@@ -3,8 +3,9 @@ import 'package:json_annotation/json_annotation.dart';
 part 'models.g.dart';
 
 abstract class Model {
-  Model(this.endpoint);
+  Model(this.endpoint, {this.id});
 
+  int id;
   String endpoint;
 
   Model fromJson(Map<String, dynamic> json);
@@ -18,7 +19,7 @@ class Note extends Model {
   String title;
   int userId;
 
-  Note({this.id, this.noteUrl, this.title, this.userId}) : super("note");
+  Note({this.id, this.noteUrl, this.title, this.userId}) : super("note", id: id);
 
   @override
   Note fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);
@@ -33,7 +34,7 @@ class Role extends Model {
   String description;
   int privilege;
 
-  Role({this.id, this.description, this.privilege}) : super("role");
+  Role({this.id, this.description, this.privilege}) : super("role", id: id);
 
   @override
   Role fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);
@@ -51,7 +52,7 @@ class GroupUser extends Model {
   DateTime unRestrictedServerTime;
 
   GroupUser({this.id, this.groupId, this.userId, this.roleId, this.unRestrictedServerTime})
-      : super("group_user");
+      : super("group_user", id: id);
 
   @override
   GroupUser fromJson(Map<String, dynamic> json) => _$GroupUserFromJson(json);
@@ -65,7 +66,7 @@ class Group extends Model {
   int id;
   String groupName;
 
-  Group({this.id, this.groupName}) : super("group");
+  Group({this.id, this.groupName}) : super("group", id: id);
 
   @override
   Group fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
@@ -79,7 +80,7 @@ class Keyword extends Model {
   int id;
   String description;
 
-  Keyword({this.id, this.description}) : super('keyword');
+  Keyword({this.id, this.description}) : super('keyword', id: id);
 
   @override
   Keyword fromJson(Map<String, dynamic> json) => _$KeywordFromJson(json);
@@ -106,7 +107,7 @@ class Message extends Model {
       this.sender,
       this.receiver,
       this.groupId})
-      : super('message');
+      : super('message', id: id);
 
   @override
   Message fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
@@ -120,7 +121,7 @@ class Module extends Model {
   int id;
   String imageUrl, title, description;
 
-  Module({this.id, this.imageUrl, this.title, this.description}) : super('module');
+  Module({this.id, this.imageUrl, this.title, this.description}) : super('module', id: id);
 
   @override
   Module fromJson(Map<String, dynamic> json) => _$ModuleFromJson(json);
@@ -147,7 +148,7 @@ class Video extends Model {
       this.keywords,
       this.parentModuleId,
       this.duration})
-      : super('video');
+      : super('video', id: id);
 
   @override
   Video fromJson(Map<String, dynamic> json) => _$VideoFromJson(json);
@@ -163,7 +164,7 @@ class History extends Model {
   int currentTime;
   int userId;
 
-  History({this.id, this.videoId, this.currentTime, this.userId}) : super('history');
+  History({this.id, this.videoId, this.currentTime, this.userId}) : super('history', id: id);
 
   @override
   History fromJson(Map<String, dynamic> json) => _$HistoryFromJson(json);
@@ -176,8 +177,17 @@ class History extends Model {
 class User extends Model {
   int id;
   String username, email, phone, password;
+  String nextToken, avatarUrl;
 
-  User({this.id, this.username, this.email, this.phone, this.password}) : super('user');
+  User({
+    this.id,
+    this.username,
+    this.email,
+    this.phone,
+    this.password,
+    this.nextToken,
+    this.avatarUrl,
+  }) : super('user', id: id);
 
   @override
   User fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -194,7 +204,7 @@ class VideoComment extends Model {
   DateTime submitServerTime;
 
   VideoComment({this.id, this.comment, this.userId, this.submitServerTime})
-      : super('video_comment');
+      : super('video_comment', id: id);
 
   @override
   VideoComment fromJson(Map<String, dynamic> json) => _$VideoCommentFromJson(json);
@@ -221,7 +231,7 @@ class Post extends Model {
       this.userId,
       this.parentId,
       this.level})
-      : super('post');
+      : super('post', id: id);
 
   @override
   Post fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
@@ -236,7 +246,7 @@ class PostLike extends Model {
   int userId;
   int postId;
 
-  PostLike({this.id, this.userId, this.postId}) : super('post_like');
+  PostLike({this.id, this.userId, this.postId}) : super('post_like', id: id);
 
   @override
   PostLike fromJson(Map<String, dynamic> json) => _$PostLikeFromJson(json);

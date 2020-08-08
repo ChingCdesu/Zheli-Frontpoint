@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/env.dart';
 
-final String apiUrl = "http://api.chingc.online/";
+final String apiUrl = "http://api.chingc.online/api/";
 final String host = "api.chingc.online";
 
 class DioSingleton {
@@ -20,9 +21,14 @@ class DioSingleton {
     // 发送请求前预处理
     onRequest: (RequestOptions options) async {
       // 添加header
-      options.headers = _headers;
+      var _customHeader = _headers;
+      _customHeader.addAll(options.headers);
+      options.headers = _customHeader;
       options.responseType = ResponseType.json;
-
+      options.queryParameters.addAll({
+        'user': Account.userId ?? null,
+        'token': Account.token ?? null,
+      });
       return options;
     },
     // 响应预处理
@@ -34,6 +40,7 @@ class DioSingleton {
           'ServerMessage': response.data['message'],
         };
         response.data = response.data['data'];
+        Account.token = response.headers.value('token');
       }
       return response;
     },
@@ -46,7 +53,6 @@ class DioSingleton {
   static Map<String, dynamic> _headers = {
     'Host': host,
     'User-Agent': '${AppEnvironment.appName}/${AppEnvironment.version}(${AppEnvironment.platform})',
-    'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
 }

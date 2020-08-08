@@ -13,6 +13,9 @@ abstract class ModelDecorator extends Model {
   StackTrace _stack;
   dynamic _result;
 
+  Model fromJson(Map<String, dynamic> json) => model.fromJson(json);
+  Map<String, dynamic> toJson() => model.toJson();
+
   ModelDecorator(this.model) : super(model.endpoint);
   ModelDecorator doOperation();
   Model getInstance() => this.model;
@@ -28,14 +31,8 @@ abstract class ModelDecorator extends Model {
       "${_stack?.toString().replaceAll('\n', '\t\n')}";
 }
 
-class AddModel extends ModelDecorator {
-  AddModel(Model model) : super(model);
-
-  @override
-  Model fromJson(Map<String, dynamic> json) => super.model.fromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => super.model.toJson();
+class Create extends ModelDecorator {
+  Create(Model model) : super(model);
 
   @override
   ModelDecorator doOperation() {
@@ -55,8 +52,147 @@ class AddModel extends ModelDecorator {
   void _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.post(
-      '$apiUrl${super.model.endpoint}/add', // path
+      '$apiUrl${super.model.endpoint}', // path
       data: this.toJson(),
+    );
+    super.httpStatusCode = response.statusCode;
+    super.retCode = response.extra['ServerCode'];
+    super.msg = response.extra['ServerMessage'];
+    if (super.httpStatusCode != 200 || super.retCode != 0) {
+      super._hasError = true;
+      return;
+    }
+    super._result = response.data;
+  }
+}
+
+class Update extends ModelDecorator {
+  Update(Model model) : super(model);
+
+  @override
+  ModelDecorator doOperation() {
+    super._operationStartTime = DateTime.now();
+    try {
+      _doRequest();
+    } catch (e, r) {
+      super._ex = e;
+      super._stack = r;
+      super._hasError = true;
+    } finally {
+      super._operationEndTime = DateTime.now();
+    }
+    return this;
+  }
+
+  void _doRequest() async {
+    var dio = DioSingleton.getInstance();
+    var response = await dio.put(
+      '$apiUrl${super.model.endpoint}/${super.model.id}', // path
+      data: this.toJson(),
+    );
+    super.httpStatusCode = response.statusCode;
+    super.retCode = response.extra['ServerCode'];
+    super.msg = response.extra['ServerMessage'];
+    if (super.httpStatusCode != 200 || super.retCode != 0) {
+      super._hasError = true;
+      return;
+    }
+    super._result = response.data;
+  }
+}
+
+class Destory extends ModelDecorator {
+  Destory(Model model) : super(model);
+
+  @override
+  ModelDecorator doOperation() {
+    super._operationStartTime = DateTime.now();
+    try {
+      _doRequest();
+    } catch (e, r) {
+      super._ex = e;
+      super._stack = r;
+      super._hasError = true;
+    } finally {
+      super._operationEndTime = DateTime.now();
+    }
+    return this;
+  }
+
+  void _doRequest() async {
+    var dio = DioSingleton.getInstance();
+    var response = await dio.delete(
+      '$apiUrl${super.model.endpoint}/${super.model.id}',
+    );
+    super.httpStatusCode = response.statusCode;
+    super.retCode = response.extra['ServerCode'];
+    super.msg = response.extra['ServerMessage'];
+    if (super.httpStatusCode != 200 || super.retCode != 0) {
+      super._hasError = true;
+      return;
+    }
+    super._result = response.data;
+  }
+}
+
+class Confirm extends ModelDecorator {
+  Confirm(Model model) : super(model);
+
+  @override
+  ModelDecorator doOperation() {
+    super._operationStartTime = DateTime.now();
+    try {
+      _doRequest();
+    } catch (e, r) {
+      super._ex = e;
+      super._stack = r;
+      super._hasError = true;
+    } finally {
+      super._operationEndTime = DateTime.now();
+    }
+    return this;
+  }
+
+  void _doRequest() async {
+    var dio = DioSingleton.getInstance();
+    var response = await dio.get(
+      '$apiUrl${super.model.endpoint}', // path
+      queryParameters: this.toJson(),
+    );
+    super.httpStatusCode = response.statusCode;
+    super.retCode = response.extra['ServerCode'];
+    super.msg = response.extra['ServerMessage'];
+    if (super.httpStatusCode != 200 || super.retCode != 0) {
+      super._hasError = true;
+      return;
+    }
+    super._result = response.data;
+  }
+}
+
+class Get extends ModelDecorator {
+  Get(Model model) : super(model);
+
+  @override
+  ModelDecorator doOperation() {
+    super._operationStartTime = DateTime.now();
+    try {
+      _doRequest();
+    } catch (e, r) {
+      super._ex = e;
+      super._stack = r;
+      super._hasError = true;
+    } finally {
+      super._operationEndTime = DateTime.now();
+    }
+    return this;
+  }
+
+  void _doRequest() async {
+    var dio = DioSingleton.getInstance();
+    var response = await dio.get(
+      '$apiUrl${super.model.endpoint}/${super.model.id}', // path
+      queryParameters: this.toJson(),
     );
     super.httpStatusCode = response.statusCode;
     super.retCode = response.extra['ServerCode'];
