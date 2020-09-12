@@ -2,12 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/env.dart';
 
-final String apiUrl = "http://api.chingc.online/api/";
+// final String apiUrl = "http://api.chingc.online/api/";
 final String host = "api.chingc.online";
+
+final String apiUrl = "http://127.0.0.1:7001/api/";
 
 class DioSingleton {
   static Dio _dio;
   DioSingleton._();
+  // lazy init
   static Dio getInstance() {
     if (null == _dio) {
       _dio = Dio();
@@ -21,10 +24,9 @@ class DioSingleton {
     // 发送请求前预处理
     onRequest: (RequestOptions options) async {
       // 添加header
-      var _customHeader = _headers;
-      _customHeader.addAll(options.headers);
-      options.headers = _customHeader;
+      options.headers.addAll(_headers);
       options.responseType = ResponseType.json;
+
       options.queryParameters.addAll({
         'user': Account.userId ?? null,
         'token': Account.token ?? null,

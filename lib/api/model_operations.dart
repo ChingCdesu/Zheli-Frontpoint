@@ -4,7 +4,8 @@ import 'package:zl_app/api/models.dart';
 abstract class ModelDecorator extends Model {
   final Model model;
 
-  int httpStatusCode, retCode;
+  int httpStatusCode;
+  dynamic retCode;
   String msg;
   DateTime _operationStartTime, _operationEndTime;
   bool _hasError = false;
@@ -17,7 +18,7 @@ abstract class ModelDecorator extends Model {
   Map<String, dynamic> toJson() => model.toJson();
 
   ModelDecorator(this.model) : super(model.endpoint);
-  ModelDecorator doOperation();
+  Future<ModelDecorator> doOperation();
   Model getInstance() => this.model;
   dynamic getResult() => this._result;
 
@@ -26,19 +27,18 @@ abstract class ModelDecorator extends Model {
       "\tHttpStatusCode: ${this.httpStatusCode ?? 'null'}\n" +
       "\tServerCode: ${this.retCode ?? 'null'} ServerMessage: ${msg ?? 'null'}\n" +
       "Exception: $_ex\n" +
-      "StackTrace: \n" +
-      // ignore: can_be_null_after_null_aware
-      "${_stack?.toString().replaceAll('\n', '\t\n')}";
+      "StackTrace: \n\t" +
+      "${_stack.toString()?.replaceAll('\n', '\t\n')}";
 }
 
 class Create extends ModelDecorator {
   Create(Model model) : super(model);
 
   @override
-  ModelDecorator doOperation() {
+  Future<ModelDecorator> doOperation() async {
     super._operationStartTime = DateTime.now();
     try {
-      _doRequest();
+      await await _doRequest();
     } catch (e, r) {
       super._ex = e;
       super._stack = r;
@@ -49,7 +49,7 @@ class Create extends ModelDecorator {
     return this;
   }
 
-  void _doRequest() async {
+  Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.post(
       '$apiUrl${super.model.endpoint}', // path
@@ -70,10 +70,10 @@ class Update extends ModelDecorator {
   Update(Model model) : super(model);
 
   @override
-  ModelDecorator doOperation() {
+  Future<ModelDecorator> doOperation() async {
     super._operationStartTime = DateTime.now();
     try {
-      _doRequest();
+      await _doRequest();
     } catch (e, r) {
       super._ex = e;
       super._stack = r;
@@ -84,7 +84,7 @@ class Update extends ModelDecorator {
     return this;
   }
 
-  void _doRequest() async {
+  Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.put(
       '$apiUrl${super.model.endpoint}/${super.model.id}', // path
@@ -105,10 +105,10 @@ class Destory extends ModelDecorator {
   Destory(Model model) : super(model);
 
   @override
-  ModelDecorator doOperation() {
+  Future<ModelDecorator> doOperation() async {
     super._operationStartTime = DateTime.now();
     try {
-      _doRequest();
+      await _doRequest();
     } catch (e, r) {
       super._ex = e;
       super._stack = r;
@@ -119,7 +119,7 @@ class Destory extends ModelDecorator {
     return this;
   }
 
-  void _doRequest() async {
+  Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.delete(
       '$apiUrl${super.model.endpoint}/${super.model.id}',
@@ -139,10 +139,10 @@ class Confirm extends ModelDecorator {
   Confirm(Model model) : super(model);
 
   @override
-  ModelDecorator doOperation() {
+  Future<ModelDecorator> doOperation() async {
     super._operationStartTime = DateTime.now();
     try {
-      _doRequest();
+      await _doRequest();
     } catch (e, r) {
       super._ex = e;
       super._stack = r;
@@ -153,7 +153,7 @@ class Confirm extends ModelDecorator {
     return this;
   }
 
-  void _doRequest() async {
+  Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.get(
       '$apiUrl${super.model.endpoint}', // path
@@ -174,10 +174,10 @@ class Get extends ModelDecorator {
   Get(Model model) : super(model);
 
   @override
-  ModelDecorator doOperation() {
+  Future<ModelDecorator> doOperation() async {
     super._operationStartTime = DateTime.now();
     try {
-      _doRequest();
+      await _doRequest();
     } catch (e, r) {
       super._ex = e;
       super._stack = r;
@@ -188,7 +188,7 @@ class Get extends ModelDecorator {
     return this;
   }
 
-  void _doRequest() async {
+  Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.get(
       '$apiUrl${super.model.endpoint}/${super.model.id}', // path

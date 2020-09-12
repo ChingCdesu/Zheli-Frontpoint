@@ -177,7 +177,7 @@ class History extends Model {
 class User extends Model {
   int id;
   String username, email, phone, password;
-  String nextToken, avatarUrl;
+  String token, avatarUrl;
 
   User({
     this.id,
@@ -185,7 +185,7 @@ class User extends Model {
     this.email,
     this.phone,
     this.password,
-    this.nextToken,
+    this.token,
     this.avatarUrl,
   }) : super('user', id: id);
 
@@ -253,4 +253,18 @@ class PostLike extends Model {
 
   @override
   Map<String, dynamic> toJson() => _$PostLikeToJson(this);
+}
+
+@JsonSerializable()
+class Favorite extends Model {
+  int id;
+  int userId;
+  int videoId;
+  Favorite({this.id, this.userId, this.videoId}) : super('favorite', id: id);
+
+  @override
+  Favorite fromJson(Map<String, dynamic> json) => _$FavoriteFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$FavoriteToJson(this);
 }

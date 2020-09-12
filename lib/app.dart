@@ -1,7 +1,5 @@
-import 'package:zl_app/pages/content_page.dart';
-import 'package:zl_app/pages/history_page.dart';
+import 'package:zl_app/pages/personal/history.dart';
 import 'package:zl_app/pages/sidebar_page.dart';
-import 'package:zl_app/pages/video_page.dart';
 import 'package:zl_app/pages/home_page.dart';
 import 'package:zl_app/utils/env.dart';
 
