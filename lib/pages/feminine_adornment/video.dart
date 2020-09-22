@@ -57,7 +57,7 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
         padding: EdgeInsetsDirectional.only(
           end: DeviceSize.getWidthByPercent(0.02),
         ),
-        //trailing: this.trailing,
+        // trailing: this.trailing,
         leading: Container(
           child: Material(
             color: Colors.transparent,

@@ -17,23 +17,47 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  Future<List<Widget>> _getHistories() async {
-    List<Widget> ret = List<Widget>();
-    var operation = await API.Get(new API.History(userId: Account.userId)).doOperation();
-    if (!operation.hasError) {
-      operation.getResult().forEach((history) {
-        ret.add(_getSingleHistory());
+  List<API.History> _histories;
+  List<API.Video> _videoInfos;
+
+  Future _getHistories() async {
+    var operation = await API.Confirm(new API.History(userId: Account.userId)).doOperation();
+    if (operation.hasError) throw ErrorDescription(operation.log);
+    var _s = operation.getResult()['values'] as List<dynamic>;
+    for (var e in _s) {
+      API.History _h;
+      API.Video _v;
+      await API.Get(new API.History(id: e['ID'])).doOperation().then((_o) async {
+        if (_o.hasError) throw ErrorDescription(_o.log);
+        _h = _o.fromJson(_o.getResult());
+        _histories.add(_h);
+        _v = API.Video(id: _h.videoId);
+        await API.Get(_v).doOperation().then((_o) {
+          if (_o.hasError) throw ErrorDescription(_o.log);
+          _v = _o.fromJson(_o.getResult());
+          _videoInfos.add(_v);
+        });
       });
-    } else {
-      print(operation.log);
     }
-    // var reversedHistories = reversedHistories.forEach((history) {
-    //   ret.add(_getSingleHistory(history));
-    // });
-    return ret;
   }
 
-  static Widget _getSingleHistory(API.History history) {
+  @override
+  void initState() async {
+    await _getHistories().catchError((e) {
+      print(e);
+    });
+    super.initState();
+  }
+
+  List<Widget> _render() {
+    List<Widget> _r = [];
+    for (var i = 0; i < _histories.length; i++) {
+      _r.add(_getSingleHistory(_histories[i], _videoInfos[i]));
+    }
+    return _r;
+  }
+
+  Widget _getSingleHistory(API.History history, API.Video video) {
     return Container(
       height: 80,
       margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
@@ -44,14 +68,14 @@ class _HistoryPageState extends State<HistoryPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            child: Image.asset(history.video.image),
+            child: Image.network(video.imageUrl),
             width: 150,
           ),
           Container(
             margin: EdgeInsets.only(left: 10, top: 4),
             width: 154,
             child: Text(
-              history.video.title,
+              video.title,
               style: TextStyle(fontSize: 12),
             ),
           )
@@ -130,7 +154,7 @@ class _HistoryPageState extends State<HistoryPage> {
             child: MediaQuery.removePadding(
               removeTop: true,
               context: context,
-              child: ListView(children: _getHistories()),
+              child: ListView(children: _render()),
             ),
           ),
         ],

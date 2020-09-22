@@ -13,33 +13,35 @@ class SideBarPage extends StatefulWidget {
 
 class _SideBarPageState extends State<SideBarPage> {
   List<Widget> _generateList() {
-    final Map<String, IconData> _list = {
-      "首页": CupertinoIcons.home,
-      "我的收藏": CupertinoIcons.heart,
-      "我的笔记": CupertinoIcons.mail,
-      "历史记录": CupertinoIcons.time,
-      "帮助": CupertinoIcons.info,
+    final Map<String, dynamic> _list = {
+      "首页": {'icon': CupertinoIcons.home, 'router': '/'},
+      "我的收藏": {'icon': CupertinoIcons.heart, 'router': '/personal/favorite'},
+      "我的笔记": {'icon': CupertinoIcons.mail, 'router': '/personal/note'},
+      "历史记录": {'icon': CupertinoIcons.time, 'router': '/personal/history'},
     };
 
     List<Widget> _widgets = List<Widget>();
 
     _list.forEach((key, value) {
       _widgets.add(
-        Container(
-          height: 79,
-          width: DeviceSize.getWidthByPercent(1.0),
-          child: ListTile(
-            leading: Icon(
-              value,
-              color: CupertinoColors.white,
-              size: 32,
-            ),
-            title: Text(
-              key,
-              style: TextStyle(
-                  color: CupertinoColors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        CupertinoButton(
+          child: Container(
+            height: 79,
+            width: DeviceSize.getWidthByPercent(1.0),
+            child: ListTile(
+              leading: Icon(
+                value['icon'],
+                color: CupertinoColors.white,
+                size: 32,
+              ),
+              title: Text(
+                key,
+                style: TextStyle(
+                    color: CupertinoColors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
+          onPressed: () => Navigator.pushNamed(context, value['router']),
         ),
       );
     });

@@ -6,13 +6,14 @@ abstract class Model {
   Model(this.endpoint, {this.id});
 
   int id;
+  @JsonKey(ignore: true)
   String endpoint;
 
   Model fromJson(Map<String, dynamic> json);
   Map<String, dynamic> toJson();
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Note extends Model {
   int id;
   String noteUrl;
@@ -28,7 +29,7 @@ class Note extends Model {
   Map<String, dynamic> toJson() => _$NoteToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Role extends Model {
   int id;
   String description;
@@ -43,7 +44,7 @@ class Role extends Model {
   Map<String, dynamic> toJson() => _$RoleToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class GroupUser extends Model {
   int id;
   int groupId;
@@ -61,7 +62,7 @@ class GroupUser extends Model {
   Map<String, dynamic> toJson() => _$GroupUserToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Group extends Model {
   int id;
   String groupName;
@@ -75,7 +76,7 @@ class Group extends Model {
   Map<String, dynamic> toJson() => _$GroupToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Keyword extends Model {
   int id;
   String description;
@@ -89,7 +90,7 @@ class Keyword extends Model {
   Map<String, dynamic> toJson() => _$KeywordToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Message extends Model {
   int id;
   String message;
@@ -116,7 +117,7 @@ class Message extends Model {
   Map<String, dynamic> toJson() => _$MessageToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Module extends Model {
   int id;
   String imageUrl, title, description;
@@ -130,7 +131,7 @@ class Module extends Model {
   Map<String, dynamic> toJson() => _$ModuleToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Video extends Model {
   int id;
   String videoUrl, imageUrl;
@@ -157,7 +158,7 @@ class Video extends Model {
   Map<String, dynamic> toJson() => _$VideoToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class History extends Model {
   int id;
   int videoId;
@@ -173,7 +174,7 @@ class History extends Model {
   Map<String, dynamic> toJson() => _$HistoryToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class User extends Model {
   int id;
   String username, email, phone, password;
@@ -196,7 +197,7 @@ class User extends Model {
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class VideoComment extends Model {
   int id;
   String comment;
@@ -213,7 +214,7 @@ class VideoComment extends Model {
   Map<String, dynamic> toJson() => _$VideoCommentToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Post extends Model {
   int id;
   String content;
@@ -240,7 +241,7 @@ class Post extends Model {
   Map<String, dynamic> toJson() => _$PostToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class PostLike extends Model {
   int id;
   int userId;
@@ -255,7 +256,7 @@ class PostLike extends Model {
   Map<String, dynamic> toJson() => _$PostLikeToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class Favorite extends Model {
   int id;
   int userId;

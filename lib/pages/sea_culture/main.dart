@@ -206,14 +206,18 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
               margin: EdgeInsets.only(left: 50),
               decoration: BoxDecoration(
                 // color: Colors.red,
-                image:
-                    DecorationImage(image: AssetImage('images/zsyh/bgc01.png'), fit: BoxFit.cover),
+                image: DecorationImage(
+                  image: AssetImage('images/zsyh/bgc01.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             // 返回按钮
             Container(
               padding: EdgeInsets.only(
-                  left: DeviceSize.getWidthByPercent(0), top: DeviceSize.getHeightByPercent(0.11)),
+                left: DeviceSize.getWidthByPercent(0),
+                top: DeviceSize.getHeightByPercent(0.11),
+              ),
               child: CupertinoButton(
                 padding: EdgeInsets.all(5),
                 child: Icon(

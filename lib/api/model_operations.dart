@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/api/models.dart';
+import 'package:zl_app/settings/user.dart';
 
 abstract class ModelDecorator extends Model {
-  final Model model;
+  Model model;
 
   int httpStatusCode;
   dynamic retCode;
@@ -13,21 +15,44 @@ abstract class ModelDecorator extends Model {
   Exception _ex;
   StackTrace _stack;
   dynamic _result;
+  String url;
 
   Model fromJson(Map<String, dynamic> json) => model.fromJson(json);
   Map<String, dynamic> toJson() => model.toJson();
 
   ModelDecorator(this.model) : super(model.endpoint);
-  Future<ModelDecorator> doOperation();
+  Future<ModelDecorator> doOperation() async {
+    print('Your token: ${Account.token}');
+    _operationStartTime = DateTime.now();
+    try {
+      await _doRequest();
+    } catch (e, r) {
+      _ex = e;
+      if (e is DioError) {
+        var _e = _ex as DioError;
+        httpStatusCode = _e.response.statusCode;
+        url = _e.request.uri.toString();
+      }
+      _stack = r;
+      _hasError = true;
+    } finally {
+      _operationEndTime = DateTime.now();
+    }
+    return this;
+  }
+
+  Future _doRequest();
+
   Model getInstance() => this.model;
   dynamic getResult() => this._result;
 
   String get log =>
       "[ ${this._operationStartTime.toIso8601String()} - ${this._operationEndTime.toIso8601String()} ]\n" +
+      "\tUrl: $url\n" +
       "\tHttpStatusCode: ${this.httpStatusCode ?? 'null'}\n" +
       "\tServerCode: ${this.retCode ?? 'null'} ServerMessage: ${msg ?? 'null'}\n" +
       "Exception: $_ex\n" +
-      "StackTrace: \n\t" +
+      "StackTrace: \n" +
       "${_stack.toString()?.replaceAll('\n', '\t\n')}";
 }
 
@@ -35,20 +60,6 @@ class Create extends ModelDecorator {
   Create(Model model) : super(model);
 
   @override
-  Future<ModelDecorator> doOperation() async {
-    super._operationStartTime = DateTime.now();
-    try {
-      await await _doRequest();
-    } catch (e, r) {
-      super._ex = e;
-      super._stack = r;
-      super._hasError = true;
-    } finally {
-      super._operationEndTime = DateTime.now();
-    }
-    return this;
-  }
-
   Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.post(
@@ -70,20 +81,6 @@ class Update extends ModelDecorator {
   Update(Model model) : super(model);
 
   @override
-  Future<ModelDecorator> doOperation() async {
-    super._operationStartTime = DateTime.now();
-    try {
-      await _doRequest();
-    } catch (e, r) {
-      super._ex = e;
-      super._stack = r;
-      super._hasError = true;
-    } finally {
-      super._operationEndTime = DateTime.now();
-    }
-    return this;
-  }
-
   Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.put(
@@ -105,20 +102,6 @@ class Destory extends ModelDecorator {
   Destory(Model model) : super(model);
 
   @override
-  Future<ModelDecorator> doOperation() async {
-    super._operationStartTime = DateTime.now();
-    try {
-      await _doRequest();
-    } catch (e, r) {
-      super._ex = e;
-      super._stack = r;
-      super._hasError = true;
-    } finally {
-      super._operationEndTime = DateTime.now();
-    }
-    return this;
-  }
-
   Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.delete(
@@ -139,20 +122,6 @@ class Confirm extends ModelDecorator {
   Confirm(Model model) : super(model);
 
   @override
-  Future<ModelDecorator> doOperation() async {
-    super._operationStartTime = DateTime.now();
-    try {
-      await _doRequest();
-    } catch (e, r) {
-      super._ex = e;
-      super._stack = r;
-      super._hasError = true;
-    } finally {
-      super._operationEndTime = DateTime.now();
-    }
-    return this;
-  }
-
   Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.get(
@@ -174,20 +143,6 @@ class Get extends ModelDecorator {
   Get(Model model) : super(model);
 
   @override
-  Future<ModelDecorator> doOperation() async {
-    super._operationStartTime = DateTime.now();
-    try {
-      await _doRequest();
-    } catch (e, r) {
-      super._ex = e;
-      super._stack = r;
-      super._hasError = true;
-    } finally {
-      super._operationEndTime = DateTime.now();
-    }
-    return this;
-  }
-
   Future _doRequest() async {
     var dio = DioSingleton.getInstance();
     var response = await dio.get(
@@ -202,5 +157,6 @@ class Get extends ModelDecorator {
       return;
     }
     super._result = response.data;
+    model = model.fromJson(_result);
   }
 }

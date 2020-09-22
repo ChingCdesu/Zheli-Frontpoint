@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:zl_app/pages/sidebar_page.dart';
+import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/ui_libraries/indicator.dart';
 import 'package:zl_app/ui_libraries/slide_stack.dart';
 import 'package:zl_app/utils/device_size.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
 
   void onSlide(double position) {
-    print("position: $position");
+    // print("position: $position");
     this.homeLock = position.floor() == 0 ? false : true;
 
     setState(() => this.position = position);
@@ -64,6 +65,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // init size of device
     DeviceSize.setDeviceSize(MediaQuery.of(context).size);
+    if (Account.token == null) {
+      // TODO: 跳转到登录界面
+    }
 
     return SlideStack(
       drawer: SideBarPage(),
@@ -201,9 +205,15 @@ class _HomePageState extends State<HomePage> {
                                       _slideKey.currentState.openOrClose();
                                     } else {}
                                   },
-                                  child: Image.asset(
-                                    _list[index].url,
-                                    fit: BoxFit.contain,
+                                  child: CupertinoButton(
+                                    child: Image.asset(
+                                      _list[index].url,
+                                      fit: BoxFit.contain,
+                                    ),
+                                    onPressed: () {
+                                      print(_list[index].router);
+                                      Navigator.pushNamed(context, _list[index].router);
+                                    },
                                   ),
                                 ),
                               ),
@@ -234,17 +244,18 @@ class _HomePageState extends State<HomePage> {
 class FirstImg {
   String url;
   String name;
+  String router;
 
-  FirstImg(this.url, this.name);
+  FirstImg(this.url, this.name, this.router);
 
   static List<FirstImg> generate() {
     return [
-      FirstImg("assets/images/arvr.png", "arvr"),
-      FirstImg("assets/images/1.png", "十里红妆"),
-      FirstImg("assets/images/皮影之光.png", "皮影之光"),
-      FirstImg("assets/images/舟山渔海.png", "舟山渔海"),
-      FirstImg("assets/images/彰吴竹扇.png", "彰吴竹扇"),
-      FirstImg("assets/images/富阳竹纸.png", "富阳竹纸"),
+      // FirstImg("assets/images/arvr.png", "arvr"),
+      FirstImg("assets/images/1.png", "十里红妆", '/pages/feminine_adornment/main'),
+      FirstImg("assets/images/皮影之光.png", "皮影之光", '/pages/shadow_play/main'),
+      FirstImg("assets/images/舟山渔海.png", "舟山渔海", '/pages/sea_culture/main'),
+      FirstImg("assets/images/彰吴竹扇.png", "彰吴竹扇", '/pages/handcrafted_fan/main'),
+      FirstImg("assets/images/富阳竹纸.png", "富阳竹纸", '/pages/china_paper/main'),
     ];
   }
 }
