@@ -49,3 +49,5 @@ app.*.map.json
 assets/
 android/app/src/main/res/
 ios/Runner/Assets.xcassets/
+.stignore
+.stfolder/
