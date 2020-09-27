@@ -2,10 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/env.dart';
 
-// final String apiUrl = "http://api.chingc.online/api/";
-final String host = "api.chingc.online";
-
-final String apiUrl = "http://127.0.0.1:7001/api/";
+final String apiUrl = "http://contest.chingc.online:54594/api/";
+final String host = "contest.chingc.online";
 
 class DioSingleton {
   static Dio _dio;

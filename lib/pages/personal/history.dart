@@ -42,11 +42,10 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   @override
-  void initState() async {
-    await _getHistories().catchError((e) {
+  void initState() {
+    _getHistories().catchError((e) {
       print(e);
-    });
-    super.initState();
+    }).whenComplete(() => super.initState());
   }
 
   List<Widget> _render() {

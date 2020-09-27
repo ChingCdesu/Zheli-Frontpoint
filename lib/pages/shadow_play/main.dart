@@ -5,11 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:zl_app/pages/shadow_play/cinema.dart';
-import 'package:zl_app/pages/shadow_play/history.dart';
-import 'package:zl_app/pages/shadow_play/manufacture.dart';
-import 'package:zl_app/pages/shadow_play/video.dart';
-
 import 'package:zl_app/utils/device_size.dart';
 
 class ShadowPlayMain extends StatefulWidget {
@@ -118,25 +113,25 @@ class _LikePageViewState extends State<LikePageView> {
             'images/pyzg/bgc02.jpg',
             ' ',
             '在影院展里我们为你拉起黑布，只留皮影的光亮。你可以从这些图片里了解到许多有趣的皮影故事，比如三打白骨精，白蛇传等等。',
-            ShadowPlayCinema(),
+            '/pages/shadow_play/cinema',
           ),
           myCard(
             'images/pyzg/bgc03.jpg',
             ' ',
             '在这里你可以看到整个皮影的制作过程。选皮｜制皮｜画稿｜过稿｜镂刻｜敷彩｜发汗熨平｜缎结完成。',
-            ShadowPlayManufacture(),
+            '/pages/shadow_play/manufacture',
           ),
           myCard(
             'images/pyzg/bgc04.jpg',
             ' ',
             '欣赏作品||倒马关。倒马关，位于河北唐县西北60公里的倒马关乡倒马关村，最初于战国时置，称鸿之塞。',
-            ShadowPlayVideo(),
+            '/pages/shadow_play/video',
           ),
           myCard(
             'images/pyzg/bgc05.jpg',
             ' ',
             '海宁皮影戏又称“影子戏”或“灯影戏”,这个将皮影人偶借助灯光投影在幕布演绎的戏剧艺术形式，在民间被称为“手工电影”',
-            ShadowPlayHistory(),
+            '/pages/shadow_play/history',
           ),
         ],
       ),
@@ -144,7 +139,7 @@ class _LikePageViewState extends State<LikePageView> {
   }
 
 //所有的卡片
-  Widget myCard(String img, String title, String text, Widget url) {
+  Widget myCard(String img, String title, String text, String url) {
     return Container(
       padding: EdgeInsets.fromLTRB(40, 10, 10, 10),
       child: Container(
@@ -177,9 +172,7 @@ class _LikePageViewState extends State<LikePageView> {
                   size: 18,
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return url;
-                  }));
+                  Navigator.pushNamed(context, url);
                 },
               ),
             ),

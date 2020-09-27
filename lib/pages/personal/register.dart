@@ -1,9 +1,12 @@
-// TODO: 完成此页面
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:zl_app/utils/crypto.dart';
 import 'package:zl_app/utils/device_size.dart';
+
+import 'package:zl_app/api/models.dart' as API;
+import 'package:zl_app/api/model_operations.dart' as API;
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -349,22 +352,26 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Expanded(
-                        flex: 2,
-                        child: Padding(
-                            padding: EdgeInsets.only(left: 5),
-                            child: Builder(builder: (BuildContext context) {
-                              return RaisedButton(
-                                color: CupertinoColors.systemGrey4,
-                                child: Text(
-                                  "获取验证码",
-                                  style: TextStyle(fontSize: 14, color: CupertinoColors.white),
-                                ),
-                                // 设置按钮圆角
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                onPressed: () {},
-                              );
-                            })))
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Builder(
+                          builder: (BuildContext context) {
+                            return RaisedButton(
+                              color: CupertinoColors.systemGrey4,
+                              child: Text(
+                                "获取验证码",
+                                style: TextStyle(fontSize: 14, color: CupertinoColors.white),
+                              ),
+                              // 设置按钮圆角
+                              shape:
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                              onPressed: () {},
+                            );
+                          },
+                        ),
+                      ),
+                    )
                   ],
                 )
                 // Expanded(
@@ -422,11 +429,16 @@ class _RegisterPageState extends State<RegisterPage> {
         color: Color.fromRGBO(172, 192, 198, 1),
         child: Text(
           "注册",
-          style: TextStyle(color: CupertinoColors.white, fontSize: 22),
+          style: TextStyle(
+            color: CupertinoColors.white,
+            fontSize: 22,
+          ),
         ),
         // 设置按钮圆角
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        onPressed: () {
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        onPressed: () async {
           //点击登录按钮，解除焦点，回收键盘
           _mobileFocus.unfocus();
           _passwordFocus.unfocus();
@@ -435,8 +447,23 @@ class _RegisterPageState extends State<RegisterPage> {
           if (_formKey.currentState.validate()) {
             //只有输入通过验证，才会执行这里
             _formKey.currentState.save();
-            //todo 登录操作
             print("$_username + $_password");
+            var _u = API.User(
+              phone: _username,
+              password: generateMd5(_password),
+            );
+            var _o = await API.Create(_u).doOperation();
+            // TODO: 注册页面的阴间验证码
+            if (!_o.hasError) {
+              SnackBar(
+                content: Text("注册成功"),
+              );
+            } else {
+              SnackBar(
+                content: Text("注册失败"),
+              );
+              print(_o.log);
+            }
           }
         },
       ),
@@ -538,7 +565,9 @@ class _RegisterPageState extends State<RegisterPage> {
               borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
             //忘记密码按钮，点击执行事件
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/personal/login');
+            },
           ),
         ],
       ),

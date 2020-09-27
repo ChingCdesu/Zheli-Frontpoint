@@ -63,12 +63,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // init size of device
-    DeviceSize.setDeviceSize(MediaQuery.of(context).size);
-    if (Account.token == null) {
-      // TODO: 跳转到登录界面
-    }
-
     return SlideStack(
       drawer: SideBarPage(),
       child: SlideContainer(

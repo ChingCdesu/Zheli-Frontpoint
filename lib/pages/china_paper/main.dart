@@ -122,8 +122,8 @@ class _CardPageState extends State<CardPage> {
           //3card
           Column(
             children: <Widget>[
-              getpyzgCard('制作过程', 'images/fyzz/bgc.png', ChinaPaperManufacture()),
-              getpyzgCard('历史起源', 'images/fyzz/bgc.png', ChinaPaperHistory()),
+              getpyzgCard('制作过程', 'images/fyzz/bgc.png', '/pages/china_paper/manufacture'),
+              getpyzgCard('历史起源', 'images/fyzz/bgc.png', '/pages/china_paper/history'),
             ],
           ),
         ],
@@ -132,7 +132,7 @@ class _CardPageState extends State<CardPage> {
   }
 
 //三个卡片的封装
-  Widget getpyzgCard(String title, String img, Widget url) {
+  Widget getpyzgCard(String title, String img, String url) {
     return Container(
       margin: EdgeInsets.fromLTRB(20, 20, 20, 15),
       padding: EdgeInsets.all(25),
@@ -169,9 +169,7 @@ class _CardPageState extends State<CardPage> {
                 size: 24,
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return url;
-                }));
+                Navigator.pushNamed(context, url);
               },
             ),
           ),

@@ -37,7 +37,8 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
                   //back
                   Container(
                     alignment: Alignment.topCenter,
-                    margin: EdgeInsets.only(top: DeviceSize.getHeightByPercent(0.108)),
+                    margin: EdgeInsets.only(
+                        top: DeviceSize.getHeightByPercent(0.108)),
                     width: DeviceSize.getWidthByPercent(0.12), // 50
                     child: CupertinoButton(
                       padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
@@ -92,7 +93,9 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
                                     ),
                                     Text(
                                       '鄣吴',
-                                      style: TextStyle(fontSize: 14, color: CupertinoColors.white),
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: CupertinoColors.white),
                                     ),
                                   ]),
                             ),
@@ -244,21 +247,19 @@ class _CardPageState extends State<CardPage> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: Color.fromRGBO(198, 204, 205, 1),
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
                           width: DeviceSize.getWidthByPercent(0.16),
                           height: DeviceSize.getWidthByPercent(0.07),
                           child: Text(
                             '播放',
-                            style: TextStyle(color: CupertinoColors.white, fontSize: 14),
+                            style: TextStyle(
+                                color: CupertinoColors.white, fontSize: 14),
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => HandcraftedFanVideo(),
-                            ),
-                          );
+                          Navigator.pushNamed(
+                              context, '/pages/handcrafted_fan/video');
                         },
                       ),
                     )

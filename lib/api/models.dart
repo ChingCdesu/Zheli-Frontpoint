@@ -178,7 +178,7 @@ class History extends Model {
 class User extends Model {
   int id;
   String username, email, phone, password;
-  String token, avatarUrl;
+  String token, avatar, headerImage;
 
   User({
     this.id,
@@ -187,7 +187,8 @@ class User extends Model {
     this.phone,
     this.password,
     this.token,
-    this.avatarUrl,
+    this.avatar,
+    this.headerImage,
   }) : super('user', id: id);
 
   @override

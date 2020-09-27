@@ -1,8 +1,12 @@
 import 'dart:core';
 
+import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/device_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:zl_app/api/models.dart' as API;
+import 'package:zl_app/api/model_operations.dart' as API;
 
 class SideBarPage extends StatefulWidget {
   SideBarPage({Key key}) : super(key: key);
@@ -48,6 +52,27 @@ class _SideBarPageState extends State<SideBarPage> {
     return _widgets;
   }
 
+  String _avatarPath;
+  String _prefix = '?user=${Account.userId}&token=${Account.token}';
+
+  void _getAvatar() {
+    final baseUrl = 'http://online.chingc.com/assets/avatar/';
+    if (Account.userId.isNaN) {
+      _avatarPath = baseUrl + 'no-avatar.png';
+    } else {
+      var _u = API.User(id: Account.userId);
+      API.Get(_u).doOperation().then((v) {
+        _avatarPath = _u.avatar;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _getAvatar();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,10 +91,7 @@ class _SideBarPageState extends State<SideBarPage> {
                 Container(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'assets/images/avatar.jpg',
-                      width: 60,
-                    ),
+                    child: Image.network(_avatarPath + _prefix),
                   ),
                 ),
                 Container(

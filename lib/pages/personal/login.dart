@@ -1,8 +1,12 @@
-// TODO: 完成此页面
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:zl_app/settings/user.dart';
+import 'package:zl_app/utils/crypto.dart';
 import 'package:zl_app/utils/device_size.dart';
+
+import 'package:zl_app/api/models.dart' as API;
+import 'package:zl_app/api/model_operations.dart' as API;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -93,6 +97,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    DeviceSize.setDeviceSize(MediaQuery.of(context).size);
+
     // logo 图片区域
     Widget logoImageArea = new Container(
       alignment: Alignment.topCenter,
@@ -296,7 +302,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         // 设置按钮圆角
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        onPressed: () {
+        onPressed: () async {
           //点击登录按钮，解除焦点，回收键盘
           _focusNodePassWord.unfocus();
           _focusNodeUserName.unfocus();
@@ -304,8 +310,23 @@ class _LoginPageState extends State<LoginPage> {
           if (_formKey.currentState.validate()) {
             //只有输入通过验证，才会执行这里
             _formKey.currentState.save();
-            //todo 登录操作
+
             print("$_username + $_password");
+            API.User login = new API.User(
+              phone: _username,
+              password: generateMd5(_password),
+            );
+
+            var operation = await API.Confirm(login).doOperation();
+            if (!operation.hasError) {
+              var result = operation.getResult();
+              Account.userId = result['values'][0]['ID'];
+            } else {
+              SnackBar(
+                content: Text("登录失败"),
+              );
+              return;
+            }
           }
         },
       ),

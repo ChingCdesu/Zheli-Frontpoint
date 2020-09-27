@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:zl_app/utils/device_size.dart';
 
-import 'package:zl_app/pages/feminine_adornment/video.dart';
-import 'package:zl_app/pages/feminine_adornment/object.dart';
-import 'package:zl_app/pages/feminine_adornment/history.dart';
-
 class FeminineAdornmentMain extends StatefulWidget {
   FeminineAdornmentMain({Key key, this.title}) : super(key: key);
   final String title;
@@ -31,7 +27,7 @@ class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              //back
+              // back
               Container(
                 alignment: Alignment.topCenter,
                 margin: EdgeInsets.only(top: DeviceSize.getHeightByPercent(0.108)),
@@ -56,21 +52,22 @@ class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
                     viewportFraction: 0.6,
                   ),
                   children: <Widget>[
+                    // TODO: 文本重复
                     myPage(
                         'images/slhz/红妆物件.png',
                         '这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看',
                         'images/slhz/bgc01.png',
-                        FeminineAdornmentObject()),
+                        '/pages/feminine_adornment/object'),
                     myPage(
                         'images/slhz/宣传片.png',
                         '这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看',
                         'images/slhz/bgc03.png',
-                        FeminineAdornmentVideo()),
+                        '/pages/feminine_adornment/video'),
                     myPage(
                         'images/slhz/历史起源.png',
                         '这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看这里是鄣吴竹扇的制作流程，欢迎观看',
                         'images/slhz/bgc02.png',
-                        FeminineAdornmentHistory()),
+                        '/pages/feminine_adornment/history'),
                   ],
                 ),
               ),
@@ -90,10 +87,10 @@ class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
     );
   }
 
-  Widget myPage(String title, String contant, String img, Widget route) {
+  Widget myPage(String title, String contant, String img, String route) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, CupertinoPageRoute(builder: (context) => route));
+        Navigator.pushNamed(context, route);
       },
       child: Container(
         height: DeviceSize.getHeightByPercent(0.7),

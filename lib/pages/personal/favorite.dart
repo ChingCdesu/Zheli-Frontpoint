@@ -1,9 +1,12 @@
-// TODO: 完成此页面
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:zl_app/settings/user.dart';
 
 import 'package:zl_app/utils/device_size.dart';
+
+import 'package:zl_app/api/models.dart' as API;
+import 'package:zl_app/api/model_operations.dart' as API;
 
 class FavoritePage extends StatefulWidget {
   FavoritePage({Key key, this.title}) : super(key: key);
@@ -14,6 +17,24 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+  List<API.Favorite> _fs = new List<API.Favorite>();
+
+  @override
+  void initState() {
+    var _f = new API.Favorite(userId: Account.userId);
+    API.Confirm(_f).doOperation().then((_o) {
+      if (_o.hasError) return;
+      var _r = _o.getResult()['values'];
+      for (var item in _r) {
+        var id = item['ID'] as int;
+        _f = new API.Favorite(id: id);
+        API.Get(_f).doOperation().then((_) {
+          _fs.add(_f);
+        });
+      }
+    }).whenComplete(() => super.initState());
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(

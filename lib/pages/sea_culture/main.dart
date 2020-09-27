@@ -24,7 +24,8 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
     return CupertinoPageScaffold(
       child: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage('images/zsyh/bgc.png'), fit: BoxFit.fill),
+          image: DecorationImage(
+              image: AssetImage('images/zsyh/bgc.png'), fit: BoxFit.fill),
         ),
         child: Stack(
           children: <Widget>[
@@ -53,7 +54,8 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                     Expanded(
                       flex: 2,
                       child: Container(
-                        padding: EdgeInsets.only(bottom: 30, left: 30, right: 30),
+                        padding:
+                            EdgeInsets.only(bottom: 30, left: 30, right: 30),
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Text(
@@ -149,7 +151,8 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                                 gradient: LinearGradient(
                                   colors: <Color>[
                                     Color.fromARGB(0, 255, 255, 255),
-                                    Color.fromARGB((0.3 * 255).floor(), 255, 255, 255),
+                                    Color.fromARGB(
+                                        (0.3 * 255).floor(), 255, 255, 255),
                                     Color.fromARGB(255, 255, 255, 255),
                                   ],
                                   begin: Alignment.topCenter,
@@ -193,9 +196,8 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return SeaCultureCinema();
-                        }));
+                        Navigator.pushNamed(
+                            context, '/pages/sea_culture/video');
                       }),
                 ],
               ),

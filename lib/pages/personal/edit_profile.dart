@@ -1,4 +1,3 @@
-// TODO: 完成此页面
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -49,7 +48,9 @@ class _EditProfileState extends State<EditProfile> {
                       color: CupertinoColors.black,
                       size: 28,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO: 点击时弹出照片选择
+                    },
                   ),
                 ],
               ),

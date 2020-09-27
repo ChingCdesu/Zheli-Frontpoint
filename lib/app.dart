@@ -46,6 +46,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Map<String, WidgetBuilder> _routes = {
+    '/home': (context) => HomePage(),
     // 富阳竹纸
     '/pages/china_paper/main': (context) => ChinaPaperMain(),
     '/pages/china_paper/history': (context) => ChinaPaperHistory(),
@@ -76,14 +77,16 @@ class MyApp extends StatelessWidget {
     '/personal/profile': (context) => ProfilePage(),
     '/personal/register': (context) => RegisterPage(),
     '/personal/note': (context) => NotePage(),
+
+    // TODO: 缺少系统设置页面
   };
 
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Cupertino App',
-      home: HomePage(),
-      initialRoute: '/',
+      home: LoginPage(),
+      initialRoute: '/personal/login',
       routes: _routes,
     );
   }

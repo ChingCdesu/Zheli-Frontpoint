@@ -1,4 +1,3 @@
-// TODO: 完成此页面
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  var _user = API.User(id: Account.userId);
+
+  @override
+  void initState() {
+    API.Get(_user).doOperation().then((_o) {
+      if (_o.hasError) {
+        SnackBar(content: Text("获取个人信息失败"));
+      }
+    }).whenComplete(() => super.initState());
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -27,8 +37,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 //背景区
                 Container(
                     height: DeviceSize.getHeightByPercent(1),
-                    child: Image.asset(
-                      'images/my/zsyh.jpg',
+                    child: Image.network(
+                      _user.headerImage,
                       fit: BoxFit.fill,
                     )),
                 //头像区
@@ -49,9 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           size: 28,
                         ),
                         onPressed: () {
-                          Navigator.pop(
-                            context,
-                          );
+                          Navigator.pop(context);
                         },
                       ),
                     ),
@@ -73,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: DeviceSize.getWidthByPercent(0.2),
                             decoration: BoxDecoration(
                               image: new DecorationImage(
-                                image: AssetImage("images/photo01.jpg"),
+                                image: AssetImage(_user.avatar),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius: BorderRadius.all(Radius.circular(45)),
@@ -81,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Container(
                             child: Text(
-                              '深沉的神仙',
+                              _user.username,
                               style: TextStyle(
                                   fontSize: 22,
                                   color: CupertinoColors.white,
@@ -134,7 +142,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                           color: Color.fromRGBO(155, 155, 155, 0.8),
                                           pressedOpacity: 0.8,
-                                          onPressed: () {}),
+                                          onPressed: () {
+                                            // TODO: 点击时弹出照片选择
+                                          }),
                                     ],
                                   )),
                             ],
