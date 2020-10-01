@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/utils/device_size.dart';
 
 class EditProfile extends StatefulWidget {
@@ -35,7 +36,7 @@ class _EditProfileState extends State<EditProfile> {
                     width: DeviceSize.getWidthByPercent(0.14),
                     decoration: BoxDecoration(
                       image: new DecorationImage(
-                        image: AssetImage("images/photo01.jpg"),
+                        image: NetworkImage(publicUrl + "assets/images/photo01.jpg"),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(45)),

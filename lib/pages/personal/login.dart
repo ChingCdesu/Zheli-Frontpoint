@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/crypto.dart';
 import 'package:zl_app/utils/device_size.dart';
@@ -104,8 +105,8 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.topCenter,
       // 设置图片为圆形
       child: ClipOval(
-        child: Image.asset(
-          "images/zsyh01.png",
+        child: Image.network(
+          publicUrl + "assets/sea_culture/main/zsyh01.png",
           height: DeviceSize.getHeightByPercent(0.3),
           width: DeviceSize.getWidthByPercent(0.3),
           fit: BoxFit.cover,
@@ -163,10 +164,11 @@ class _LoginPageState extends State<LoginPage> {
                       // // 验证用户名
                       // validator: validateUserName,
                       //保存数据
-                      onSubmitted: (String value) {
+                      onChanged: (String value) {
                         _username = value;
                         print(value);
                       },
+
                       //验证用户名
                       // validator: validateUserName,
                       // //保存数据
@@ -228,6 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Icon(Icons.lock),
                       onPressed: () {},
                     ),
+                    onChanged: (value) => _password = value,
                     suffix: CupertinoButton(
                       child: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
                       onPressed: () {
@@ -321,10 +324,16 @@ class _LoginPageState extends State<LoginPage> {
             if (!operation.hasError) {
               var result = operation.getResult();
               Account.userId = result['values'][0]['ID'];
+              print(Account.userId);
+              print(Account.token);
+              Navigator.pushNamed(context, "/home");
             } else {
-              SnackBar(
-                content: Text("登录失败"),
-              );
+              print(operation.log);
+              setState(() {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text("登录失败"),
+                ));
+              });
               return;
             }
           }
@@ -461,7 +470,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("images/login01.png"),
+                  image: NetworkImage(publicUrl + "assets/login01.png"),
                   fit: BoxFit.cover,
                 ),
               ),

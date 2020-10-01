@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/utils/device_size.dart';
 
 class ShadowPlayCinema extends StatefulWidget {
@@ -64,13 +65,13 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
                 child: PageView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
-                    placeListView('images/pyzg/cnm_01.png', '家里来了皮影戏'),
-                    placeListView('images/pyzg/cnm_02.png', '老手艺人进行皮影戏演出'),
-                    placeListView('images/pyzg/cnm_03.png', '亲手制作皮影戏纸偶'),
-                    placeListView('images/pyzg/cnm_04.png', '与孩子一起体验皮影'),
-                    placeListView('images/pyzg/cnm_05.png', '江南风格皮影戏纸偶'),
-                    placeListView('images/pyzg/cnm_06.png', '西安一家商店里的皮影道具'),
-                    placeListView('images/pyzg/cnm_07.png', '老手艺人进行皮影戏演出'),
+                    placeListView('assets/shadow_play/cinema/cnm_01.png', '家里来了皮影戏'),
+                    placeListView('assets/shadow_play/cinema/cnm_02.png', '老手艺人进行皮影戏演出'),
+                    placeListView('assets/shadow_play/cinema/cnm_03.png', '亲手制作皮影戏纸偶'),
+                    placeListView('assets/shadow_play/cinema/cnm_04.png', '与孩子一起体验皮影'),
+                    placeListView('assets/shadow_play/cinema/cnm_05.png', '江南风格皮影戏纸偶'),
+                    placeListView('assets/shadow_play/cinema/cnm_06.png', '西安一家商店里的皮影道具'),
+                    placeListView('assets/shadow_play/cinema/cnm_07.png', '老手艺人进行皮影戏演出'),
                   ],
                 ),
               ),
@@ -116,8 +117,8 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
                     )
                   ],
                   image: DecorationImage(
-                    image: AssetImage(
-                      img,
+                    image: NetworkImage(
+                      publicUrl + img,
                     ),
                     fit: BoxFit.cover,
                   ),

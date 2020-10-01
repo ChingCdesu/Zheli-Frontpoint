@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 
-import 'package:zl_app/pages/sea_culture/cinema.dart';
-import 'package:zl_app/pages/sea_culture/video.dart';
+// import 'package:zl_app/pages/sea_culture/cinema.dart';
+// import 'package:zl_app/pages/sea_culture/video.dart';
 
 import 'package:zl_app/utils/device_size.dart';
 
@@ -25,7 +26,7 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('images/zsyh/bgc.png'), fit: BoxFit.fill),
+              image: NetworkImage(publicUrl + 'assets/sea_culture/main/bgc.png'), fit: BoxFit.fill),
         ),
         child: Stack(
           children: <Widget>[
@@ -54,8 +55,7 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                     Expanded(
                       flex: 2,
                       child: Container(
-                        padding:
-                            EdgeInsets.only(bottom: 30, left: 30, right: 30),
+                        padding: EdgeInsets.only(bottom: 30, left: 30, right: 30),
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Text(
@@ -126,7 +126,7 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                         )
                       ],
                       image: DecorationImage(
-                        image: AssetImage('images/zsyh/fishdraw.png'),
+                        image: NetworkImage(publicUrl + 'assets/sea_culture/main/fishdraw.png'),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -151,8 +151,7 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                                 gradient: LinearGradient(
                                   colors: <Color>[
                                     Color.fromARGB(0, 255, 255, 255),
-                                    Color.fromARGB(
-                                        (0.3 * 255).floor(), 255, 255, 255),
+                                    Color.fromARGB((0.3 * 255).floor(), 255, 255, 255),
                                     Color.fromARGB(255, 255, 255, 255),
                                   ],
                                   begin: Alignment.topCenter,
@@ -191,13 +190,12 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                             )
                           ],
                           image: DecorationImage(
-                            image: AssetImage('images/zsyh/播放.png'),
+                            image: NetworkImage(publicUrl + 'assets/sea_culture/main/播放.png'),
                           ),
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, '/pages/sea_culture/video');
+                        Navigator.pushNamed(context, '/pages/sea_culture/video');
                       }),
                 ],
               ),
@@ -209,7 +207,7 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
               decoration: BoxDecoration(
                 // color: Colors.red,
                 image: DecorationImage(
-                  image: AssetImage('images/zsyh/bgc01.png'),
+                  image: NetworkImage(publicUrl + 'assets/sea_culture/main/bgc01.png'),
                   fit: BoxFit.cover,
                 ),
               ),

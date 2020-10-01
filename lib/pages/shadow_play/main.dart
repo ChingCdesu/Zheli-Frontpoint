@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 
 import 'package:zl_app/utils/device_size.dart';
 
@@ -28,7 +29,8 @@ class _ShadowPlayMainState extends State<ShadowPlayMain> {
             width: double.infinity,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(35),
-              child: Image.asset('images/pyzg/bgc.jpg', fit: BoxFit.cover),
+              child:
+                  Image.network(publicUrl + 'assets/shadow_play/main/bgc.jpg', fit: BoxFit.cover),
             ),
           ),
           //back
@@ -104,31 +106,31 @@ class _LikePageViewState extends State<LikePageView> {
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           myCard2(
-            'images/pyzg/bgc01.jpg',
+            'assets/shadow_play/main/bgc01.jpg',
             ' ',
             '浙江海宁市的海宁皮影戏是一门古老的传统艺术，最早诞生在两千年前的西汉，又称羊皮戏，是目前江南仅存的国家级非遗皮影戏艺术，具有典型的南宋风格。',
             null,
           ),
           myCard(
-            'images/pyzg/bgc02.jpg',
+            'assets/shadow_play/main/bgc02.jpg',
             ' ',
             '在影院展里我们为你拉起黑布，只留皮影的光亮。你可以从这些图片里了解到许多有趣的皮影故事，比如三打白骨精，白蛇传等等。',
             '/pages/shadow_play/cinema',
           ),
           myCard(
-            'images/pyzg/bgc03.jpg',
+            'assets/shadow_play/main/bgc03.jpg',
             ' ',
             '在这里你可以看到整个皮影的制作过程。选皮｜制皮｜画稿｜过稿｜镂刻｜敷彩｜发汗熨平｜缎结完成。',
             '/pages/shadow_play/manufacture',
           ),
           myCard(
-            'images/pyzg/bgc04.jpg',
+            'assets/shadow_play/main/bgc04.jpg',
             ' ',
             '欣赏作品||倒马关。倒马关，位于河北唐县西北60公里的倒马关乡倒马关村，最初于战国时置，称鸿之塞。',
             '/pages/shadow_play/video',
           ),
           myCard(
-            'images/pyzg/bgc05.jpg',
+            'assets/shadow_play/main/bgc05.jpg',
             ' ',
             '海宁皮影戏又称“影子戏”或“灯影戏”,这个将皮影人偶借助灯光投影在幕布演绎的戏剧艺术形式，在民间被称为“手工电影”',
             '/pages/shadow_play/history',
@@ -146,7 +148,7 @@ class _LikePageViewState extends State<LikePageView> {
         padding: EdgeInsets.all(10),
         width: DeviceSize.getWidthByPercent(0.6), // width: 240,
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
+          image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover),
           borderRadius: BorderRadius.circular(35),
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -206,7 +208,7 @@ class _LikePageViewState extends State<LikePageView> {
         padding: EdgeInsets.all(10),
         width: DeviceSize.getWidthByPercent(0.6), // width: 240,
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
+          image: DecorationImage(image: NetworkImage(publicUrl +img), fit: BoxFit.cover),
           borderRadius: BorderRadius.circular(35),
           boxShadow: <BoxShadow>[
             BoxShadow(

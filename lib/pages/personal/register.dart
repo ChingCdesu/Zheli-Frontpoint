@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/utils/crypto.dart';
 import 'package:zl_app/utils/device_size.dart';
 
@@ -144,8 +145,8 @@ class _RegisterPageState extends State<RegisterPage> {
       alignment: Alignment.topCenter,
       // 设置图片为圆形
       child: ClipOval(
-        child: Image.asset(
-          "images/zsyh01.png",
+        child: Image.network(
+          "assets/images/zsyh01.png",
           height: DeviceSize.getHeightByPercent(0.3),
           width: DeviceSize.getWidthByPercent(0.3),
           fit: BoxFit.cover,
@@ -588,7 +589,8 @@ class _RegisterPageState extends State<RegisterPage> {
         },
         child: new Container(
           decoration: BoxDecoration(
-            image: new DecorationImage(image: AssetImage("images/login01.png"), fit: BoxFit.cover),
+            image: new DecorationImage(
+                image: NetworkImage(publicUrl +"assets/images/login01.png"), fit: BoxFit.cover),
           ),
           child: Column(
             children: <Widget>[

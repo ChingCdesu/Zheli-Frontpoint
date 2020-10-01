@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/utils/device_size.dart';
 
 class SeaCultureCinema extends StatefulWidget {
@@ -64,15 +65,15 @@ class _SeaCultureCinemaState extends State<SeaCultureCinema> {
                 child: PageView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
-                    placeListView('images/zsyh/360°2.gif', '360°船模展示'),
-                    placeListView('images/zsyh/360°3.gif', '360°船模展示'),
-                    placeListView('images/zsyh/360°1.gif', '360°船模展示'),
-                    placeListView('images/zsyh/cnm_01.jpg', '舟山海景'),
-                    placeListView('images/zsyh/cnm_02.png', '舟山渔民在码头舞龙祈福'),
-                    placeListView('images/zsyh/cnm_03.png', '舟山渔港'),
-                    placeListView('images/zsyh/cnm_04.png', '舟山群岛'),
-                    placeListView('images/zsyh/cnm_05.png', '手艺人在编织渔绳结'),
-                    placeListView('images/zsyh/cnm_06.png', '海雾笼罩中的舟山城'),
+                    placeListView('assets/sea_culture/cinema/360°2.gif', '360°船模展示'),
+                    placeListView('assets/sea_culture/cinema/360°3.gif', '360°船模展示'),
+                    placeListView('assets/sea_culture/cinema/360°1.gif', '360°船模展示'),
+                    placeListView('assets/sea_culture/cinema/cnm_01.jpg', '舟山海景'),
+                    placeListView('assets/sea_culture/cinema/cnm_02.png', '舟山渔民在码头舞龙祈福'),
+                    placeListView('assets/sea_culture/cinema/cnm_03.png', '舟山渔港'),
+                    placeListView('assets/sea_culture/cinema/cnm_04.png', '舟山群岛'),
+                    placeListView('assets/sea_culture/cinema/cnm_05.png', '手艺人在编织渔绳结'),
+                    placeListView('assets/sea_culture/cinema/cnm_06.png', '海雾笼罩中的舟山城'),
                   ],
                 ),
               ),
@@ -118,8 +119,8 @@ class _SeaCultureCinemaState extends State<SeaCultureCinema> {
                     )
                   ],
                   image: DecorationImage(
-                    image: AssetImage(
-                      img,
+                    image: NetworkImage(
+                      publicUrl + img,
                     ),
                     fit: BoxFit.cover,
                   ),

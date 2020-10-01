@@ -8,6 +8,7 @@ import 'package:chewie/chewie.dart';
 
 import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
+import 'package:zl_app/api/dio_singleton.dart';
 
 class SeaCultureVideo extends StatefulWidget {
   SeaCultureVideo({Key key, this.title}) : super(key: key);
@@ -31,7 +32,8 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
   @override
   void initState() {
     super.initState();
-    _videoPlayercontroller = VideoPlayerController.asset('video/zsyh01.mp4');
+    _videoPlayercontroller =
+        VideoPlayerController.network(publicUrl + 'assets/sea_culture/video/zsyh01.mp4');
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayercontroller,
       autoPlay: true,

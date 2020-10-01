@@ -270,3 +270,18 @@ class Favorite extends Model {
   @override
   Map<String, dynamic> toJson() => _$FavoriteToJson(this);
 }
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
+class Cinema extends Model {
+  int id;
+  int moduleId;
+  String image;
+  String title;
+  Cinema({this.id, this.moduleId, this.image, this.title}) : super('cinema', id: id);
+
+  @override
+  Cinema fromJson(Map<String, dynamic> json) => _$CinemaFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$CinemaToJson(this);
+}

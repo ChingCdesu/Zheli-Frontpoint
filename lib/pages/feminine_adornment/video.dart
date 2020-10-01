@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/device_size.dart';
 import 'package:flutter/rendering.dart';
@@ -30,7 +31,8 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
   @override
   void initState() {
     super.initState();
-    _videoPlayercontroller = VideoPlayerController.asset('video/zsyh01.mp4');
+    _videoPlayercontroller =
+        VideoPlayerController.network(publicUrl + 'assets/feminine_adornment/video/video.mp4');
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayercontroller,
       autoPlay: true,

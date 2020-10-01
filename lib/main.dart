@@ -41,10 +41,17 @@ void main() {
     AppEnvironment.version = value.version;
     AppEnvironment.buildNumber = value.buildNumber;
   });
-  runApp(MyApp());
+  runApp(ZlApp());
 }
 
-class MyApp extends StatelessWidget {
+class ZlApp extends StatefulWidget {
+  ZlApp({Key key}) : super(key: key);
+
+  @override
+  _ZlAppState createState() => _ZlAppState();
+}
+
+class _ZlAppState extends State<ZlApp> {
   final Map<String, WidgetBuilder> _routes = {
     '/home': (context) => HomePage(),
     // 富阳竹纸

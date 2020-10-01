@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 
 class ShadowPlayManufacture extends StatefulWidget {
   ShadowPlayManufacture({Key key}) : super(key: key);
@@ -68,14 +69,14 @@ class _ContainPageviewState extends State<ContainPageview> {
     return PageView(
       scrollDirection: Axis.horizontal,
       children: <Widget>[
-        contain('images/pyzg/process01.png'),
-        contain('images/pyzg/process02.png'),
-        contain('images/pyzg/process03.png'),
-        contain('images/pyzg/process04.png'),
-        contain('images/pyzg/process05.png'),
-        contain('images/pyzg/process06.png'),
-        contain('images/pyzg/process07.png'),
-        contain('images/pyzg/process08.png'),
+        contain('assets/shadow_play/manufacture/process01.png'),
+        contain('assets/shadow_play/manufacture/process02.png'),
+        contain('assets/shadow_play/manufacture/process03.png'),
+        contain('assets/shadow_play/manufacture/process04.png'),
+        contain('assets/shadow_play/manufacture/process05.png'),
+        contain('assets/shadow_play/manufacture/process06.png'),
+        contain('assets/shadow_play/manufacture/process07.png'),
+        contain('assets/shadow_play/manufacture/process08.png'),
       ],
     );
   }
@@ -83,8 +84,9 @@ class _ContainPageviewState extends State<ContainPageview> {
   Widget contain(String img) {
     return Container(
       padding: EdgeInsets.all(5),
-      // child: Image.asset(img),
-      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover)),
+      // child: Image.network(img),
+      decoration: BoxDecoration(
+          image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover)),
     );
   }
 }

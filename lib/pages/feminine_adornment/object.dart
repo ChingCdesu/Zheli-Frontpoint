@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 
 class FeminineAdornmentObject extends StatefulWidget {
   FeminineAdornmentObject({Key key}) : super(key: key);
@@ -68,10 +69,10 @@ class _ContainPageviewState extends State<ContainPageview> {
     return PageView(
       scrollDirection: Axis.horizontal,
       children: <Widget>[
-        contain('images/slhz/object01.png'),
-        contain('images/slhz/object02.png'),
-        contain('images/slhz/object03.png'),
-        contain('images/slhz/object04.png'),
+        contain('assets/feminine_adornment/object/object01.png'),
+        contain('assets/feminine_adornment/object/object02.png'),
+        contain('assets/feminine_adornment/object/object03.png'),
+        contain('assets/feminine_adornment/object/object04.png'),
       ],
     );
   }
@@ -79,7 +80,8 @@ class _ContainPageviewState extends State<ContainPageview> {
   Widget contain(String img) {
     return Container(
       padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover)),
+      decoration: BoxDecoration(
+          image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover)),
     );
   }
 }

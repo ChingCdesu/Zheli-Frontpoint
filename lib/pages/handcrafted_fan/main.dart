@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/api/models.dart' as API;
 
-import 'package:zl_app/pages/handcrafted_fan/video.dart';
+// import 'package:zl_app/pages/handcrafted_fan/video.dart';
 
 import 'package:zl_app/utils/device_size.dart';
 import 'package:zl_app/api/model_operations.dart' as API;
@@ -27,7 +28,7 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
               height: DeviceSize.getHeightByPercent(0.8),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/zwzs/zwzs.png'),
+                  image: NetworkImage(publicUrl + 'assets/handcrafted_fan/main/zwzs.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -37,8 +38,7 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
                   //back
                   Container(
                     alignment: Alignment.topCenter,
-                    margin: EdgeInsets.only(
-                        top: DeviceSize.getHeightByPercent(0.108)),
+                    margin: EdgeInsets.only(top: DeviceSize.getHeightByPercent(0.108)),
                     width: DeviceSize.getWidthByPercent(0.12), // 50
                     child: CupertinoButton(
                       padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
@@ -93,9 +93,7 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
                                     ),
                                     Text(
                                       '鄣吴',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: CupertinoColors.white),
+                                      style: TextStyle(fontSize: 14, color: CupertinoColors.white),
                                     ),
                                   ]),
                             ),
@@ -219,7 +217,7 @@ class _CardPageState extends State<CardPage> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Image.asset(v.imageUrl),
+                child: Image.network(v.imageUrl),
                 height: DeviceSize.getHeightByPercent(0.3), //110
                 decoration: BoxDecoration(),
               ),
@@ -247,19 +245,16 @@ class _CardPageState extends State<CardPage> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: Color.fromRGBO(198, 204, 205, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                              borderRadius: BorderRadius.all(Radius.circular(10))),
                           width: DeviceSize.getWidthByPercent(0.16),
                           height: DeviceSize.getWidthByPercent(0.07),
                           child: Text(
                             '播放',
-                            style: TextStyle(
-                                color: CupertinoColors.white, fontSize: 14),
+                            style: TextStyle(color: CupertinoColors.white, fontSize: 14),
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(
-                              context, '/pages/handcrafted_fan/video');
+                          Navigator.pushNamed(context, '/pages/handcrafted_fan/video');
                         },
                       ),
                     )

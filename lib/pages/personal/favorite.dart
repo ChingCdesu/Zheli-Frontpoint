@@ -23,7 +23,10 @@ class _FavoritePageState extends State<FavoritePage> {
   void initState() {
     var _f = new API.Favorite(userId: Account.userId);
     API.Confirm(_f).doOperation().then((_o) {
-      if (_o.hasError) return;
+      if (_o.hasError) {
+        print(_o.log);
+        return;
+      }
       var _r = _o.getResult()['values'];
       for (var item in _r) {
         var id = item['ID'] as int;

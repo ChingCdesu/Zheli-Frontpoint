@@ -14,7 +14,7 @@ class ImageLibrary {
 
   static String getImagePathByName(String name) => _images[name] ?? null;
   static bool exists(String name) => _images.containsKey(name);
-  static Image getImageByName(String name) => exists(name) ? Image.asset(_images[name]) : null;
+  static Image getImageByName(String name) => exists(name) ? Image.network(_images[name]) : null;
 }
 
 class VideoLibrary {
@@ -22,5 +22,5 @@ class VideoLibrary {
 
   static String getVideoPathByName(String name) => _videos[name] ?? null;
   static bool exists(String name) => _videos.containsKey(name);
-  static Image getVideoByName(String name) => exists(name) ? Image.asset(_videos[name]) : null;
+  static Image getVideoByName(String name) => exists(name) ? Image.network(_videos[name]) : null;
 }

@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
 import 'package:zl_app/settings/user.dart';
@@ -81,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: DeviceSize.getWidthByPercent(0.2),
                             decoration: BoxDecoration(
                               image: new DecorationImage(
-                                image: AssetImage(_user.avatar),
+                                image: NetworkImage(publicUrl + _user.avatar),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius: BorderRadius.all(Radius.circular(45)),

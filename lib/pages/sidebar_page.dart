@@ -18,7 +18,7 @@ class SideBarPage extends StatefulWidget {
 class _SideBarPageState extends State<SideBarPage> {
   List<Widget> _generateList() {
     final Map<String, dynamic> _list = {
-      "首页": {'icon': CupertinoIcons.home, 'router': '/'},
+      // "首页": {'icon': CupertinoIcons.home, 'router': '/home'},
       "我的收藏": {'icon': CupertinoIcons.heart, 'router': '/personal/favorite'},
       "我的笔记": {'icon': CupertinoIcons.mail, 'router': '/personal/note'},
       "历史记录": {'icon': CupertinoIcons.time, 'router': '/personal/history'},
@@ -53,7 +53,7 @@ class _SideBarPageState extends State<SideBarPage> {
   }
 
   String _avatarPath;
-  String _prefix = '?user=${Account.userId}&token=${Account.token}';
+  // String _prefix = '?user=${Account.userId}&token=${Account.token}';
 
   void _getAvatar() {
     final baseUrl = 'http://online.chingc.com/assets/avatar/';
@@ -91,7 +91,7 @@ class _SideBarPageState extends State<SideBarPage> {
                 Container(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network(_avatarPath + _prefix),
+                    child: Image.asset('assets/images/avatar.jpg'),
                   ),
                 ),
                 Container(
@@ -168,28 +168,29 @@ class _SideBarPageState extends State<SideBarPage> {
                   color: Colors.blueGrey[400],
                 ),
                 Expanded(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      child: Icon(
-                        CupertinoIcons.bell,
-                        color: Colors.blueGrey[600],
-                        size: 24,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        '退出登录',
-                        style: TextStyle(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        child: Icon(
+                          CupertinoIcons.bell,
                           color: Colors.blueGrey[600],
+                          size: 24,
                         ),
                       ),
-                    )
-                  ],
-                )),
+                      Container(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          '退出登录',
+                          style: TextStyle(
+                            color: Colors.blueGrey[600],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           )

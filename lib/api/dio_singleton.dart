@@ -2,8 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/env.dart';
 
-final String apiUrl = "http://contest.chingc.online:54594/api/";
-final String host = "contest.chingc.online";
+final String apiUrl = "http://sunba.asuscomm.com:54954/api/";
+final String publicUrl = "http://sunba.asuscomm.com:54954/public/";
+final String host = "sunba.asuscomm.com";
 
 class DioSingleton {
   static Dio _dio;
@@ -25,10 +26,10 @@ class DioSingleton {
       options.headers.addAll(_headers);
       options.responseType = ResponseType.json;
 
-      options.queryParameters.addAll({
-        'user': Account.userId ?? null,
-        'token': Account.token ?? null,
-      });
+      // options.queryParameters.addAll({
+      //   'user': Account.userId ?? null,
+      //   'token': Account.token ?? null,
+      // });
       return options;
     },
     // 响应预处理
@@ -40,7 +41,7 @@ class DioSingleton {
           'ServerMessage': response.data['message'],
         };
         response.data = response.data['data'];
-        Account.token = response.headers.value('token');
+        // Account.token = response.headers.value('token');
       }
       return response;
     },

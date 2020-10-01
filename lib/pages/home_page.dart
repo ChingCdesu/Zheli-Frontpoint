@@ -1,7 +1,8 @@
 import 'dart:math';
 
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/pages/sidebar_page.dart';
-import 'package:zl_app/settings/user.dart';
+// import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/ui_libraries/indicator.dart';
 import 'package:zl_app/ui_libraries/slide_stack.dart';
 import 'package:zl_app/utils/device_size.dart';
@@ -144,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                                 BoxShadow(
                                     color: CupertinoColors.systemGrey2,
                                     offset: Offset(5.0, 5.0),
-                                    blurRadius: 5.0)
+                                    blurRadius: 8.0)
                               ],
                             ),
                           ),
@@ -185,13 +186,13 @@ class _HomePageState extends State<HomePage> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(36.0)),
                                     boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                        color: Color.fromARGB(
-                                            (255 * (1 - position)).floor(), 180, 180, 180),
-                                        offset: Offset(12, 18),
-                                        blurRadius: 15.0,
-                                        spreadRadius: 0.0,
-                                      )
+                                      // BoxShadow(
+                                      //   color: Color.fromARGB(
+                                      //       (120 * (1 - position)).floor(), 180, 180, 180),
+                                      //   offset: Offset(12, 18),
+                                      //   blurRadius: 15.0,
+                                      //   spreadRadius: 0.0,
+                                      // )
                                     ]),
                                 child: GestureDetector(
                                   onTap: () {
@@ -200,8 +201,8 @@ class _HomePageState extends State<HomePage> {
                                     } else {}
                                   },
                                   child: CupertinoButton(
-                                    child: Image.asset(
-                                      _list[index].url,
+                                    child: Image.network(
+                                      publicUrl + _list[index].url,
                                       fit: BoxFit.contain,
                                     ),
                                     onPressed: () {
@@ -245,11 +246,11 @@ class FirstImg {
   static List<FirstImg> generate() {
     return [
       // FirstImg("assets/images/arvr.png", "arvr"),
-      FirstImg("assets/images/1.png", "十里红妆", '/pages/feminine_adornment/main'),
-      FirstImg("assets/images/皮影之光.png", "皮影之光", '/pages/shadow_play/main'),
-      FirstImg("assets/images/舟山渔海.png", "舟山渔海", '/pages/sea_culture/main'),
-      FirstImg("assets/images/彰吴竹扇.png", "彰吴竹扇", '/pages/handcrafted_fan/main'),
-      FirstImg("assets/images/富阳竹纸.png", "富阳竹纸", '/pages/china_paper/main'),
+      FirstImg("assets/feminine_adornment.png", "十里红妆", '/pages/feminine_adornment/main'),
+      FirstImg("assets/shadow_play.png", "皮影之光", '/pages/shadow_play/main'),
+      FirstImg("assets/sea_culture.png", "舟山渔海", '/pages/sea_culture/main'),
+      // FirstImg("assets/handcrafted_fan.png", "彰吴竹扇", '/pages/handcrafted_fan/main'),
+      FirstImg("assets/china_paper.png", "富阳竹纸", '/pages/china_paper/main'),
     ];
   }
 }

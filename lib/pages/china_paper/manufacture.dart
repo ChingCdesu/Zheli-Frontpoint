@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 
 class ChinaPaperManufacture extends StatefulWidget {
   ChinaPaperManufacture({Key key}) : super(key: key);
@@ -68,11 +69,11 @@ class _ContainPageviewState extends State<ContainPageview> {
     return PageView(
       scrollDirection: Axis.horizontal,
       children: <Widget>[
-        contain('images/fyzz/process01.png'),
-        contain('images/fyzz/process02.png'),
-        contain('images/fyzz/process03.png'),
-        contain('images/fyzz/process04.png'),
-        contain('images/fyzz/process05.png'),
+        contain('assets/china_paper/manufacture/process01.png'),
+        contain('assets/china_paper/manufacture/process02.png'),
+        contain('assets/china_paper/manufacture/process03.png'),
+        contain('assets/china_paper/manufacture/process04.png'),
+        contain('assets/china_paper/manufacture/process05.png'),
       ],
     );
   }
@@ -80,8 +81,13 @@ class _ContainPageviewState extends State<ContainPageview> {
   Widget contain(String img) {
     return Container(
       padding: EdgeInsets.all(5),
-      // child: Image.asset(img),
-      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover)),
+      // child: Image.network(img),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(publicUrl + img),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }

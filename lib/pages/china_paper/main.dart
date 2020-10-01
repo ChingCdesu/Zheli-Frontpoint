@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import 'package:zl_app/pages/china_paper/manufacture.dart';
-import 'package:zl_app/pages/china_paper/history.dart';
+import 'package:zl_app/api/dio_singleton.dart';
 
 import 'package:zl_app/utils/device_size.dart';
 
@@ -24,8 +22,8 @@ class _ChinaPaperMainState extends State<ChinaPaperMain> {
         children: <Widget>[
           Container(
             height: DeviceSize.getHeightByPercent(0.8),
-            child: Image.asset(
-              'images/fyzz/head.jpg',
+            child: Image.network(
+              publicUrl + 'assets/china_paper/main/head.jpg',
               fit: BoxFit.fill,
             ),
           ),
@@ -122,8 +120,9 @@ class _CardPageState extends State<CardPage> {
           //3card
           Column(
             children: <Widget>[
-              getpyzgCard('制作过程', 'images/fyzz/bgc.png', '/pages/china_paper/manufacture'),
-              getpyzgCard('历史起源', 'images/fyzz/bgc.png', '/pages/china_paper/history'),
+              getpyzgCard(
+                  '制作过程', 'assets/china_paper/main/bgc.png', '/pages/china_paper/manufacture'),
+              getpyzgCard('历史起源', 'assets/china_paper/main/bgc.png', '/pages/china_paper/history'),
             ],
           ),
         ],
@@ -147,7 +146,7 @@ class _CardPageState extends State<CardPage> {
           )
         ],
         image: new DecorationImage(
-          image: AssetImage(img),
+          image: NetworkImage(publicUrl + img),
           fit: BoxFit.cover,
         ),
       ),
