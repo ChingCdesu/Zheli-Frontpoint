@@ -26,7 +26,9 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage(publicUrl + 'assets/sea_culture/main/bgc.png'), fit: BoxFit.fill),
+              //image: NetworkImage(publicUrl + 'assets/sea_culture/main/bgc.png'),
+              image: AssetImage('assets/sea_culture/bgc.png'),
+              fit: BoxFit.fill),
         ),
         child: Stack(
           children: <Widget>[
@@ -126,7 +128,8 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                         )
                       ],
                       image: DecorationImage(
-                        image: NetworkImage(publicUrl + 'assets/sea_culture/main/fishdraw.png'),
+                        // image: NetworkImage(publicUrl + 'assets/sea_culture/main/fishdraw.png'),
+                        image: AssetImage('assets/sea_culture/fishdraw.png'),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -190,8 +193,8 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                             )
                           ],
                           image: DecorationImage(
-                            image: NetworkImage(publicUrl + 'assets/sea_culture/main/播放.png'),
-                          ),
+                              //image: NetworkImage(publicUrl + 'assets/sea_culture/main/播放.png'),
+                              image: AssetImage('assets/sea_culture/play.png')),
                         ),
                       ),
                       onPressed: () {
@@ -207,7 +210,8 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
               decoration: BoxDecoration(
                 // color: Colors.red,
                 image: DecorationImage(
-                  image: NetworkImage(publicUrl + 'assets/sea_culture/main/bgc01.png'),
+                  //image: NetworkImage(publicUrl + 'assets/sea_culture/main/bgc01.png'),
+                  image: AssetImage('assets/sea_culture/bgc01.png'),
                   fit: BoxFit.cover,
                 ),
               ),

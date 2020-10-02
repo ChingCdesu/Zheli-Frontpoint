@@ -36,7 +36,8 @@ class _EditProfileState extends State<EditProfile> {
                     width: DeviceSize.getWidthByPercent(0.14),
                     decoration: BoxDecoration(
                       image: new DecorationImage(
-                        image: NetworkImage(publicUrl + "assets/images/photo01.jpg"),
+                        //image: NetworkImage(publicUrl + "assets/images/photo01.jpg"),
+                        image: AssetImage('assets/images/home_page/photo01.jpg'),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(45)),

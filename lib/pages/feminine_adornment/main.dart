@@ -53,7 +53,6 @@ class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
                     viewportFraction: 0.6,
                   ),
                   children: <Widget>[
-                    // TODO: 文本重复
                     myPage(
                         'assets/feminine_adornment/main/title_object.png',
                         '这些红妆器物马桶开道，花轿居中，棺材压阵，浩浩荡荡，绵延数里，生死一生，十里尽显。这些精雕细琢，髹朱漆金的红嫁妆被称为“十里红妆”，其造型的独特、工艺的精湛，极具华美的视觉效果，沉淀了数百年岁月的恍惚旧梦。',

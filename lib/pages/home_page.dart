@@ -201,8 +201,12 @@ class _HomePageState extends State<HomePage> {
                                     } else {}
                                   },
                                   child: CupertinoButton(
-                                    child: Image.network(
-                                      publicUrl + _list[index].url,
+                                    // child: Image.network(
+                                    //   publicUrl + _list[index].url,
+                                    //   fit: BoxFit.contain,
+                                    // ),
+                                    child: Image.asset(
+                                      _list[index].url,
                                       fit: BoxFit.contain,
                                     ),
                                     onPressed: () {
@@ -246,11 +250,11 @@ class FirstImg {
   static List<FirstImg> generate() {
     return [
       // FirstImg("assets/images/arvr.png", "arvr"),
-      FirstImg("assets/feminine_adornment.png", "十里红妆", '/pages/feminine_adornment/main'),
-      FirstImg("assets/shadow_play.png", "皮影之光", '/pages/shadow_play/main'),
-      FirstImg("assets/sea_culture.png", "舟山渔海", '/pages/sea_culture/main'),
-      // FirstImg("assets/handcrafted_fan.png", "彰吴竹扇", '/pages/handcrafted_fan/main'),
-      FirstImg("assets/china_paper.png", "富阳竹纸", '/pages/china_paper/main'),
+      FirstImg("assets/images/home_page/slhz_home.png", "十里红妆", '/pages/feminine_adornment/main'),
+      FirstImg("assets/images/home_page/pyzg_home.png", "皮影之光", '/pages/shadow_play/main'),
+      FirstImg("assets/images/home_page/zsyh_home.png", "舟山渔海", '/pages/sea_culture/main'),
+      // FirstImg("assets/images/home_page/zwzs_home.png", "彰吴竹扇", '/pages/handcrafted_fan/main'),
+      FirstImg("assets/images/home_page/fyzz_home.png", "富阳竹纸", '/pages/china_paper/main'),
     ];
   }
 }

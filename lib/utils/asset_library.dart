@@ -3,7 +3,6 @@ import 'dart:core';
 import 'package:flutter/widgets.dart';
 
 class ImageLibrary {
-  // TODO: 整合资源文件
   static final Map<String, String> _images = {
     '十里红妆': 'assets/images/1.png',
     '富阳竹纸': 'assets/images/富阳竹纸.png',

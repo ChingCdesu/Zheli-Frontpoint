@@ -11,6 +11,7 @@ class ShadowPlayCinema extends StatefulWidget {
 }
 
 class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
+  // TODO: like和favorite不能同时用一个变量
   bool like = false;
   bool favorite = false;
   void likeImg() {
@@ -117,9 +118,10 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
                     )
                   ],
                   image: DecorationImage(
-                    image: NetworkImage(
-                      publicUrl + img,
-                    ),
+                    // image: NetworkImage(
+                    //   publicUrl + img,
+                    // ),
+                    image: AssetImage(img),
                     fit: BoxFit.cover,
                   ),
                 ),

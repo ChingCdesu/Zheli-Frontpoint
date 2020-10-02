@@ -91,7 +91,7 @@ class _SideBarPageState extends State<SideBarPage> {
                 Container(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset('assets/images/avatar.jpg'),
+                    child: Image.asset('assets/images/home_page/avatar.jpg'),
                   ),
                 ),
                 Container(

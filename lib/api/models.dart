@@ -188,7 +188,6 @@ class User extends Model {
     this.password,
     this.token,
     this.avatar,
-    this.headerImage,
   }) : super('user', id: id);
 
   @override

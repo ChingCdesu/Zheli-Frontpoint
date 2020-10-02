@@ -40,6 +40,7 @@ dependencies:
   font_awesome_flutter: ^8.2.0
   flutter_screenutil: ^0.5.3
   city_pickers: ^0.1.18
+  toast: ^0.1.5
   # flutter_ijk:
   #   path: plugins/flutter_ijk
 

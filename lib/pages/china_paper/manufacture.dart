@@ -84,7 +84,8 @@ class _ContainPageviewState extends State<ContainPageview> {
       // child: Image.network(img),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(publicUrl + img),
+          //image: NetworkImage(publicUrl + img),
+          image: AssetImage(img),
           fit: BoxFit.cover,
         ),
       ),

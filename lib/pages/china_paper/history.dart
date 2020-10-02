@@ -39,7 +39,8 @@ class _ChinaPaperHistoryState extends State<ChinaPaperHistory> {
       child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(publicUrl + 'assets/china_paper/history/his_bgc.png'),
+              //image: NetworkImage(publicUrl + 'assets/china_paper/history/his_bgc.png'),
+              image: AssetImage('assets/china_paper/history/his_bgc.png'),
               fit: BoxFit.cover,
             ),
           ),

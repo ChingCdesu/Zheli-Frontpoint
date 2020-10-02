@@ -25,7 +25,10 @@ class DioSingleton {
       // 添加header
       options.headers.addAll(_headers);
       options.responseType = ResponseType.json;
-
+      options.headers.addAll({
+        'user': Account.userId ?? null,
+        'token': Account.token ?? null,
+      });
       // options.queryParameters.addAll({
       //   'user': Account.userId ?? null,
       //   'token': Account.token ?? null,

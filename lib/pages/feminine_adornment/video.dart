@@ -229,12 +229,13 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
                                     Container(
                                       padding:
                                           EdgeInsets.only(left: DeviceSize.getWidthByPercent(0.02)),
-                                      child: new Text(
-                                        '(0)',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      ),
+                                      // child: new Text(
+                                      //   '(0)',
+                                      //   style: TextStyle(
+                                      //     fontSize: 14,
+                                      //   ),
+                                      // ),
+                                      
                                     ),
                                   ],
                                 ),

@@ -85,7 +85,7 @@ class _CardPageState extends State<CardPage> {
                           fontSize: 36, color: CupertinoColors.black, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'The sea and fisheery',
+                      'china paper',
                       style: TextStyle(
                           fontSize: 20, color: CupertinoColors.black, fontWeight: FontWeight.bold),
                     ),
@@ -112,7 +112,7 @@ class _CardPageState extends State<CardPage> {
           Container(
             padding: EdgeInsets.fromLTRB(30, 6, 40, 10),
             child: Text(
-              '舟山市位于浙江省东北部，东临东海、西靠杭州湾、北面上海市，是环杭州湾大湾区核心城市、长江流域和长江三角洲对外开放的海上门户和通道，与亚太新兴港口城市呈扇形辐射之势。',
+              '富阳竹纸始于魏晋南北朝时期（317-581）。以世代相传，迄今已有一千多年。清光绪《富阳县志》记载：“邑人率造纸为业，老少勤做，昼夜不休”、“富阳竹纸一项每年约可博六七十万金”。',
               style: TextStyle(
                   fontSize: 14, color: CupertinoColors.black, fontWeight: FontWeight.bold),
             ),
@@ -121,8 +121,9 @@ class _CardPageState extends State<CardPage> {
           Column(
             children: <Widget>[
               getpyzgCard(
-                  '制作过程', 'assets/china_paper/main/bgc.png', '/pages/china_paper/manufacture'),
-              getpyzgCard('历史起源', 'assets/china_paper/main/bgc.png', '/pages/china_paper/history'),
+                  '制作过程', 'assets/images/china_paper/bgc.png', '/pages/china_paper/manufacture'),
+              getpyzgCard(
+                  '历史起源', 'assets/images/china_paper/bgc.png', '/pages/china_paper/history'),
             ],
           ),
         ],
@@ -146,7 +147,8 @@ class _CardPageState extends State<CardPage> {
           )
         ],
         image: new DecorationImage(
-          image: NetworkImage(publicUrl + img),
+          //image: NetworkImage(publicUrl + img),
+          image: AssetImage(img),
           fit: BoxFit.cover,
         ),
       ),

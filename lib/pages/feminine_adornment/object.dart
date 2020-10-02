@@ -69,10 +69,10 @@ class _ContainPageviewState extends State<ContainPageview> {
     return PageView(
       scrollDirection: Axis.horizontal,
       children: <Widget>[
-        contain('assets/feminine_adornment/object/object01.png'),
-        contain('assets/feminine_adornment/object/object02.png'),
-        contain('assets/feminine_adornment/object/object03.png'),
-        contain('assets/feminine_adornment/object/object04.png'),
+        contain('assets/feminine_adornment/object01.png'),
+        contain('assets/feminine_adornment/object02.png'),
+        contain('assets/feminine_adornment/object03.png'),
+        contain('assets/feminine_adornment/object04.png'),
       ],
     );
   }
@@ -81,7 +81,10 @@ class _ContainPageviewState extends State<ContainPageview> {
     return Container(
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover)),
+          image: DecorationImage(
+              // image: NetworkImage(publicUrl + img),
+              image: AssetImage(img),
+              fit: BoxFit.cover)),
     );
   }
 }

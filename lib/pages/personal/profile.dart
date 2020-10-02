@@ -82,7 +82,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: DeviceSize.getWidthByPercent(0.2),
                             decoration: BoxDecoration(
                               image: new DecorationImage(
-                                image: NetworkImage(publicUrl + _user.avatar),
+                                //image: NetworkImage(publicUrl + _user.avatar),
+                                image: AssetImage('assets/images/home_page/avatar.jpg'),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius: BorderRadius.all(Radius.circular(45)),

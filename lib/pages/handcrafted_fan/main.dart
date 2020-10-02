@@ -28,7 +28,8 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
               height: DeviceSize.getHeightByPercent(0.8),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(publicUrl + 'assets/handcrafted_fan/main/zwzs.png'),
+                  //image: NetworkImage(publicUrl + 'assets/handcrafted_fan/main/zwzs.png'),
+                  image: AssetImage('assets/handcrafted_fan/zwzs.png'),
                   fit: BoxFit.cover,
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/crypto.dart';
 import 'package:zl_app/utils/device_size.dart';
+import 'package:zl_app/ui_libraries/toast.dart';
 
 import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
@@ -71,6 +72,11 @@ class _LoginPageState extends State<LoginPage> {
       // 取消用户名框焦点状态
       _focusNodeUserName.unfocus();
     }
+  }
+
+//toast登录失败提示
+  void showToast(String msg, {int duration, int gravity}) {
+    Toast.show(msg, context, duration: duration, gravity: gravity);
   }
 
   //验证用户名
@@ -329,11 +335,12 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.pushNamed(context, "/home");
             } else {
               print(operation.log);
-              setState(() {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text("登录失败"),
-                ));
-              });
+              // setState(() {
+              //   Scaffold.of(context).showSnackBar(SnackBar(
+              //     content: Text("登录失败"),
+              //   ));
+              // });
+              Toast.show("登录失败", context, duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
               return;
             }
           }
@@ -470,8 +477,9 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(publicUrl + "assets/login01.png"),
-                  fit: BoxFit.cover,
+                  //image: NetworkImage(publicUrl + "assets/login01.png"),
+                  image: AssetImage('assets/images/home_page/login01.png'),
+                  fit: BoxFit.fill,
                 ),
               ),
               height: MediaQuery.of(context).size.height,
