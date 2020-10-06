@@ -69,14 +69,14 @@ class _ContainPageviewState extends State<ContainPageview> {
     return PageView(
       scrollDirection: Axis.horizontal,
       children: <Widget>[
-        contain('assets/shadow_play/manufacture/process01.png'),
-        contain('assets/shadow_play/manufacture/process02.png'),
-        contain('assets/shadow_play/manufacture/process03.png'),
-        contain('assets/shadow_play/manufacture/process04.png'),
-        contain('assets/shadow_play/manufacture/process05.png'),
-        contain('assets/shadow_play/manufacture/process06.png'),
-        contain('assets/shadow_play/manufacture/process07.png'),
-        contain('assets/shadow_play/manufacture/process08.png'),
+        contain('assets/images/shadow_play/process01.png'),
+        contain('assets/images/shadow_play/process02.png'),
+        contain('assets/images/shadow_play/process03.png'),
+        contain('assets/images/shadow_play/process04.png'),
+        contain('assets/images/shadow_play/process05.png'),
+        contain('assets/images/shadow_play/process06.png'),
+        contain('assets/images/shadow_play/process07.png'),
+        contain('assets/images/shadow_play/process08.png'),
       ],
     );
   }
@@ -86,7 +86,8 @@ class _ContainPageviewState extends State<ContainPageview> {
       padding: EdgeInsets.all(5),
       // child: Image.network(img),
       decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover)),
+          //image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover)),
     );
   }
 }

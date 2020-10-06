@@ -22,10 +22,11 @@ class _ChinaPaperMainState extends State<ChinaPaperMain> {
         children: <Widget>[
           Container(
             height: DeviceSize.getHeightByPercent(0.8),
-            child: Image.network(
-              publicUrl + 'assets/china_paper/main/head.jpg',
-              fit: BoxFit.fill,
-            ),
+            // child: Image.network(
+            //   publicUrl + 'assets/china_paper/main/head.jpg',
+            //   fit: BoxFit.fill,
+            // ),
+            child: Image.asset('assets/images/china_paper/head.jpg'),
           ),
           //back icon
           Positioned(
@@ -96,7 +97,7 @@ class _CardPageState extends State<CardPage> {
                   padding: EdgeInsets.fromLTRB(50, 44, 0, 0),
                   child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
                     Icon(
-                      IconData(0xe677, fontFamily: 'Schyler'),
+                      IconData(0xe75a, fontFamily: 'Schyler'),
                       color: CupertinoColors.black,
                     ),
                     Text(

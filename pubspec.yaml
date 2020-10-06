@@ -41,6 +41,7 @@ dependencies:
   flutter_screenutil: ^0.5.3
   city_pickers: ^0.1.18
   toast: ^0.1.5
+  shared_preferences: "^0.4.2"
   # flutter_ijk:
   #   path: plugins/flutter_ijk
 
@@ -61,8 +62,17 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
+  #assets:
+  #  - assets/images/
   assets:
     - assets/images/
+    - assets/images/china_paper/
+    - assets/images/feminine_adornment/
+    - assets/images/handcrafted_fan/
+    - assets/images/my/
+    - assets/images/sea_culture/
+    - assets/images/shadow_play/
+    - assets/images/home_page/
   fonts:
     - family: Schyler
       fonts:

@@ -35,6 +35,12 @@ import 'package:zl_app/utils/env.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info/package_info.dart';
 
+//启动页
+import 'package:zl_app/pages/start_page.dart';
+
+//shaed_preferences
+import 'package:zl_app/utils/shared_preferences_util.dart';
+
 void main() {
   PackageInfo.fromPlatform().then((value) {
     AppEnvironment.appName = value.appName;
@@ -51,7 +57,7 @@ class ZlApp extends StatefulWidget {
   _ZlAppState createState() => _ZlAppState();
 }
 
-class _ZlAppState extends State<ZlApp> {
+class _ZlAppState extends State<ZlApp> with WidgetsBindingObserver {
   final Map<String, WidgetBuilder> _routes = {
     '/home': (context) => HomePage(),
     // 富阳竹纸
@@ -84,6 +90,9 @@ class _ZlAppState extends State<ZlApp> {
     '/personal/profile': (context) => ProfilePage(),
     '/personal/register': (context) => RegisterPage(),
     '/personal/note': (context) => NotePage(),
+    //导入页
+    '/splashScreen': (context) => SplashScreen(),
+    //shaed_preferences
 
     // TODO: 缺少系统设置页面
   };
@@ -92,9 +101,20 @@ class _ZlAppState extends State<ZlApp> {
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Cupertino App',
-      home: LoginPage(),
-      initialRoute: '/personal/login',
+      //home: LoginPage(),
+      home: SplashScreen(),
+      //initialRoute: '/personal/login',
+      initialRoute: '/splashScreen',
       routes: _routes,
+      // builder: (BuildContext context, Widget child) {
+      //   return MediaQuery(
+      //     data: MediaQuery.of(context).copyWith(
+      //       textScaleFactor: 1.0,
+      //       boldText: false,
+      //     ),
+      //     child: child,
+      //   );
+      // },
     );
   }
 }

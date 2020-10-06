@@ -89,7 +89,7 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
                                     Icon(
-                                      IconData(0xe677, fontFamily: 'Schyler'),
+                                      IconData(0xe75a, fontFamily: 'Schyler'),
                                       color: CupertinoColors.white,
                                     ),
                                     Text(

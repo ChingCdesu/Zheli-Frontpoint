@@ -24,11 +24,11 @@ class DioSingleton {
     onRequest: (RequestOptions options) async {
       // 添加header
       options.headers.addAll(_headers);
-      options.responseType = ResponseType.json;
       options.headers.addAll({
-        'user': Account.userId ?? null,
-        'token': Account.token ?? null,
+        'user': Account.userId ?? 3,
+        'token': Account.token ?? 1,
       });
+      options.responseType = ResponseType.json;
       // options.queryParameters.addAll({
       //   'user': Account.userId ?? null,
       //   'token': Account.token ?? null,

@@ -63,12 +63,12 @@ class _RegisterPageState extends State<RegisterPage> {
     _mobileController.addListener(() {
       print(_mobileController.text);
       // 监听文本框输入变化，当有内容的时候，显示尾部清除按钮，否则不显示
-      if (_mobileController.text.length > 0) {
-        _isShowClear = true;
-      } else {
-        _isShowClear = false;
-      }
-      setState(() {});
+      // if (_mobileController.text.length > 0) {
+      //   _isShowClear = true;
+      // } else {
+      //   _isShowClear = false;
+      // }
+      // setState(() {});
     });
 
     super.initState();
@@ -163,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     //输入文本框区域
     Widget inputTextArea = new Container(
-      height: DeviceSize.getHeightByPercent(0.6),
+      height: DeviceSize.getHeightByPercent(0.38),
       margin: EdgeInsets.only(left: 36, right: 46),
       decoration: new BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -174,258 +174,69 @@ class _RegisterPageState extends State<RegisterPage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             //手机号栏
-            Expanded(
-                flex: 2,
-                child: Column(
-                  children: <Widget>[
-                    new CupertinoTextField(
-                      padding: EdgeInsets.all(2),
-                      // new TextFormField(
-                      controller: _mobileController,
-                      focusNode: _mobileFocus,
-                      //设置键盘类型
-                      keyboardType: TextInputType.number,
-                      placeholder: '手机号',
-                      // prefix: CupertinoButton(
-                      //   child: Icon(
-                      //     Icons.person,
-                      //   ),
-                      //   onPressed: () {},
-                      //   pressedOpacity: 1,
-                      // ),
-                      prefix: Icon(
-                        IconData(0xe787, fontFamily: 'Schyler'),
-                      ),
-                      suffix: (_isShowClear)
-                          ? CupertinoButton(
-                              child: Icon(CupertinoIcons.clear),
-                              onPressed: () {
-                                setState(() {
-                                  _mobileController.clear();
-                                });
-                              },
-                            )
-                          : null,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(26.0),
-                        ),
-                      ),
-                      // // 验证用户名
-                      // validator: validateUserName,
-                      //保存数据
-                      onSubmitted: (String value) {
-                        _username = value;
-                        print(value);
-                      },
-                      // clearButtonMode: OverlayVisibilityMode.editing
-                      // decoration: InputDecoration(
-                      //   focusedBorder: UnderlineInputBorder(
-                      //       borderSide: BorderSide(
-                      //           color: CupertinoColors.systemGrey, width: 2)),
-                      //   icon: Icon(Icons.person),
-                      //   // labelText: "手机号",
-                      //   // labelStyle: TextStyle(color: CupertinoColors.systemGrey),
-                      //   hintText: "手机号",
-                      //   hintStyle: TextStyle(fontSize: 14),
-                      //   //尾部添加清除按钮
-                      //   suffixIcon: (_isShowClear)
-                      //       ? IconButton(
-                      //           icon: Icon(Icons.clear),
-                      //           onPressed: () {
-                      //             // 清空输入框内容
-                      //             _mobileController.clear();
-                      //           },
-                      //         )
-                      //       : null,
-                      // ),
-                      //验证用户名
-                      // validator: validatePhoneNumber,
-                      // //保存数据
-                      // onSaved: (String value) {
-                      //   _username = value;
-                      // },
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(
-                          left: 50,
-                          right: 0,
-                        ),
-                        height: DeviceSize.getHeightByPercent(0.004), //120
-                        width: DeviceSize.getWidthByPercent(1), // 1.0
-                        color: CupertinoColors.systemGrey2)
-                  ],
-                )),
-            //密码
-            Expanded(
-                flex: 2,
-                child: Column(
-                  children: <Widget>[
-                    new CupertinoTextField(
-                      padding: EdgeInsets.all(2),
-                      // child: new TextFormField(
-                      //设置键盘类型
-                      keyboardType: TextInputType.text,
-                      focusNode: _passwordFocus,
-                      placeholder: '密码',
-                      prefix: CupertinoButton(
-                        child: Icon(Icons.lock),
-                        onPressed: () {},
-                      ),
-                      suffix: CupertinoButton(
-                        child: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
+            Container(
+              height: DeviceSize.getHeightByPercent(0.14),
+              // flex: 2,
+              child: new CupertinoTextField(
+                padding: EdgeInsets.fromLTRB(26, 2, 2, 2),
+                controller: _mobileController,
+                focusNode: _mobileFocus, //设置键盘类型
+                keyboardType: TextInputType.text,
+                placeholder: '用户名',
+                style: TextStyle(
+                  fontFamily: "PingFang SC",
+                ),
+                suffix: (_isShowClear)
+                    ? CupertinoButton(
+                        child: Icon(CupertinoIcons.clear),
                         onPressed: () {
                           setState(() {
-                            _isShowPwd = !_isShowPwd;
+                            _mobileController.clear();
                           });
                         },
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(26.0),
-                        ),
-                      ),
-                      obscureText: !_isShowPwd,
-                      // decoration: InputDecoration(
-                      //     focusedBorder: UnderlineInputBorder(
-                      //         borderSide: BorderSide(
-                      //             color: CupertinoColors.systemGrey, width: 2)),
-                      //     icon: Icon(Icons.lock),
-                      //     focusColor: CupertinoColors.systemGrey,
-                      //     // labelText: "密码",
-                      //     hintText: "密码",
-                      //     hintStyle: TextStyle(fontSize: 14),
-                      //     // 是否显示密码
-                      //     suffixIcon: IconButton(
-                      //       icon: Icon(
-                      //           (_isShowPwd) ? Icons.visibility : Icons.visibility_off),
-                      //       // 点击改变显示或隐藏密码
-                      // onPressed: () {
-                      //   setState(() {
-                      //     _isShowPwd = !_isShowPwd;
-                      //   });
-                      // },
-                      //     )),
-                      //密码验证
-                      // validator: validatePassWord,
-                      // //保存数据
-                      // onSaved: (String value) {
-                      //   _password = value;
-                      // },
+                      )
+                    : null,
+                decoration: BoxDecoration(
+                    // color: CupertinoColors.activeBlue,
+                    // borderRadius: BorderRadius.all(
+                    //   Radius.circular(26.0),
+                    // ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(
-                          left: 50,
-                          right: 0,
-                        ),
-                        height: DeviceSize.getHeightByPercent(0.004), //120
-                        width: DeviceSize.getWidthByPercent(1), // 1.0
-                        color: CupertinoColors.systemGrey2)
-                  ],
-                )),
-            //验证码
-            Expanded(
-              flex: 1,
-              child: Container(),
-              // child: Row(
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: <Widget>[
-              //     Expanded(
-              //       flex: 2,
-              //       child: Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: <Widget>[
-              //           Container(
-              //             padding: EdgeInsets.only(left: 14),
-              //             child: new CupertinoTextField(
-              //               controller: _veriController,
-              //               focusNode: _veriFocus,
-              //               keyboardType: TextInputType.number,
-              //               decoration: BoxDecoration(),
-              //               onSubmitted: (String value) {
-              //                 _veri = value;
-              //                 print(value);
-              //               },
-              //               //   validator: validateVeri,
-              //               //   onSaved: (String value) {
-              //               //     _veri = value;
-              //               //   },
-              //             ),
-              //           ),
-              //           Container(
-              //               margin: EdgeInsets.only(
-              //                 top: 8,
-              //                 left: 14,
-              //               ),
-              //               height: DeviceSize.getHeightByPercent(0.004), //120
-              //               width: DeviceSize.getWidthByPercent(1), // 1.0
-              //               color: CupertinoColors.systemGrey2)
-              //         ],
-              //       ),
-              //     ),
-              //     // Expanded(
-              //     //   flex: 2,
-              //     //   child: Padding(
-              //     //     padding: EdgeInsets.only(left: 5),
-              //     //     child: Builder(
-              //     //       builder: (BuildContext context) {
-              //     //         return RaisedButton(
-              //     //           color: CupertinoColors.systemGrey4,
-              //     //           child: Text(
-              //     //             "获取验证码",
-              //     //             style: TextStyle(fontSize: 14, color: CupertinoColors.white),
-              //     //           ),
-              //     //           // 设置按钮圆角
-              //     //           shape:
-              //     //               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-              //     //           onPressed: () {},
-              //     //         );
-              //     //       },
-              //     //     ),
-              //     //   ),
-              //     // )
-              //   ],
-              // ),
-              // Expanded(
-              //     child: Container(
-              //   height: 100,
-              //   width: 100,
-              //   child: Row(
-              //     children: <Widget>[
-              //       new TextFormField(
-              //         //设置键盘类型
-              //         keyboardType: TextInputType.number,
-              //         focusNode: _veriFocus,
-              //         decoration: InputDecoration(
-              //           focusedBorder: UnderlineInputBorder(
-              //               borderSide: BorderSide(
-              //                   color: CupertinoColors.systemGrey, width: 2)),
-              //           focusColor: CupertinoColors.systemGrey,
-              //           // hintText: "验证码",
-              //           // hintStyle: TextStyle(fontSize: 14),
-              //         ),
-              //         validator: validateVeri,
-              //         //保存数据
-              //         onSaved: (String value) {
-              //           _veri = value;
-              //         },
-              //       ),
-              //       Expanded(
-              //           child: RaisedButton(
-              //         color: Color.fromRGBO(172, 192, 198, 1),
-              //         child: Text(
-              //           "注册",
-              //           style: Theme.of(context).primaryTextTheme.headline,
-              //         ),
-              //         // 设置按钮圆角
-              //         shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(20.0)),
-              //         onPressed: () {},
-              //       ))
-              //     ],
-              //   ),
-              // )),
+                onSubmitted: (String value) {
+                  _username = value;
+                  print(value);
+                },
+              ),
             ),
+            //密码
+            Container(
+                // flex: 2,
+                child: Column(
+              children: <Widget>[
+                new CupertinoTextField(
+                  padding: EdgeInsets.fromLTRB(26, 0, 2, 0),
+                  keyboardType: TextInputType.text, //设置键盘类型
+                  focusNode: _passwordFocus,
+                  placeholder: '密码',
+                  suffix: CupertinoButton(
+                    child: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _isShowPwd = !_isShowPwd;
+                      });
+                    },
+                  ),
+                  decoration: BoxDecoration(
+                    // color: CupertinoColors.activeGreen,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(26.0),
+                    ),
+                  ),
+                  obscureText: !_isShowPwd,
+                ),
+              ],
+            )),
+            //验证码
           ],
         ),
       ),
@@ -462,7 +273,7 @@ class _RegisterPageState extends State<RegisterPage> {
             print("$_username + $_password");
             var _u = API.User(
               username: _username,
-              phone: _username,
+              // phone: _username,
               password: generateMd5(_password),
             );
             var _o = await API.Create(_u).doOperation();
@@ -483,71 +294,6 @@ class _RegisterPageState extends State<RegisterPage> {
         },
       ),
     );
-
-    //第三方登录区域
-    // Widget thirdLoginArea = new Container(
-    //   margin: EdgeInsets.only(left: 20, right: 20),
-    //   child: new Column(
-    //     children: <Widget>[
-    //       new Row(
-    //         mainAxisSize: MainAxisSize.max,
-    //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //         children: <Widget>[
-    //           Container(
-    //             height: DeviceSize.getHeightByPercent(0.001), //120
-    //             width: DeviceSize.getWidthByPercent(0.3), // 1.0
-    //             color: Colors.grey,
-    //           ),
-    //           Text(
-    //             'or',
-    //             style: TextStyle(color: Colors.grey, fontSize: 16),
-    //           ),
-    //           Container(
-    //             height: DeviceSize.getHeightByPercent(0.001), //120
-    //             width: DeviceSize.getWidthByPercent(0.3), // 1.0
-    //             color: Colors.grey,
-    //           ),
-    //         ],
-    //       ),
-    //       new SizedBox(
-    //         height: DeviceSize.getHeightByPercent(0.04), //18
-    //       ),
-    //       new Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //         children: <Widget>[
-    //           CupertinoButton(
-    //             child: Icon(
-    //               FontAwesomeIcons.weixin,
-    //               size: 30,
-    //             ),
-    //             onPressed: () {},
-    //           ),
-    //           CupertinoButton(
-    //             child: Icon(
-    //               FontAwesomeIcons.weibo,
-    //               size: 30,
-    //             ),
-    //             onPressed: () {},
-    //           ),
-    //           CupertinoButton(
-    //             child: Icon(
-    //               FontAwesomeIcons.qq,
-    //               size: 30,
-    //             ),
-    //             onPressed: () {},
-    //           ),
-    //           CupertinoButton(
-    //             child: Icon(
-    //               Icons.mail,
-    //               size: 30,
-    //             ),
-    //             onPressed: () {},
-    //           ),
-    //         ],
-    //       )
-    //     ],
-    //   ),
-    // );
 
     //已有账号立即登录
     Widget bottomArea = new Container(
@@ -580,9 +326,7 @@ class _RegisterPageState extends State<RegisterPage> {
               borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
             //忘记密码按钮，点击执行事件
-            onPressed: () {
-              Navigator.pushNamed(context, '/personal/login');
-            },
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ],
       ),
@@ -596,7 +340,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: new GestureDetector(
         onTap: () {
           // 点击空白区域，回收键盘
-          print("���击了空白区域");
+          print("击了空白区域");
           _mobileFocus.unfocus();
           _passwordFocus.unfocus();
           // _veriFocus.unfocus();
@@ -604,16 +348,18 @@ class _RegisterPageState extends State<RegisterPage> {
         child: new Container(
           decoration: BoxDecoration(
             image: new DecorationImage(
-                image: NetworkImage(publicUrl + "assets/images/login01.png"), fit: BoxFit.cover),
+                //image: NetworkImage(publicUrl + "assets/images/login01.png"), fit: BoxFit.cover),
+                image: AssetImage('assets/images/home_page/login01.png'),
+                fit: BoxFit.cover),
           ),
           child: Column(
             children: <Widget>[
+              // new SizedBox(
+              //   height: DeviceSize.getHeightByPercent(0.2),
+              // ),
+              // logoImageArea
               new SizedBox(
-                height: DeviceSize.getHeightByPercent(0.18),
-              ),
-              logoImageArea,
-              new SizedBox(
-                height: DeviceSize.getHeightByPercent(0.12),
+                height: DeviceSize.getHeightByPercent(0.3),
               ),
               inputTextArea,
               new SizedBox(
@@ -625,10 +371,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: DeviceSize.getHeightByPercent(0.1),
               ),
               bottomArea,
-              //thirdLoginArea,
-              // new SizedBox(
-              //   height: DeviceSize.getHeightByPercent(0.08),
-              // ),
             ],
           ),
         ),

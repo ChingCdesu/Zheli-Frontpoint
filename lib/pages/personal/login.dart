@@ -10,6 +10,8 @@ import 'package:zl_app/ui_libraries/toast.dart';
 import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
 
+import 'package:zl_app/utils/shared_preferences_util.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -22,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
 
   //用户名输入框控制器，此控制器可以监听用户名输入框操作
   TextEditingController _userNameController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
 
   //表单状态
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -30,6 +33,9 @@ class _LoginPageState extends State<LoginPage> {
   var _username = ''; //密码
   var _isShowPwd = false; //是否显示密码
   var _isShowClear = false; //是否显示输入框尾部的清除按钮
+
+  String _savedValue = '手机号';
+  String _currentInputValue;
 
   @override
   void initState() {
@@ -48,7 +54,13 @@ class _LoginPageState extends State<LoginPage> {
       }
       setState(() {});
     });
+    //
     super.initState();
+    SharedPreferencesUtil.getData<String>("myData").then((value) {
+      setState(() {
+        _savedValue = value;
+      });
+    });
   }
 
   @override
@@ -111,8 +123,9 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.topCenter,
       // 设置图片为圆形
       child: ClipOval(
-        child: Image.network(
-          publicUrl + "assets/sea_culture/main/zsyh01.png",
+        child: Image.asset(
+          //publicUrl + "assets/sea_culture/main/zsyh01.png",
+          'assets/images/home_page/head.jpg',
           height: DeviceSize.getHeightByPercent(0.3),
           width: DeviceSize.getWidthByPercent(0.3),
           fit: BoxFit.cover,
@@ -122,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
 
     //输入文本框区域
     Widget inputTextArea = new Container(
-      height: DeviceSize.getHeightByPercent(0.4),
+      height: DeviceSize.getHeightByPercent(0.3),
       margin: EdgeInsets.only(left: 36, right: 46),
       decoration: new BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -132,26 +145,17 @@ class _LoginPageState extends State<LoginPage> {
         child: new Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            //手机号
+            //用户名
             Expanded(
                 flex: 2,
                 child: Column(
                   children: <Widget>[
                     new CupertinoTextField(
-                      padding: EdgeInsets.all(2),
-                      // new TextFormField(
+                      padding: EdgeInsets.fromLTRB(26, 0, 2, 0),
                       controller: _userNameController,
                       focusNode: _focusNodeUserName,
-                      //设置键盘类型
-                      keyboardType: TextInputType.number,
-                      placeholder: '手机号',
-                      prefix: CupertinoButton(
-                        child: Icon(
-                          Icons.person,
-                        ),
-                        onPressed: () {},
-                        pressedOpacity: 1,
-                      ),
+                      keyboardType: TextInputType.text,
+                      placeholder: '用户名',
                       suffix: (_isShowClear)
                           ? CupertinoButton(
                               child: Icon(CupertinoIcons.clear),
@@ -167,56 +171,11 @@ class _LoginPageState extends State<LoginPage> {
                           Radius.circular(26.0),
                         ),
                       ),
-                      // // 验证用户名
-                      // validator: validateUserName,
-                      //保存数据
                       onChanged: (String value) {
                         _username = value;
                         print(value);
                       },
-
-                      //验证用户名
-                      // validator: validateUserName,
-                      // //保存数据
-                      // onSaved: (String value) {
-                      //   _username = value;
-                      // },
-
-                      // decoration: InputDecoration(
-                      //   focusedBorder: UnderlineInputBorder(
-                      //       borderSide: BorderSide(
-                      //           color: CupertinoColors.systemGrey, width: 2)),
-                      //   icon: Icon(Icons.person),
-                      //   // labelText: "手机号",
-                      //   // labelStyle: TextStyle(color: CupertinoColors.systemGrey),
-                      //   hintText: "手机号",
-                      //   hintStyle: TextStyle(fontSize: 14),
-                      //   //尾部添加清除按钮
-                      //   suffixIcon: (_isShowClear)
-                      //       ? IconButton(
-                      //           icon: Icon(Icons.clear),
-                      //           onPressed: () {
-                      //             // 清空输入框内容
-                      //             _userNameController.clear();
-                      //           },
-                      //         )
-                      //       : null,
-                      // ),
-                      // 验证用户名
-                      // validator: validateUserName,
-                      // //保存数据
-                      // onSaved: (String value) {
-                      //   _username = value;
-                      // },
                     ),
-                    Container(
-                        margin: EdgeInsets.only(
-                          left: 50,
-                          right: 0,
-                        ),
-                        height: DeviceSize.getHeightByPercent(0.004), //120
-                        width: DeviceSize.getWidthByPercent(1), // 1.0
-                        color: CupertinoColors.systemGrey2)
                   ],
                 )),
             //密码
@@ -225,17 +184,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: <Widget>[
                   new CupertinoTextField(
-                    padding: EdgeInsets.all(2),
-                    // TextFormField(
-                    //controller: _userNameController,
-                    focusNode: _focusNodePassWord,
-                    //设置键盘类型
+                    padding: EdgeInsets.fromLTRB(26, 0, 2, 0),
+                    controller: _passwordController,
+                    focusNode: _focusNodePassWord, //设置键盘类型
                     keyboardType: TextInputType.text,
                     placeholder: '密码',
-                    prefix: CupertinoButton(
-                      child: Icon(Icons.lock),
-                      onPressed: () {},
-                    ),
                     onChanged: (value) => _password = value,
                     suffix: CupertinoButton(
                       child: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
@@ -251,44 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     obscureText: !_isShowPwd,
-                    //     TextFormField(
-                    //   focusNode: _focusNodePassWord,
-                    //   decoration: InputDecoration(
-                    //       focusedBorder: UnderlineInputBorder(
-                    //           borderSide: BorderSide(
-                    //               color: CupertinoColors.systemGrey, width: 2)),
-                    //       icon: Icon(Icons.lock),
-                    //       focusColor: CupertinoColors.systemGrey,
-                    //       // labelText: "密码",
-                    //       hintText: "密码",
-                    //       hintStyle: TextStyle(fontSize: 14),
-                    //       // 是否显示密码
-                    //       suffixIcon: IconButton(
-                    //         icon: Icon(
-                    //             (_isShowPwd) ? Icons.visibility : Icons.visibility_off),
-                    //         // 点击改变显示或隐藏密码
-                    //         onPressed: () {
-                    //           setState(() {
-                    //             _isShowPwd = !_isShowPwd;
-                    //           });
-                    //         },
-                    //       )),
-                    //   obscureText: !_isShowPwd,
-                    //   //密码验证
-                    //   validator: validatePassWord,
-                    //   //保存数据
-                    //   onSaved: (String value) {
-                    //     _password = value;
-                    //   },
                   ),
-                  Container(
-                      margin: EdgeInsets.only(
-                        left: 50,
-                        right: 0,
-                      ),
-                      height: DeviceSize.getHeightByPercent(0.004), //120
-                      width: DeviceSize.getWidthByPercent(1), // 1.0
-                      color: CupertinoColors.systemGrey2)
                 ],
               ),
             )
@@ -312,6 +228,14 @@ class _LoginPageState extends State<LoginPage> {
         // 设置按钮圆角
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         onPressed: () async {
+          // 当点击按钮时, 调用存储数据的函数
+          SharedPreferencesUtil.saveData<String>("myData", _currentInputValue);
+
+          // 同时渲染当前显示的保存的值
+          setState(() {
+            _savedValue = _currentInputValue;
+          });
+
           //点击登录按钮，解除焦点，回收键盘
           _focusNodePassWord.unfocus();
           _focusNodeUserName.unfocus();
@@ -322,7 +246,7 @@ class _LoginPageState extends State<LoginPage> {
 
             print("$_username + $_password");
             API.User login = new API.User(
-              phone: _username,
+              username: _username,
               password: generateMd5(_password),
             );
 
@@ -345,71 +269,6 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
         },
-      ),
-    );
-
-    //第三方登录区域
-    Widget thirdLoginArea = new Container(
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: new Column(
-        children: <Widget>[
-          new Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Container(
-                height: DeviceSize.getHeightByPercent(0.001), //120
-                width: DeviceSize.getWidthByPercent(0.3), // 1.0
-                color: Colors.grey,
-              ),
-              Text(
-                'or',
-                style: TextStyle(color: Colors.grey, fontSize: 16),
-              ),
-              Container(
-                height: DeviceSize.getHeightByPercent(0.001), //120
-                width: DeviceSize.getWidthByPercent(0.3), // 1.0
-                color: Colors.grey,
-              ),
-            ],
-          ),
-          new SizedBox(
-            height: DeviceSize.getHeightByPercent(0.04), //18
-          ),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              CupertinoButton(
-                child: Icon(
-                  FontAwesomeIcons.weixin,
-                  size: 30,
-                ),
-                onPressed: () {},
-              ),
-              CupertinoButton(
-                child: Icon(
-                  FontAwesomeIcons.weibo,
-                  size: 30,
-                ),
-                onPressed: () {},
-              ),
-              CupertinoButton(
-                child: Icon(
-                  FontAwesomeIcons.qq,
-                  size: 30,
-                ),
-                onPressed: () {},
-              ),
-              CupertinoButton(
-                child: Icon(
-                  Icons.mail,
-                  size: 30,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          )
-        ],
       ),
     );
 
@@ -487,22 +346,17 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: <Widget>[
                   new SizedBox(
-                    height: DeviceSize.getHeightByPercent(0.18),
-                  ),
-                  logoImageArea,
-                  new SizedBox(
-                    height: DeviceSize.getHeightByPercent(0.12),
+                    height: DeviceSize.getHeightByPercent(0.3),
                   ),
                   inputTextArea,
                   new SizedBox(
-                    height: DeviceSize.getHeightByPercent(0.1),
+                    height: DeviceSize.getHeightByPercent(0.2),
                   ),
                   loginButtonArea,
                   new SizedBox(
                     height: DeviceSize.getHeightByPercent(0.08),
                   ),
                   bottomArea,
-                  thirdLoginArea,
                   new SizedBox(
                     height: DeviceSize.getHeightByPercent(0.08),
                   ),

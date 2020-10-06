@@ -3,7 +3,7 @@ import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/api/models.dart';
 import 'package:zl_app/settings/user.dart';
 
-abstract class ModelDecorator extends Model {
+abstract class ModelDecorator {
   Model model;
 
   int httpStatusCode;
@@ -20,7 +20,7 @@ abstract class ModelDecorator extends Model {
   Model fromJson(Map<String, dynamic> json) => model.fromJson(json);
   Map<String, dynamic> toJson() => model.toJson();
 
-  ModelDecorator(this.model) : super(model.endpoint);
+  ModelDecorator(this.model);
   Future<ModelDecorator> doOperation() async {
     print('Your token: ${Account.token}');
     _operationStartTime = DateTime.now();

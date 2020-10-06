@@ -70,7 +70,8 @@ class _ChinaPaperHistoryState extends State<ChinaPaperHistory> {
     return Column(
       children: <Widget>[
         Container(
-          child: Image.network(publicUrl + img),
+          //child: Image.network(publicUrl + img),
+          child: Image.asset(img),
         ),
         Container(
           padding: EdgeInsets.only(top: 20, bottom: 20),

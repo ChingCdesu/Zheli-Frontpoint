@@ -66,13 +66,13 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
                 child: PageView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
-                    placeListView('assets/shadow_play/cinema/cnm_01.png', '家里来了皮影戏'),
-                    placeListView('assets/shadow_play/cinema/cnm_02.png', '老手艺人进行皮影戏演出'),
-                    placeListView('assets/shadow_play/cinema/cnm_03.png', '亲手制作皮影戏纸偶'),
-                    placeListView('assets/shadow_play/cinema/cnm_04.png', '与孩子一起体验皮影'),
-                    placeListView('assets/shadow_play/cinema/cnm_05.png', '江南风格皮影戏纸偶'),
-                    placeListView('assets/shadow_play/cinema/cnm_06.png', '西安一家商店里的皮影道具'),
-                    placeListView('assets/shadow_play/cinema/cnm_07.png', '老手艺人进行皮影戏演出'),
+                    placeListView('assets/images/shadow_play/cnm_01.png', '家里来了皮影戏'),
+                    placeListView('assets/images/shadow_play/cnm_02.png', '老手艺人进行皮影戏演出'),
+                    placeListView('assets/images/shadow_play/cnm_03.png', '亲手制作皮影戏纸偶'),
+                    placeListView('assets/images/shadow_play/cnm_04.png', '与孩子一起体验皮影'),
+                    placeListView('assets/images/shadow_play/cnm_05.png', '江南风格皮影戏纸偶'),
+                    placeListView('assets/images/shadow_play/cnm_06.png', '西安一家商店里的皮影道具'),
+                    placeListView('assets/images/shadow_play/cnm_07.png', '老手艺人进行皮影戏演出'),
                   ],
                 ),
               ),
@@ -140,9 +140,9 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
                   child: CupertinoButton(
                     child: Icon(
                       like
-                          ? IconData(0xebaa, fontFamily: 'Schyler')
-                          : IconData(0xeb97, fontFamily: 'Schyler'),
-                      size: 40,
+                          ? IconData(0xe780, fontFamily: 'Schyler')
+                          : IconData(0xe757, fontFamily: 'Schyler'),
+                      size: 50,
                       color: Colors.white,
                     ),
                     onPressed: () {
@@ -154,9 +154,9 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
                   child: CupertinoButton(
                     child: Icon(
                       favorite
-                          ? IconData(0xe68a, fontFamily: 'Schyler')
-                          : IconData(0xe672, fontFamily: 'Schyler'),
-                      size: 42,
+                          ? IconData(0xe779, fontFamily: 'Schyler')
+                          : IconData(0xe745, fontFamily: 'Schyler'),
+                      size: 50,
                       color: Colors.white,
                     ),
                     onPressed: () {

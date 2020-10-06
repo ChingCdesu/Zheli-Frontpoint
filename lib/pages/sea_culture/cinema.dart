@@ -47,13 +47,14 @@ class _SeaCultureCinemaState extends State<SeaCultureCinema> {
               child: Material(
             color: Colors.transparent,
             child: CupertinoButton(
-                padding: EdgeInsets.all(0),
-                child: Icon(
-                  CupertinoIcons.back,
-                  color: CupertinoColors.white,
-                  size: 25,
-                ),
-                onPressed: () => Navigator.of(context).pop()),
+              padding: EdgeInsets.all(0),
+              child: Icon(
+                CupertinoIcons.back,
+                color: CupertinoColors.white,
+                size: 25,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           )),
         ),
         child: Container(
@@ -65,15 +66,15 @@ class _SeaCultureCinemaState extends State<SeaCultureCinema> {
                 child: PageView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
-                    placeListView('assets/sea_culture/360°2.gif', '360°船模展示'),
-                    placeListView('assets/sea_culture/360°3.gif', '360°船模展示'),
-                    placeListView('assets/sea_culture/360°1.gif', '360°船模展示'),
-                    placeListView('assets/sea_culture/cnm_01.jpg', '舟山海景'),
-                    placeListView('assets/sea_culture/cnm_02.png', '舟山渔民在码头舞龙祈福'),
-                    placeListView('assets/sea_culture/cnm_03.png', '舟山渔港'),
-                    placeListView('assets/sea_culture/cnm_04.png', '舟山群岛'),
-                    placeListView('assets/sea_culture/cnm_05.png', '手艺人在编织渔绳结'),
-                    placeListView('assets/sea_culture/cnm_06.png', '海雾笼罩中的舟山城'),
+                    placeListView('assets/images/sea_culture/360°2.gif', '360°船模展示'),
+                    placeListView('assets/images/sea_culture/360°3.gif', '360°船模展示'),
+                    placeListView('assets/images/sea_culture/360°1.gif', '360°船模展示'),
+                    placeListView('assets/images/sea_culture/cnm_01.jpg', '舟山海景'),
+                    placeListView('assets/images/sea_culture/cnm_02.png', '舟山渔民在码头舞龙祈福'),
+                    placeListView('assets/images/sea_culture/cnm_03.png', '舟山渔港'),
+                    placeListView('assets/images/sea_culture/cnm_04.png', '舟山群岛'),
+                    placeListView('assets/images/sea_culture/cnm_05.png', '手艺人在编织渔绳结'),
+                    placeListView('assets/images/sea_culture/cnm_06.png', '海雾笼罩中的舟山城'),
                   ],
                 ),
               ),

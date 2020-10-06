@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'models.g.dart';
@@ -11,6 +13,11 @@ abstract class Model {
 
   Model fromJson(Map<String, dynamic> json);
   Map<String, dynamic> toJson();
+
+  @override
+  String toString() {
+    return JsonEncoder.withIndent('  ').convert(this);
+  }
 }
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
@@ -53,7 +60,7 @@ class GroupUser extends Model {
   DateTime unRestrictedServerTime;
 
   GroupUser({this.id, this.groupId, this.userId, this.roleId, this.unRestrictedServerTime})
-      : super("group_user", id: id);
+      : super("groupUser", id: id);
 
   @override
   GroupUser fromJson(Map<String, dynamic> json) => _$GroupUserFromJson(json);
@@ -203,9 +210,10 @@ class VideoComment extends Model {
   String comment;
   int userId;
   DateTime submitServerTime;
+  int videoId;
 
-  VideoComment({this.id, this.comment, this.userId, this.submitServerTime})
-      : super('video_comment', id: id);
+  VideoComment({this.id, this.comment, this.userId, this.submitServerTime, this.videoId})
+      : super('videoComment', id: id);
 
   @override
   VideoComment fromJson(Map<String, dynamic> json) => _$VideoCommentFromJson(json);
@@ -247,7 +255,7 @@ class PostLike extends Model {
   int userId;
   int postId;
 
-  PostLike({this.id, this.userId, this.postId}) : super('post_like', id: id);
+  PostLike({this.id, this.userId, this.postId}) : super('postLike', id: id);
 
   @override
   PostLike fromJson(Map<String, dynamic> json) => _$PostLikeFromJson(json);

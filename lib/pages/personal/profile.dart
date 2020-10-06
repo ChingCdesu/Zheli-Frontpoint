@@ -41,7 +41,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Image.network(
                       _user.headerImage,
                       fit: BoxFit.fill,
-                    )),
+                    ),
+                    ),
                 //头像区
                 Positioned(
                     child: Column(
