@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:zl_app/api/dio_singleton.dart';
+import 'package:zl_app/api/interfaces.dart';
 import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
 
@@ -13,6 +15,8 @@ import 'package:zl_app/api/model_operations.dart' as API;
 
 import 'package:zl_app/utils/device_size.dart';
 import 'data.dart';
+
+List<API.Video> _vs = new List();
 
 class SeaCultureMain extends StatefulWidget {
   SeaCultureMain({Key key, this.title}) : super(key: key);
@@ -27,23 +31,13 @@ var widgetAspectRatio = cardAspectRatio * 1.2;
 
 class _SeaCultureMainState extends State<SeaCultureMain> {
   var currentPage = images.length - 1.0;
-  List<API.Video> _vs = new List();
 
   @override
   void initState() {
-    API.Video _v = new API.Video(parentModuleId: 1);
-    API.Confirm(_v).doOperation().then((_o) {
-      if (_o.hasError) print(_o.log);
-      final _r = _o.getResult()['values'];
-      for (var item in _r) {
-        var id = item['ID'] as int;
-        _v = new API.Video(id: id);
-        API.Get(_v).doOperation().then((_) {
-          _vs.add(_v);
-        });
-      }
-      print(_vs);
-    }).whenComplete(() => super.initState());
+    super.initState();
+    getVideosByModuleIdAsync(1)
+        .then((value) => _vs = value.reversed.toList())
+        .whenComplete(() => setState(() {}));
   }
 
   @override
@@ -52,15 +46,17 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
     controller.addListener(() {
       setState(() {
         currentPage = controller.page;
+        print(currentPage.floor());
       });
     });
     return CupertinoPageScaffold(
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              //image: NetworkImage(publicUrl + 'assets/sea_culture/main/bgc.png'),
-              image: AssetImage('assets/images/sea_culture/bgc.png'),
-              fit: BoxFit.fill),
+            //image: NetworkImage(publicUrl + 'assets/sea_culture/main/bgc.png'),
+            image: AssetImage('assets/images/sea_culture/bgc.png'),
+            fit: BoxFit.fill,
+          ),
         ),
         child: Stack(
           children: <Widget>[
@@ -147,66 +143,6 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  //重叠式卡片
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.circular(25),
-                  //     boxShadow: <BoxShadow>[
-                  //       BoxShadow(
-                  //         color: CupertinoColors.systemGrey,
-                  //         offset: Offset(4, 5),
-                  //         blurRadius: 12.0,
-                  //         spreadRadius: 0.0,
-                  //       )
-                  //     ],
-                  //     image: DecorationImage(
-                  //       // image: NetworkImage(publicUrl + 'assets/sea_culture/main/fishdraw.png'),
-                  //       image: AssetImage('assets/images/sea_culture/fishdraw.png'),
-                  //       fit: BoxFit.fill,
-                  //     ),
-                  //   ),
-                  //   height: DeviceSize.getHeightByPercent(0.96), // height: 400,
-                  //   width: DeviceSize.getWidthByPercent(0.76), // width: 320,
-                  //   margin: EdgeInsets.only(top: 100),
-                  //   child: Align(
-                  //     alignment: Alignment.bottomCenter,
-                  //     child: Row(
-                  //       children: <Widget>[
-                  //         Expanded(
-                  //           child: Container(
-                  //             padding: EdgeInsets.only(
-                  //               top: 80,
-                  //               bottom: 40,
-                  //             ),
-                  //             decoration: BoxDecoration(
-                  //               borderRadius: BorderRadius.only(
-                  //                 bottomLeft: Radius.circular(25),
-                  //                 bottomRight: Radius.circular(25),
-                  //               ),
-                  //               gradient: LinearGradient(
-                  //                 colors: <Color>[
-                  //                   Color.fromARGB(0, 255, 255, 255),
-                  //                   Color.fromARGB((0.3 * 255).floor(), 255, 255, 255),
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //                 ],
-                  //                 begin: Alignment.topCenter,
-                  //                 end: Alignment.bottomCenter,
-                  //                 // center: Alignment.bottomCenter,
-                  //                 // radius: 2,
-                  //                 stops: [0, 0.15, 0.4],
-                  //               ),
-                  //             ),
-                  //             child: Align(
-                  //               heightFactor: 0,
-                  //               alignment: Alignment.center,
-                  //               child: Text("舟山传统工艺——渔民画"),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: DeviceSize.getHeightByPercent(0.3),
                   ),
@@ -248,7 +184,8 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/pages/sea_culture/video');
+                        Navigator.pushNamed(context, '/pages/sea_culture/video',
+                            arguments: _vs[currentPage.floor()]);
                       }),
                 ],
               ),
@@ -338,7 +275,10 @@ class CardScrollWidget extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: <Widget>[
-                      Image.asset(images[i], fit: BoxFit.fill),
+                      Image.network(
+                        publicUrl + _vs[i].imageUrl,
+                        fit: BoxFit.fill,
+                      ),
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: Column(
@@ -346,12 +286,17 @@ class CardScrollWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                              child: Text(title[i],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                      fontFamily: "SF-Pro-Text-Regular")),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                                vertical: 8.0,
+                              ),
+                              child: Text(
+                                _vs[i].title,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25.0,
+                                    fontFamily: "SF-Pro-Text-Regular"),
+                              ),
                             ),
                             SizedBox(
                               height: 10.0,

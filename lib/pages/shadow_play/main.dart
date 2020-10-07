@@ -5,8 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:zl_app/api/dio_singleton.dart';
+import 'package:zl_app/api/interfaces.dart';
 
 import 'package:zl_app/utils/device_size.dart';
+
+import 'package:zl_app/api/models.dart' as API;
 
 class ShadowPlayMain extends StatefulWidget {
   ShadowPlayMain({Key key, this.title}) : super(key: key);
@@ -17,9 +20,9 @@ class ShadowPlayMain extends StatefulWidget {
 }
 
 class _ShadowPlayMainState extends State<ShadowPlayMain> {
+
   @override
   Widget build(BuildContext context) {
-    DeviceSize.setDeviceSize(MediaQuery.of(context).size);
     return Container(
       color: Colors.white,
       child: Stack(
@@ -28,10 +31,11 @@ class _ShadowPlayMainState extends State<ShadowPlayMain> {
             alignment: Alignment.topLeft,
             width: double.infinity,
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(35),
-                child:
-                    //Image.network(publicUrl + 'assets/shadow_play/main/bgc.jpg', fit: BoxFit.cover),
-                    Image.asset('assets/images/shadow_play/bgc.jpg', fit: BoxFit.cover)),
+              borderRadius: BorderRadius.circular(35),
+              child:
+                  //Image.network(publicUrl + 'assets/shadow_play/main/bgc.jpg', fit: BoxFit.cover),
+                  Image.asset('assets/images/shadow_play/bgc.jpg', fit: BoxFit.cover),
+            ),
           ),
           //back
           Positioned(
@@ -97,6 +101,15 @@ class LikePageView extends StatefulWidget {
 }
 
 class _LikePageViewState extends State<LikePageView> {
+  List<API.Video> _videos = new List(1);
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      getVideosByModuleIdAsync(4).then((v) => _videos = v).whenComplete(() => setState(() {}));
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -128,6 +141,7 @@ class _LikePageViewState extends State<LikePageView> {
             ' ',
             '欣赏作品||倒马关。倒马关，位于河北唐县西北60公里的倒马关乡倒马关村，最初于战国时置，称鸿之塞。',
             '/pages/shadow_play/video',
+            arguments: _videos[0],
           ),
           myCard(
             'assets/images/shadow_play/bgc05.jpg',
@@ -141,68 +155,69 @@ class _LikePageViewState extends State<LikePageView> {
   }
 
 //所有的卡片
-  Widget myCard(String img, String title, String text, String route) {
+  Widget myCard(String img, String title, String text, String route,{dynamic arguments}) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, route);
+        Navigator.pushNamed(context, route, arguments: arguments);
       },
-        child: Container(
-      padding: EdgeInsets.fromLTRB(40, 10, 10, 10),
       child: Container(
-        padding: EdgeInsets.all(10),
-        width: DeviceSize.getWidthByPercent(0.6), // width: 240,
-        decoration: BoxDecoration(
-          //image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover),
-          image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
-          borderRadius: BorderRadius.circular(35),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: CupertinoColors.systemGrey,
-              offset: Offset(-2, 2),
-              blurRadius: 6.0,
-              spreadRadius: 0.0,
-            ),
-          ],
-        ),
-        child: Row(
-          children: <Widget>[
-            //扩展按钮
-            Expanded(
-              flex: 1,
-              child: CupertinoButton(
-                padding: EdgeInsets.only(
-                    top: DeviceSize.getWidthByPercent(0.7),
-                    left: DeviceSize.getWidthByPercent(0.05)),
-                child: Icon(
-                  IconData(0xe659, fontFamily: 'Schyler'),
-                  color: CupertinoColors.black,
-                  size: 18,
+        padding: EdgeInsets.fromLTRB(40, 10, 10, 10),
+        child: Container(
+          padding: EdgeInsets.all(10),
+          width: DeviceSize.getWidthByPercent(0.6), // width: 240,
+          decoration: BoxDecoration(
+            //image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover),
+            image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
+            borderRadius: BorderRadius.circular(35),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: CupertinoColors.systemGrey,
+                offset: Offset(-2, 2),
+                blurRadius: 6.0,
+                spreadRadius: 0.0,
+              ),
+            ],
+          ),
+          child: Row(
+            children: <Widget>[
+              //扩展按钮
+              Expanded(
+                flex: 1,
+                child: CupertinoButton(
+                  padding: EdgeInsets.only(
+                      top: DeviceSize.getWidthByPercent(0.7),
+                      left: DeviceSize.getWidthByPercent(0.05)),
+                  child: Icon(
+                    IconData(0xe659, fontFamily: 'Schyler'),
+                    color: CupertinoColors.black,
+                    size: 18,
+                  ),
+                  // onPressed: () {
+                  //   Navigator.pushNamed(context, url);
+                  // },
                 ),
-                // onPressed: () {
-                //   Navigator.pushNamed(context, url);
-                // },
               ),
-            ),
-            //文本介绍
-            Expanded(
-              flex: 4,
-              child: Container(
-                padding: EdgeInsets.only(top: 40),
-                child: _verticalText(text, 12),
+              //文本介绍
+              Expanded(
+                flex: 4,
+                child: Container(
+                  padding: EdgeInsets.only(top: 40),
+                  child: _verticalText(text, 12),
+                ),
               ),
-            ),
-            //标题
-            Expanded(
-              flex: 3,
-              child: Container(
-                padding: EdgeInsets.only(top: 40, right: 20),
-                child: _verticalText(title, 4),
+              //标题
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: EdgeInsets.only(top: 40, right: 20),
+                  child: _verticalText(title, 4),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
 //简介——没有按钮的卡片

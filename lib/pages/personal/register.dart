@@ -61,7 +61,6 @@ class _RegisterPageState extends State<RegisterPage> {
     // _veriFocus.addListener(_focusNodeListener);
     //监听手机号框的输入改变
     _mobileController.addListener(() {
-      print(_mobileController.text);
       // 监听文本框输入变化，当有内容的时候，显示尾部清除按钮，否则不显示
       // if (_mobileController.text.length > 0) {
       //   _isShowClear = true;
@@ -87,13 +86,11 @@ class _RegisterPageState extends State<RegisterPage> {
   // 监听焦点
   Future<Null> _focusNodeListener() async {
     if (_mobileFocus.hasFocus) {
-      print("用户名框获取焦点");
       // 取消密码框和验证码的焦点状态
       _passwordFocus.unfocus();
       // _veriFocus.unfocus();
     }
     if (_passwordFocus.hasFocus) {
-      print("密码框获取焦点");
       // 取消用户名和验证码框焦点状态
       _mobileFocus.unfocus();
       // _veriFocus.unfocus();
@@ -204,7 +201,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                 onSubmitted: (String value) {
                   _username = value;
-                  print(value);
                 },
               ),
             ),
@@ -270,7 +266,6 @@ class _RegisterPageState extends State<RegisterPage> {
           if (_formKey.currentState.validate()) {
             // 只有输入通过验证，才会执行这里
             _formKey.currentState.save();
-            print("$_username + $_password");
             var _u = API.User(
               username: _username,
               // phone: _username,
@@ -340,7 +335,6 @@ class _RegisterPageState extends State<RegisterPage> {
       child: new GestureDetector(
         onTap: () {
           // 点击空白区域，回收键盘
-          print("击了空白区域");
           _mobileFocus.unfocus();
           _passwordFocus.unfocus();
           // _veriFocus.unfocus();

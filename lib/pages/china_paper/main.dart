@@ -4,6 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:zl_app/api/dio_singleton.dart';
 
 import 'package:zl_app/utils/device_size.dart';
+import 'package:zl_app/api/interfaces.dart';
+import 'package:zl_app/api/models.dart' as API;
 
 class ChinaPaperMain extends StatefulWidget {
   ChinaPaperMain({Key key}) : super(key: key);
@@ -13,6 +15,7 @@ class ChinaPaperMain extends StatefulWidget {
 }
 
 class _ChinaPaperMainState extends State<ChinaPaperMain> {
+
   @override
   Widget build(BuildContext context) {
     DeviceSize.setDeviceSize(MediaQuery.of(context).size);

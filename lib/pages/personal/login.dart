@@ -44,8 +44,6 @@ class _LoginPageState extends State<LoginPage> {
     _focusNodePassWord.addListener(_focusNodeListener);
     //监听用户名框的输入改变
     _userNameController.addListener(() {
-      print(_userNameController.text);
-
       // 监听文本框输入变化，当有内容的时候，显示尾部清除按钮，否则不显示
       if (_userNameController.text.length > 0) {
         _isShowClear = true;
@@ -75,12 +73,10 @@ class _LoginPageState extends State<LoginPage> {
   // 监听焦点
   Future<Null> _focusNodeListener() async {
     if (_focusNodeUserName.hasFocus) {
-      print("用户名框获取焦点");
       // 取消密码框的焦点状态
       _focusNodePassWord.unfocus();
     }
     if (_focusNodePassWord.hasFocus) {
-      print("密码框获取焦点");
       // 取消用户名框焦点状态
       _focusNodeUserName.unfocus();
     }
@@ -173,7 +169,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onChanged: (String value) {
                         _username = value;
-                        print(value);
                       },
                     ),
                   ],
@@ -244,7 +239,6 @@ class _LoginPageState extends State<LoginPage> {
             //只有输入通过验证，才会执行这里
             _formKey.currentState.save();
 
-            print("$_username + $_password");
             API.User login = new API.User(
               username: _username,
               password: generateMd5(_password),
@@ -254,8 +248,6 @@ class _LoginPageState extends State<LoginPage> {
             if (!operation.hasError) {
               var result = operation.getResult();
               Account.userId = result['values'][0]['ID'];
-              print(Account.userId);
-              print(Account.token);
               Navigator.pushNamed(context, "/home");
             } else {
               print(operation.log);
@@ -327,7 +319,6 @@ class _LoginPageState extends State<LoginPage> {
       child: new GestureDetector(
         onTap: () {
           // 点击空白区域，回收键盘
-          print("点击了空白区域");
           _focusNodePassWord.unfocus();
           _focusNodeUserName.unfocus();
         },

@@ -29,7 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigationPage() {
     _timer.cancel();
-    Navigator.of(context).pushReplacementNamed('/personal/login'); //要跳转的页面
+    //要跳转的页面
+    Navigator.of(context).pushReplacementNamed('/personal/login');
   }
 
   @override

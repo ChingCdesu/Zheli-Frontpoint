@@ -129,42 +129,46 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
             ],
           ),
           //按钮
+          buttom(),
+        ],
+      ),
+    );
+  }
+
+  Widget buttom() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: CupertinoButton(
-                    child: Icon(
-                      like
-                          ? IconData(0xe780, fontFamily: 'Schyler')
-                          : IconData(0xe757, fontFamily: 'Schyler'),
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      likeImg();
-                    },
-                  ),
-                ),
-                Container(
-                  child: CupertinoButton(
-                    child: Icon(
-                      favorite
-                          ? IconData(0xe779, fontFamily: 'Schyler')
-                          : IconData(0xe745, fontFamily: 'Schyler'),
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      favoriteImg();
-                    },
-                  ),
-                ),
-              ],
+            margin: EdgeInsets.only(right: 20),
+            child: CupertinoButton(
+              child: Icon(
+                like
+                    ? IconData(0xe780, fontFamily: 'Schyler')
+                    : IconData(0xe757, fontFamily: 'Schyler'),
+                size: 50,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                likeImg();
+              },
+            ),
+          ),
+          Container(
+            child: CupertinoButton(
+              child: Icon(
+                favorite
+                    ? IconData(0xe779, fontFamily: 'Schyler')
+                    : IconData(0xe745, fontFamily: 'Schyler'),
+                size: 50,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                favoriteImg();
+              },
             ),
           ),
         ],

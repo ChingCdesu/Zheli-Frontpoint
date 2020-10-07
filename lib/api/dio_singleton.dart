@@ -44,7 +44,7 @@ class DioSingleton {
           'ServerMessage': response.data['message'],
         };
         response.data = response.data['data'];
-        // Account.token = response.headers.value('token');
+        Account.token = response.headers.value('token');
       }
       return response;
     },

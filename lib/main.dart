@@ -58,7 +58,7 @@ class ZlApp extends StatefulWidget {
 }
 
 class _ZlAppState extends State<ZlApp> with WidgetsBindingObserver {
-  final Map<String, WidgetBuilder> _routes = {
+  final _routes = {
     '/home': (context) => HomePage(),
     // 富阳竹纸
     '/pages/china_paper/main': (context) => ChinaPaperMain(),
@@ -101,10 +101,13 @@ class _ZlAppState extends State<ZlApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Cupertino App',
-      //home: LoginPage(),
+      //home: HomePage(),
       home: SplashScreen(),
+
       //initialRoute: '/personal/login',
       initialRoute: '/splashScreen',
+
+      //initialRoute: '/home',
       routes: _routes,
       // builder: (BuildContext context, Widget child) {
       //   return MediaQuery(
@@ -114,6 +117,25 @@ class _ZlAppState extends State<ZlApp> with WidgetsBindingObserver {
       //     ),
       //     child: child,
       //   );
+      // },
+      // onGenerateRoute: (settings) {
+      //   final name = settings.name;
+      //   final Function pageContentBuilder = _routes[name];
+      //   if (settings.arguments != null) {
+      //     print(settings.arguments);
+      //     return new CupertinoPageRoute(
+      //       builder: (context) => pageContentBuilder(
+      //         context,
+      //         arguments: settings.arguments,
+      //       ),
+      //     );
+      //   } else {
+      //     return new CupertinoPageRoute(
+      //       builder: (context) => pageContentBuilder(
+      //         context,
+      //       ),
+      //     );
+      //   }
       // },
     );
   }

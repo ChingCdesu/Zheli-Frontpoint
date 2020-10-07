@@ -156,7 +156,7 @@ class Get extends ModelDecorator {
       super._hasError = true;
       return;
     }
-    super._result = response.data;
-    model = model.fromJson(_result);
+    super._result = model.fromJson(response.data);
+    // model = model.fromJson(_result);
   }
 }

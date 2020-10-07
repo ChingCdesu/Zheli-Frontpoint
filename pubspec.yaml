@@ -77,6 +77,9 @@ flutter:
     - family: Schyler
       fonts:
         - asset: assets/fonts/iconfont.ttf
+    - family: font_boo
+      fonts:
+        - asset: assets/fonts/font_boo.TTF
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

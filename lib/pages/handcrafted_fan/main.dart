@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:zl_app/api/dio_singleton.dart';
+import 'package:zl_app/api/interfaces.dart';
 import 'package:zl_app/api/models.dart' as API;
 
 // import 'package:zl_app/pages/handcrafted_fan/video.dart';
@@ -141,19 +142,8 @@ class _CardPageState extends State<CardPage> {
 
   @override
   void initState() {
-    var _v = API.Video(parentModuleId: 3);
-    API.Confirm(_v).doOperation().then((_o) {
-      if (_o.hasError) {
-        print(_o.log);
-      } else {
-        var _r = _o.getResult();
-        var _l = _r['values'] as List<dynamic>;
-        _l.forEach((element) {
-          _v.id = element['ID'];
-          API.Get(_v).doOperation().then((_) => _videos.add(_v));
-        });
-      }
-    }).whenComplete(() => super.initState());
+    super.initState();
+    getVideosByModuleIdAsync(2).then((v) => _videos = v).whenComplete(() => setState(() {}));
   }
 
   @override
@@ -218,7 +208,7 @@ class _CardPageState extends State<CardPage> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Image.network(v.imageUrl),
+                child: Image.network(publicUrl + v.imageUrl),
                 height: DeviceSize.getHeightByPercent(0.3), //110
                 decoration: BoxDecoration(),
               ),

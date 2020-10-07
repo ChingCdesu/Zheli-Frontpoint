@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/utils/device_size.dart';
+import 'package:zl_app/api/interfaces.dart';
+
+import 'package:zl_app/api/models.dart' as API;
 
 class FeminineAdornmentMain extends StatefulWidget {
   FeminineAdornmentMain({Key key, this.title}) : super(key: key);
@@ -13,6 +16,14 @@ class FeminineAdornmentMain extends StatefulWidget {
 }
 
 class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
+  List<API.Video> _videos = new List(1);
+
+  @override
+  void initState() {
+    super.initState();
+    getVideosByModuleIdAsync(3).then((v) => _videos = v).whenComplete(() => setState(() {}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -63,7 +74,8 @@ class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
                         'assets/images/feminine_adornment/title_video.png',
                         '十里红妆是以浙江省宁海县为主的浙东地区存在的一种传统婚俗，得名于当地嫁女时，所用的嫁妆从床铺家具到针头线脑一应俱全，从而迎送嫁妆的队伍经常从女家一直延伸到夫家，浩浩荡荡，绵延十里，故称“十里红妆”。',
                         'assets/images/feminine_adornment/bgc03.png',
-                        '/pages/feminine_adornment/video'),
+                        '/pages/feminine_adornment/video',
+                        arguments: _videos[0]),
                     myPage(
                         'assets/images/feminine_adornment/title_history.png',
                         '红妆艺术是一种传统艺术，但它同时也展示了当时人们的一种文化态度、生活方式。旧时宁海大户富庶，才能负担起丰厚的嫁妆。新娘的嫁妆贵重与否决定了以后在夫家的地位。于是，小到针头线脑，大到婚床花轿、箱、柜、桌、椅、盆、桶、铜锡器，无一不是描龙画凤，样样齐全。',
@@ -93,10 +105,10 @@ class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
     );
   }
 
-  Widget myPage(String title, String contant, String img, String route) {
+  Widget myPage(String title, String contant, String img, String route, {dynamic arguments}) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, route);
+        Navigator.pushNamed(context, route, arguments: arguments);
       },
       child: Container(
         height: DeviceSize.getHeightByPercent(0.7),
@@ -112,10 +124,11 @@ class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
           ),
           boxShadow: [
             BoxShadow(
-                blurRadius: 5,
-                color: CupertinoColors.systemGrey3,
-                offset: Offset.fromDirection(45, 10),
-                spreadRadius: 4)
+              blurRadius: 5,
+              color: CupertinoColors.systemGrey3,
+              offset: Offset.fromDirection(45, 10),
+              spreadRadius: 4,
+            )
           ],
           borderRadius: BorderRadius.all(Radius.circular(15)),
           color: CupertinoColors.white,

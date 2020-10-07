@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/interfaces.dart';
+import 'package:zl_app/api/models.dart' as API;
+import 'package:zl_app/api/model_operations.dart' as API;
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/device_size.dart';
 import 'package:flutter/rendering.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
-import 'package:zl_app/api/models.dart' as API;
-import 'package:zl_app/api/model_operations.dart' as API;
-import 'package:zl_app/api/dio_singleton.dart';
-
 class SeaCultureVideo extends StatefulWidget {
-  SeaCultureVideo({Key key, this.title}) : super(key: key);
-  final String title;
+  SeaCultureVideo({Key key}) : super(key: key);
 
   @override
   _SeaCultureVideoState createState() => _SeaCultureVideoState();
 }
 
 class _SeaCultureVideoState extends State<SeaCultureVideo> {
+  _SeaCultureVideoState();
   VideoPlayerController _videoPlayercontroller;
   ChewieController _chewieController;
 
@@ -27,18 +27,12 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
   var isdislikeLight = false;
 
   API.Video _videoInfo;
+  List<VideoCommentUserView> _comments = List();
   int favId;
 
   @override
   void initState() {
     super.initState();
-    _videoPlayercontroller =
-        VideoPlayerController.network(publicUrl + 'assets/sea_culture/video/zsyh01.mp4');
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayercontroller,
-      autoPlay: true,
-      aspectRatio: 16 / 9.0,
-    );
   }
 
   @override
@@ -50,19 +44,29 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
 
   @override
   Widget build(BuildContext context) {
-    DeviceSize.setDeviceSize(MediaQuery.of(context).size);
+    _videoInfo = ModalRoute.of(context).settings.arguments;
+    getCommentsByVideoIdAsync(_videoInfo.id)
+        .then((comments) => _comments.addAll(comments as List<VideoCommentUserView>))
+        .whenComplete(() => print(_comments));
+    _videoPlayercontroller = VideoPlayerController.network(publicUrl + _videoInfo.videoUrl);
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayercontroller,
+      autoPlay: true,
+      aspectRatio: 16 / 9.0,
+    );
+    // DeviceSize.setDeviceSize(MediaQuery.of(context).size);
     return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          automaticallyImplyLeading: false,
-          automaticallyImplyMiddle: true,
-          border: Border(),
-          backgroundColor: Colors.white,
-          padding: EdgeInsetsDirectional.only(
-            end: DeviceSize.getWidthByPercent(0.02),
-          ),
-          //trailing: this.trailing,
-          leading: Container(
-              child: Material(
+      navigationBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+        automaticallyImplyMiddle: true,
+        border: Border(),
+        backgroundColor: Colors.white,
+        padding: EdgeInsetsDirectional.only(
+          end: DeviceSize.getWidthByPercent(0.02),
+        ),
+        // trailing: this.trailing,
+        leading: Container(
+          child: Material(
             color: Colors.transparent,
             child: CupertinoButton(
               padding: EdgeInsets.all(0),
@@ -102,43 +106,46 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
                 Navigator.of(context).pop();
               },
             ),
-          )),
+          ),
         ),
-        child: Stack(children: <Widget>[
-          Column(children: [
-            //视频播放
-            Container(
-              padding: EdgeInsets.all(0),
-              color: Color.fromRGBO(44, 44, 4, 1),
-              child: Chewie(
-                controller: _chewieController,
+      ),
+      child: Stack(
+        children: <Widget>[
+          Column(
+            children: [
+              //视频播放
+              Container(
+                padding: EdgeInsets.all(0),
+                color: Color.fromRGBO(44, 44, 4, 1),
+                child: Chewie(
+                  controller: _chewieController,
+                ),
               ),
-            ),
-            //评论
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: <Widget>[
-                  //评论列表
-                  Expanded(
-                    child: MediaQuery.removePadding(
-                      removeTop: true,
-                      context: context,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: DeviceSize.getHeightByPercent(0.2)),
-                        child: ListView(
-                          children: <Widget>[
-                            //视频简介
-                            Container(
-                              child: Container(
-                                alignment: Alignment.centerLeft,
-                                margin: EdgeInsets.only(
-                                    left: DeviceSize.getWidthByPercent(0.02),
-                                    right: DeviceSize.getWidthByPercent(0.02)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
+              //评论
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: <Widget>[
+                    //评论列表
+                    Expanded(
+                      child: MediaQuery.removePadding(
+                        removeTop: true,
+                        context: context,
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: DeviceSize.getHeightByPercent(0.2)),
+                          child: ListView(
+                            children: <Widget>[
+                              //视频简介
+                              Container(
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.only(
+                                      left: DeviceSize.getWidthByPercent(0.02),
+                                      right: DeviceSize.getWidthByPercent(0.02)),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
                                         padding: EdgeInsets.only(
                                             left: DeviceSize.getWidthByPercent(0.02)),
                                         child: Row(
@@ -155,10 +162,12 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
                                                 Container(
                                                   padding: EdgeInsets.only(
                                                       left: DeviceSize.getWidthByPercent(0.04)),
-                                                  child: new Text('舟山渔海-船模',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                      )),
+                                                  child: new Text(
+                                                    _videoInfo.title,
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -179,9 +188,8 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
                                                     isLight = !isLight;
                                                     if (isLight) {
                                                       var _f = API.Favorite(
-                                                        userId: Account.userId,
-                                                        videoId: this._videoInfo.id,
-                                                      );
+                                                          userId: Account.userId,
+                                                          videoId: this._videoInfo.id);
                                                       var _o = await API.Create(_f).doOperation();
                                                       if (_o.hasError) {
                                                         print(_o.log);
@@ -199,20 +207,21 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
                                               ),
                                             )
                                           ],
-                                        )),
-                                    Container(
-                                      margin: EdgeInsets.fromLTRB(10, 4, 10, 10),
-                                      child: new Text(
-                                        '视频内容：船模，是完全依照真船的形状、结构、色彩，甚至内饰部件，严格按比例缩小而制作的比例模型。用精湛巧妙的手艺再现原船的主要特征以及过去的生活场景，船模蕴含着独特的船舶文化。',
-                                        style: TextStyle(fontSize: 14),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Container(
+                                        margin: EdgeInsets.fromLTRB(10, 4, 10, 10),
+                                        child: new Text(
+                                          _videoInfo.description,
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            //评论
-                            Container(
+                              //评论
+                              Container(
                                 padding: EdgeInsets.only(
                                   left: DeviceSize.getWidthByPercent(0.05),
                                 ),
@@ -225,22 +234,26 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
                                     Container(
                                       padding:
                                           EdgeInsets.only(left: DeviceSize.getWidthByPercent(0.02)),
-                                      child: new Text('(0)',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          )),
+                                      // child: new Text(
+                                      //   '(0)',
+                                      //   style: TextStyle(
+                                      //     fontSize: 14,
+                                      //   ),
+                                      // ),
                                     ),
                                   ],
-                                )),
-                          ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
           Align(
             alignment: AlignmentDirectional.bottomCenter,
             child: Container(
@@ -291,6 +304,8 @@ class _SeaCultureVideoState extends State<SeaCultureVideo> {
               ),
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }

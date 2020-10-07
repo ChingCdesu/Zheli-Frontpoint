@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/interfaces.dart';
 import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
 import 'package:zl_app/api/dio_singleton.dart';
@@ -10,14 +11,14 @@ import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
 class FeminineAdornmentVideo extends StatefulWidget {
-  FeminineAdornmentVideo({Key key, this.title}) : super(key: key);
-  final String title;
+  FeminineAdornmentVideo({Key key}) : super(key: key);
 
   @override
   _FeminineAdornmentVideoState createState() => _FeminineAdornmentVideoState();
 }
 
 class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
+  _FeminineAdornmentVideoState();
   VideoPlayerController _videoPlayercontroller;
   ChewieController _chewieController;
 
@@ -26,18 +27,12 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
   var isdislikeLight = false;
 
   API.Video _videoInfo;
+  List<VideoCommentUserView> _comments = List();
   int favId;
 
   @override
   void initState() {
     super.initState();
-    _videoPlayercontroller =
-        VideoPlayerController.network(publicUrl + 'assets/feminine_adornment/video/video.mp4');
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayercontroller,
-      autoPlay: true,
-      aspectRatio: 16 / 9.0,
-    );
   }
 
   @override
@@ -49,7 +44,17 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
 
   @override
   Widget build(BuildContext context) {
-    DeviceSize.setDeviceSize(MediaQuery.of(context).size);
+    _videoInfo = ModalRoute.of(context).settings.arguments;
+    getCommentsByVideoIdAsync(_videoInfo.id)
+        .then((comments) => _comments.addAll(comments as List<VideoCommentUserView>))
+        .whenComplete(() => print(_comments));
+    _videoPlayercontroller = VideoPlayerController.network(publicUrl + _videoInfo.videoUrl);
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayercontroller,
+      autoPlay: true,
+      aspectRatio: 16 / 9.0,
+    );
+    // DeviceSize.setDeviceSize(MediaQuery.of(context).size);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         automaticallyImplyLeading: false,
@@ -158,7 +163,7 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
                                                   padding: EdgeInsets.only(
                                                       left: DeviceSize.getWidthByPercent(0.04)),
                                                   child: new Text(
-                                                    '十里红妆-宣传片',
+                                                    _videoInfo.title,
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                     ),
@@ -207,7 +212,7 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
                                       Container(
                                         margin: EdgeInsets.fromLTRB(10, 4, 10, 10),
                                         child: new Text(
-                                          '视频内容：十里红妆，盛行于以宁海为代表的浙东地区，这种传统婚俗始于南宋时期，盛于明清。因嫁妆丰厚，抬嫁妆的队伍浩浩荡荡，绵延十里，无比壮阔而得名。而陪嫁物大至床铺，桌椅，被褥，小至线板，纺锤，女红用品等都应有尽有。',
+                                          _videoInfo.description,
                                           style: TextStyle(fontSize: 14),
                                         ),
                                       ),
@@ -235,7 +240,6 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
                                       //     fontSize: 14,
                                       //   ),
                                       // ),
-                                      
                                     ),
                                   ],
                                 ),

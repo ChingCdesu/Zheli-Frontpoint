@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/dio_singleton.dart';
+import 'package:zl_app/api/interfaces.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/device_size.dart';
 import 'package:flutter/rendering.dart';
@@ -10,8 +12,8 @@ import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
 
 class ShadowPlayVideo extends StatefulWidget {
-  ShadowPlayVideo({Key key, this.title}) : super(key: key);
-  final String title;
+  ShadowPlayVideo({Key key, this.videoInfo}) : super(key: key);
+  final API.Video videoInfo;
 
   @override
   _ShadowPlayVideoState createState() => _ShadowPlayVideoState();
@@ -26,17 +28,12 @@ class _ShadowPlayVideoState extends State<ShadowPlayVideo> {
   var isdislikeLight = false;
 
   API.Video _videoInfo;
+   List<VideoCommentUserView> _comments = List();
   int favId;
 
   @override
   void initState() {
     super.initState();
-    _videoPlayercontroller = VideoPlayerController.asset('video/zsyh01.mp4');
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayercontroller,
-      autoPlay: true,
-      aspectRatio: 16 / 9.0,
-    );
   }
 
   @override
@@ -48,7 +45,16 @@ class _ShadowPlayVideoState extends State<ShadowPlayVideo> {
 
   @override
   Widget build(BuildContext context) {
-    DeviceSize.setDeviceSize(MediaQuery.of(context).size);
+    _videoInfo = ModalRoute.of(context).settings.arguments;
+    getCommentsByVideoIdAsync(_videoInfo.id)
+        .then((comments) => _comments.addAll(comments as List<VideoCommentUserView>))
+        .whenComplete(() => print(_comments));
+    _videoPlayercontroller = VideoPlayerController.network(publicUrl + _videoInfo.videoUrl);
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayercontroller,
+      autoPlay: true,
+      aspectRatio: 16 / 9.0,
+    );
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           automaticallyImplyLeading: false,
@@ -123,7 +129,7 @@ class _ShadowPlayVideoState extends State<ShadowPlayVideo> {
                                                 Container(
                                                   padding: EdgeInsets.only(
                                                       left: DeviceSize.getWidthByPercent(0.04)),
-                                                  child: new Text('皮影之光 -《盗马关》作品展示',
+                                                  child: new Text(_videoInfo.title,
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                       )),
@@ -171,7 +177,7 @@ class _ShadowPlayVideoState extends State<ShadowPlayVideo> {
                                     Container(
                                       margin: EdgeInsets.fromLTRB(10, 4, 10, 10),
                                       child: new Text(
-                                        '视频内容：皮影戏，起源于西汉时期，是中国民间古老的传统艺术，通过灯光，将皮影人偶投影在幕布上来演绎戏剧，2011年，中国皮影戏更是入选人类非物质文化遗产代表作名录。《盗马关》则是皮影的一个经典剧目。',
+                                        _videoInfo.description,
                                         style: TextStyle(fontSize: 14),
                                       ),
                                     ),
