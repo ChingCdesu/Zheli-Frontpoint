@@ -15,7 +15,6 @@ class ChinaPaperMain extends StatefulWidget {
 }
 
 class _ChinaPaperMainState extends State<ChinaPaperMain> {
-
   @override
   Widget build(BuildContext context) {
     DeviceSize.setDeviceSize(MediaQuery.of(context).size);
@@ -24,12 +23,17 @@ class _ChinaPaperMainState extends State<ChinaPaperMain> {
       child: Stack(
         children: <Widget>[
           Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/china_paper/head.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
             height: DeviceSize.getHeightByPercent(0.8),
             // child: Image.network(
             //   publicUrl + 'assets/china_paper/main/head.jpg',
             //   fit: BoxFit.fill,
             // ),
-            child: Image.asset('assets/images/china_paper/head.jpg'),
           ),
           //back icon
           Positioned(

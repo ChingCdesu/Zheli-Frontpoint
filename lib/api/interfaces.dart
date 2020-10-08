@@ -106,16 +106,12 @@ Future<API.User> registAsync(String username, String password) async {
 
 // TODO: 待完成
 // 添加视频评论
-Future<bool> createCommentsAsync(API.VideoComment comment) async {
-
-}
+Future<bool> createCommentsAsync(API.VideoComment comment) async {}
 // 获取用户的动态(用户id)
-Future<List> getPostsByUserIdAsync(int userId) async {
-  
-}
+Future<List> getPostsByUserIdAsync(int userId) async {}
 // 添加动态
 Future<bool> createPostAsync(API.Post post) async {}
 // 给动态点赞
-Future<bool> createPostLikeAsync(API.PostLike link) async {}
+Future<bool> createPostLikeAsync(API.PostLike like) async {}
 // 获取动态的赞(动态id)
 Future<List> getPostLikesByPostIdAsync(int postId) async {}

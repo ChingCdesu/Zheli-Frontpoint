@@ -66,14 +66,14 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
               maxHeight: DeviceSize.getHeightByPercent(0.8), // maxHeight: 400,
               slideDirection: SlideDirection.DOWN,
               borderRadius: BorderRadius.circular(35),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: CupertinoColors.systemGrey,
-                  offset: Offset(2, 5),
-                  blurRadius: 12.0,
-                  spreadRadius: 0.0,
-                ),
-              ],
+              // boxShadow: <BoxShadow>[
+              //   BoxShadow(
+              //     color: CupertinoColors.systemGrey,
+              //     offset: Offset(2, 5),
+              //     blurRadius: 12.0,
+              //     spreadRadius: 0.0,
+              //   ),
+              // ],
               //上拉
               panel: Container(
                 decoration: BoxDecoration(
@@ -171,16 +171,17 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(50),
                           boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: CupertinoColors.systemGrey,
-                              offset: Offset(3, 5),
-                              blurRadius: 8.0,
-                              spreadRadius: 0.0,
-                            )
+                            // BoxShadow(
+                            //   color: CupertinoColors.systemGrey,
+                            //   offset: Offset(3, 5),
+                            //   blurRadius: 8.0,
+                            //   spreadRadius: 0.0,
+                            // )
                           ],
                           image: DecorationImage(
                               //image: NetworkImage(publicUrl + 'assets/sea_culture/main/播放.png'),
-                              image: AssetImage('assets/images/sea_culture/play.png')),
+                              image: AssetImage('assets/images/sea_culture/play.png'),
+                              fit: BoxFit.cover),
                         ),
                       ),
                       onPressed: () {
@@ -267,9 +268,12 @@ class CardScrollWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
               child: Container(
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(color: Colors.black12, offset: Offset(3.0, 6.0), blurRadius: 10.0)
-                ]),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  // boxShadow: [
+                  //   BoxShadow(color: Colors.black12, offset: Offset(3.0, 6.0), blurRadius: 10.0)
+                  // ],
+                ),
                 child: AspectRatio(
                   aspectRatio: cardAspectRatio,
                   child: Stack(
@@ -277,7 +281,7 @@ class CardScrollWidget extends StatelessWidget {
                     children: <Widget>[
                       Image.network(
                         publicUrl + _vs[i].imageUrl,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                       Align(
                         alignment: Alignment.bottomLeft,

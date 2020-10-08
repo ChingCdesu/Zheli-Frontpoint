@@ -53,7 +53,7 @@ class _TestState extends State<Test> {
     //     setState(() {});
     //   },
     // );
-    image = await AssetLibrary.AImage.network('http://localhost:7001/public/upload/avatar/1.png');
+    image = await AssetLibrary.Image.network('http://localhost:7001/public/upload/avatar/1.png');
     setState(() {});
   }
 

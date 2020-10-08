@@ -226,6 +226,8 @@ class _CardPageState extends State<CardPage> {
                       margin: EdgeInsets.only(top: 6),
                       child: Text(
                         v.description,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 14),
                       ),
                     ),
@@ -245,7 +247,7 @@ class _CardPageState extends State<CardPage> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/pages/handcrafted_fan/video');
+                          Navigator.pushNamed(context, '/pages/video');
                         },
                       ),
                     )

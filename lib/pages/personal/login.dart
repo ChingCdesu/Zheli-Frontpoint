@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
 
     //输入文本框区域
     Widget inputTextArea = new Container(
-      height: DeviceSize.getHeightByPercent(0.3),
+      height: DeviceSize.getHeightByPercent(0.28),
       margin: EdgeInsets.only(left: 36, right: 46),
       decoration: new BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: <Widget>[
                     new CupertinoTextField(
-                      padding: EdgeInsets.fromLTRB(26, 0, 2, 0),
+                      padding: EdgeInsets.fromLTRB(26, 16, 2, 16),
                       controller: _userNameController,
                       focusNode: _focusNodeUserName,
                       keyboardType: TextInputType.text,
@@ -163,6 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                             )
                           : null,
                       decoration: BoxDecoration(
+                        // color: CupertinoColors.activeBlue,
                         borderRadius: BorderRadius.all(
                           Radius.circular(26.0),
                         ),

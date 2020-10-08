@@ -74,7 +74,7 @@ class _FeminineAdornmentMainState extends State<FeminineAdornmentMain> {
                         'assets/images/feminine_adornment/title_video.png',
                         '十里红妆是以浙江省宁海县为主的浙东地区存在的一种传统婚俗，得名于当地嫁女时，所用的嫁妆从床铺家具到针头线脑一应俱全，从而迎送嫁妆的队伍经常从女家一直延伸到夫家，浩浩荡荡，绵延十里，故称“十里红妆”。',
                         'assets/images/feminine_adornment/bgc03.png',
-                        '/pages/feminine_adornment/video',
+                        '/pages/video',
                         arguments: _videos[0]),
                     myPage(
                         'assets/images/feminine_adornment/title_history.png',

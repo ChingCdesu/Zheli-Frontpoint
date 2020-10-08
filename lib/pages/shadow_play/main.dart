@@ -140,7 +140,7 @@ class _LikePageViewState extends State<LikePageView> {
             'assets/images/shadow_play/bgc04.jpg',
             ' ',
             '欣赏作品||倒马关。倒马关，位于河北唐县西北60公里的倒马关乡倒马关村，最初于战国时置，称鸿之塞。',
-            '/pages/shadow_play/video',
+            '/pages/video',
             arguments: _videos[0],
           ),
           myCard(

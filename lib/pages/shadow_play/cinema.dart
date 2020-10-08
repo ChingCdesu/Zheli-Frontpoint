@@ -58,6 +58,7 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
           )),
         ),
         child: Container(
+          padding: EdgeInsets.only(top: 50),
           color: Color.fromRGBO(50, 50, 50, 1),
           child: Column(
             children: <Widget>[
@@ -129,7 +130,7 @@ class _ShadowPlayCinemaState extends State<ShadowPlayCinema> {
             ],
           ),
           //按钮
-          buttom(),
+          // buttom(),
         ],
       ),
     );

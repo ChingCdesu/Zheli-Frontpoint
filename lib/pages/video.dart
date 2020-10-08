@@ -244,6 +244,7 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
                                   ],
                                 ),
                               ),
+                              //评论列表
                               Container(
                                 child: ListView.builder(
                                 itemCount: _comments.length,
@@ -305,9 +306,8 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
                                         ),
                                       );
                                 },
-
                               )
-                            ],
+                              )],
                           ),
                         ),
                       ),
@@ -317,6 +317,7 @@ class _FeminineAdornmentVideoState extends State<FeminineAdornmentVideo> {
               ),
             ],
           ),
+          //输入框
           Align(
             alignment: AlignmentDirectional.bottomCenter,
             child: Container(

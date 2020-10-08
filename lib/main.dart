@@ -5,7 +5,7 @@ import 'package:zl_app/pages/china_paper/manufacture.dart';
 import 'package:zl_app/pages/feminine_adornment/history.dart';
 import 'package:zl_app/pages/feminine_adornment/main.dart';
 import 'package:zl_app/pages/feminine_adornment/object.dart';
-import 'package:zl_app/pages/feminine_adornment/video.dart';
+import 'package:zl_app/pages/video.dart';
 
 import 'package:zl_app/pages/handcrafted_fan/main.dart';
 import 'package:zl_app/pages/handcrafted_fan/video.dart';
@@ -28,7 +28,7 @@ import 'package:zl_app/pages/shadow_play/main.dart';
 import 'package:zl_app/pages/shadow_play/manufacture.dart';
 import 'package:zl_app/pages/shadow_play/video.dart';
 
-// import 'package:zl_app/pages/sidebar_page.dart';
+import 'package:zl_app/pages/sidebar_page.dart';
 import 'package:zl_app/pages/home_page.dart';
 import 'package:zl_app/utils/env.dart';
 
