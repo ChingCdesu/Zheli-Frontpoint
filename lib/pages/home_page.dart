@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/pages/sidebar_page.dart';
+import 'package:zl_app/settings/user.dart';
 // import 'package:zl_app/pages/sidebar_page.txt';
 // import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/ui_libraries/indicator.dart';
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   double height = 0.0;
   bool homeLock = false;
 
-  double get maxSlideDistance => MediaQuery.of(context).size.width * 0.45;
+  double get maxSlideDistance => MediaQuery.of(context).size.width * 0.9;
 
   final GlobalKey<ContainerState> _slideKey = GlobalKey<ContainerState>();
 
@@ -39,13 +40,13 @@ class _HomePageState extends State<HomePage> {
 
   PageController pageController;
   double viewportFraction = 0.8; //放大之后展示多大的图
-  double pageOffset = 1; //首个放大页面是第几个
+  double pageOffset = 0; //首个放大页面是第几个
 
   @override
   void initState() {
     super.initState();
     //首页面设置第几个，放多大
-    pageController = PageController(initialPage: 1, viewportFraction: viewportFraction)
+    pageController = PageController(initialPage: 0, viewportFraction: viewportFraction)
       ..addListener(() {
         setState(() {
           pageOffset = pageController.page;
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               //Padding(padding: EdgeInsets.only(bottom: 8)),
                               Text(
-                                "欢迎回来,Colaholic!",
+                                "欢迎回来,${Account.username}!",
                                 style: TextStyle(
                                   fontSize: 25.0,
                                   fontFamily: "font_boo",
@@ -165,6 +166,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: <Widget>[
                       Expanded(
+                        flex: 12,
                         child: PageView.builder(
                           physics: this.homeLock ? NeverScrollableScrollPhysics() : null,
                           onPageChanged: _pageChanged,
@@ -178,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                                   right: 10 + position * 30,
                                   left: 0,
                                   top: 140 - scale * 15,
-                                  bottom: 60 - scale * 2),
+                                  bottom: 10 - scale * 2),
                               child: Container(
                                 child: GestureDetector(
                                   onTap: () {
@@ -217,6 +219,18 @@ class _HomePageState extends State<HomePage> {
                           itemCount: _list.length,
                         ),
                       ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          '点击进入相关研学主题',
+                          style: TextStyle(
+                            color: Color.fromRGBO(108, 100, 78, 1),
+                            fontSize: 20.0,
+                            fontFamily: "font_boo",
+                          ),
+                        ),
+                      ),
+                      //两个按钮
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -287,11 +301,11 @@ class FirstImg {
   static List<FirstImg> generate() {
     return [
       FirstImg("assets/images/home_page/zsyh_home.png", "zsyh_home", '/pages/sea_culture/main'),
-      FirstImg("assets/images/home_page/fyzz_home.png", "fyzz_home", '/pages/china_paper/main'),
-      FirstImg("assets/images/home_page/pyzg_home.png", "pyzg_home", '/pages/shadow_play/main'),
       FirstImg(
           "assets/images/home_page/slhz_home.png", "slhz_home", '/pages/feminine_adornment/main'),
+      FirstImg("assets/images/home_page/fyzz_home.png", "fyzz_home", '/pages/china_paper/main'),
       FirstImg("assets/images/home_page/zwzs_home.png", "zwzs_home", '/pages/handcrafted_fan/main'),
+      FirstImg("assets/images/home_page/pyzg_home.png", "pyzg_home", '/pages/shadow_play/main'),
     ];
   }
 }

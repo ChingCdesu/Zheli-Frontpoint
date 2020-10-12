@@ -138,73 +138,93 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: new Form(
         key: _formKey,
-        child: new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            //用户名
-            Expanded(
-                flex: 2,
-                child: Column(
-                  children: <Widget>[
-                    new CupertinoTextField(
-                      padding: EdgeInsets.fromLTRB(26, 16, 2, 16),
-                      controller: _userNameController,
-                      focusNode: _focusNodeUserName,
-                      keyboardType: TextInputType.text,
-                      placeholder: '用户名',
-                      suffix: (_isShowClear)
-                          ? CupertinoButton(
-                              child: Icon(CupertinoIcons.clear),
-                              onPressed: () {
-                                setState(() {
-                                  _userNameController.clear();
-                                });
-                              },
-                            )
-                          : null,
-                      decoration: BoxDecoration(
-                        // color: CupertinoColors.activeBlue,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(26.0),
-                        ),
-                      ),
-                      onChanged: (String value) {
-                        _username = value;
-                      },
-                    ),
-                  ],
-                )),
-            //密码
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: <Widget>[
-                  new CupertinoTextField(
-                    padding: EdgeInsets.fromLTRB(26, 0, 2, 0),
-                    controller: _passwordController,
-                    focusNode: _focusNodePassWord, //设置键盘类型
-                    keyboardType: TextInputType.text,
-                    placeholder: '密码',
-                    onChanged: (value) => _password = value,
-                    suffix: CupertinoButton(
-                      child: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
-                      onPressed: () {
-                        setState(() {
-                          _isShowPwd = !_isShowPwd;
-                        });
-                      },
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(26.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Color.fromARGB((255 * 0.2).floor(), 255, 255, 255),
+            // borderRadius: BorderRadius.all(
+            //   Radius.circular(10.0),
+            // ),
+          ),
+          child: new Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              //用户名
+              Expanded(
+                // flex: 2,
+                child: new CupertinoTextField(
+                  padding: EdgeInsets.fromLTRB(36, 12, 2, 12),
+                  controller: _userNameController,
+                  focusNode: _focusNodeUserName,
+                  keyboardType: TextInputType.name,
+                  placeholder: '用户名',
+                  suffix: (_isShowClear)
+                      ? CupertinoButton(
+                          child: Icon(CupertinoIcons.clear),
+                          onPressed: () {
+                            setState(() {
+                              _userNameController.clear();
+                            });
+                          },
+                        )
+                      : null,
+                  decoration: BoxDecoration(
+                    // color: CupertinoColors.activeBlue,
+                    // borderRadius: BorderRadius.all(
+                    //   Radius.circular(26.0),
+                    // ),
+                    // color: Color.fromARGB(102, 255, 255, 255),
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey[500],
                       ),
                     ),
-                    obscureText: !_isShowPwd,
                   ),
-                ],
+                  onChanged: (String value) {
+                    _username = value;
+                  },
+                ),
               ),
-            )
-          ],
+              //密码
+              // SizedBox(
+              //   height: 5,
+              // ),
+              Expanded(
+                // flex: 2,
+                child: new CupertinoTextField(
+                  padding: EdgeInsets.fromLTRB(36, 12, 2, 12),
+                  controller: _passwordController,
+                  focusNode: _focusNodePassWord, //设置键盘类型
+                  keyboardType: TextInputType.text,
+                  placeholder: '密码',
+                  onChanged: (value) => _password = value,
+                  // suffix: CupertinoButton(
+                  //   child: Icon((_isShowPwd) ? Icons.visibility : Icons.visibility_off),
+                  //   onPressed: () {
+                  //     setState(() {
+                  //       _isShowPwd = !_isShowPwd;
+                  //     });
+                  //   },
+                  // ),
+                  decoration: BoxDecoration(
+                    // borderRadius: BorderRadius.all(
+                    //   Radius.circular(26.0),
+                    // ),
+                    // border: Border.all(color: Colors.red, width: 1),
+                    // color: Color.fromARGB(102, 255, 255, 255),
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ),
+                  obscureText: !_isShowPwd,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -249,6 +269,10 @@ class _LoginPageState extends State<LoginPage> {
             if (!operation.hasError) {
               var result = operation.getResult();
               Account.userId = result['values'][0]['ID'];
+              operation = await API.Get(new API.User(id: Account.userId)).doOperation();
+              var _u = operation.getResult() as API.User;
+              Account.avatarPath = _u.avatar;
+              Account.username = _u.username;
               Navigator.pushNamed(context, "/home");
             } else {
               print(operation.log);

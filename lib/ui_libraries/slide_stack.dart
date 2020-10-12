@@ -118,10 +118,8 @@ class SlideContainer extends StatefulWidget {
   ContainerState createState() => ContainerState();
 }
 
-class ContainerState extends State<SlideContainer>
-    with TickerProviderStateMixin {
-  final Map<Type, GestureRecognizerFactory> gestures =
-      <Type, GestureRecognizerFactory>{};
+class ContainerState extends State<SlideContainer> with TickerProviderStateMixin {
+  final Map<Type, GestureRecognizerFactory> gestures = <Type, GestureRecognizerFactory>{};
 
   // User's finger move value.
   double dragValue = 0.0;
@@ -133,31 +131,24 @@ class ContainerState extends State<SlideContainer>
   Ticker fingerTicker;
 
   bool get isSlideVertical =>
-      widget.slideDirection == SlideDirection.top ||
-      widget.slideDirection == SlideDirection.bottom;
+      widget.slideDirection == SlideDirection.top || widget.slideDirection == SlideDirection.bottom;
 
   double get maxDragDistance =>
       widget.drawerSize ??
-      (isSlideVertical
-          ? MediaQuery.of(context).size.height
-          : MediaQuery.of(context).size.width);
+      (isSlideVertical ? MediaQuery.of(context).size.height : MediaQuery.of(context).size.width);
 
-  double get minAutoSlideDistance =>
-      widget.minAutoSlideDistance ?? maxDragDistance * 0.5;
+  double get minAutoSlideDistance => widget.minAutoSlideDistance ?? maxDragDistance * 0.5;
 
   // The translation offset of the container.(decides the position of the container)
-  double get containerOffset =>
-      animationController.value * maxDragDistance * dragTarget.sign;
+  double get containerOffset => animationController.value * maxDragDistance * dragTarget.sign;
 
   @override
   void initState() {
-    animationController =
-        AnimationController(vsync: this, duration: widget.autoSlideDuration)
-          ..addListener(() {
-            if (widget.onSlide != null)
-              widget.onSlide(animationController.value);
-            setState(() {});
-          });
+    animationController = AnimationController(duration: widget.autoSlideDuration, vsync: this)
+      ..addListener(() {
+        if (widget.onSlide != null) widget.onSlide(animationController.value);
+        setState(() {});
+      });
 
     fingerTicker = createTicker((_) {
       if ((dragValue - dragTarget).abs() <= 1.0) {
@@ -180,18 +171,17 @@ class ContainerState extends State<SlideContainer>
     super.dispose();
   }
 
-  GestureRecognizerFactoryWithHandlers<T>
-      createGestureRecognizer<T extends DragGestureRecognizer>(
-              GestureRecognizerFactoryConstructor<T> constructor) =>
-          GestureRecognizerFactoryWithHandlers<T>(
-            constructor,
-            (T instance) {
-              instance
-                ..onStart = handleDragStart
-                ..onUpdate = handleDragUpdate
-                ..onEnd = handleDragEnd;
-            },
-          );
+  GestureRecognizerFactoryWithHandlers<T> createGestureRecognizer<T extends DragGestureRecognizer>(
+          GestureRecognizerFactoryConstructor<T> constructor) =>
+      GestureRecognizerFactoryWithHandlers<T>(
+        constructor,
+        (T instance) {
+          instance
+            ..onStart = handleDragStart
+            ..onUpdate = handleDragUpdate
+            ..onEnd = handleDragEnd;
+        },
+      );
 
   void _registerGestureRecognizer() {
     if (isSlideVertical) {
@@ -205,17 +195,15 @@ class ContainerState extends State<SlideContainer>
     }
   }
 
-  double getVelocity(DragEndDetails details) => isSlideVertical
-      ? details.velocity.pixelsPerSecond.dy
-      : details.velocity.pixelsPerSecond.dx;
+  double getVelocity(DragEndDetails details) =>
+      isSlideVertical ? details.velocity.pixelsPerSecond.dy : details.velocity.pixelsPerSecond.dx;
 
   double getDelta(DragUpdateDetails details) =>
       isSlideVertical ? details.delta.dy : details.delta.dx;
 
   void openOrClose() {
     final AnimationStatus status = animationController.status;
-    final bool isOpen = status == AnimationStatus.completed ||
-        status == AnimationStatus.forward;
+    final bool isOpen = status == AnimationStatus.completed || status == AnimationStatus.forward;
     // Reset dragTarget in close state. It's import!!!
     // Or the containerOffset value will be zero.
     dragTarget = isOpen ? dragTarget : 1.0;
@@ -246,8 +234,7 @@ class ContainerState extends State<SlideContainer>
       isFirstDragFrame = false;
       return;
     }
-    dragValue = (dragValue + getDelta(details))
-        .clamp(-maxDragDistance, maxDragDistance);
+    dragValue = (dragValue + getDelta(details)).clamp(-maxDragDistance, maxDragDistance);
     if (widget.slideDirection == SlideDirection.top ||
         widget.slideDirection == SlideDirection.left) {
       dragValue = dragValue.clamp(0.0, maxDragDistance);
@@ -258,16 +245,12 @@ class ContainerState extends State<SlideContainer>
   }
 
   void handleDragEnd(DragEndDetails details) {
-    if (getVelocity(details) * dragTarget.sign >
-        widget.minAutoSlideDragVelocity) {
+    if (getVelocity(details) * dragTarget.sign > widget.minAutoSlideDragVelocity) {
       _completeSlide();
-    } else if (getVelocity(details) * dragTarget.sign <
-        -widget.minAutoSlideDragVelocity) {
+    } else if (getVelocity(details) * dragTarget.sign < -widget.minAutoSlideDragVelocity) {
       _cancelSlide();
     } else {
-      dragTarget.abs() > minAutoSlideDistance
-          ? _completeSlide()
-          : _cancelSlide();
+      dragTarget.abs() > minAutoSlideDistance ? _completeSlide() : _cancelSlide();
     }
     fingerTicker.stop();
   }
@@ -296,8 +279,7 @@ class ContainerState extends State<SlideContainer>
     }
   }
 
-  bool get hasShadow =>
-      widget.shadowBlurRadius != null && widget.shadowSpreadRadius != null;
+  bool get hasShadow => widget.shadowBlurRadius != null && widget.shadowSpreadRadius != null;
 
   @override
   Widget build(BuildContext context) => RawGestureDetector(

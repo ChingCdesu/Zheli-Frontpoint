@@ -24,6 +24,11 @@ Future<API.User> loginAsync(String username, String password) async {
   }
 }
 
+// typedef VideoList as List<API.Video> ;
+// typedef List<VideoCommentUserView> = CommentList;
+// typedef List<API.Favorire> = FavoriteList;
+// typedef List<API.History> = HistoryList;
+
 // 获取模块的视频列表(模块id)
 Future<List> getVideosByModuleIdAsync(int moduleId) async {
   // 用于存放 video 信息
@@ -104,9 +109,64 @@ Future<API.User> registAsync(String username, String password) async {
   }
 }
 
-// TODO: 待完成
 // 添加视频评论
-Future<bool> createCommentsAsync(API.VideoComment comment) async {}
+Future<bool> createCommentsAsync(API.VideoComment comment) async {
+  var operation = await API.Create(comment).doOperation();
+  if (operation.hasError) {
+    print(operation.log);
+    return false;
+  } else {
+    return true;
+  }
+}
+
+Future<List> getFavoritesByUserIdAsync(int userId) async {
+  List<API.Favorite> favorites = new List();
+
+  API.Favorite _f = new API.Favorite(userId: userId);
+  var operation = await API.Confirm(_f).doOperation();
+  if (operation.hasError) {
+    print(operation.log);
+  } else {
+    var ids = operation.getResult()['values'];
+    for (var favoriteId in ids) {
+      final id = favoriteId['ID'];
+      var _v = new API.Favorite(id: id);
+      operation = await API.Get(_v).doOperation();
+      if (operation.hasError) {
+        print(operation.log);
+      } else {
+        favorites.add(operation.getResult());
+      }
+    }
+  }
+  return favorites.length == 0 ? null : favorites;
+}
+
+Future<List> getHistoriesByUserIdAsync(int userId) async {
+  List<API.History> histories = new List();
+
+  API.History _f = new API.History(userId: userId);
+  var operation = await API.Confirm(_f).doOperation();
+  if (operation.hasError) {
+    print(operation.log);
+  } else {
+    var ids = operation.getResult()['values'];
+    for (var hId in ids) {
+      final id = hId['ID'];
+      var _v = new API.History(id: id);
+      operation = await API.Get(_v).doOperation();
+      if (operation.hasError) {
+        print(operation.log);
+      } else {
+        histories.add(operation.getResult());
+      }
+    }
+  }
+  return histories.length == 0 ? null : histories;
+}
+
+// TODO: 待完成
 // 获取用户的动态(用户id)
 Future<List> getPostsByUserIdAsync(int userId) async {}
 // 添加动态

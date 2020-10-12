@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/api/interfaces.dart';
 import 'package:zl_app/api/models.dart' as API;
+import 'package:zl_app/pages/video_page.dart';
 
 // import 'package:zl_app/pages/handcrafted_fan/video.dart';
 
@@ -30,7 +31,7 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   //image: NetworkImage(publicUrl + 'assets/handcrafted_fan/main/zwzs.png'),
-                  image: AssetImage('assets/handcrafted_fan/zwzs.png'),
+                  image: AssetImage('assets/images/handcrafted_fan/zwzs.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -76,7 +77,7 @@ class _HandcraftedFanMainState extends State<HandcraftedFanMain> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  'Zhang Wu Bamboo fan',
+                                  'Handcrafted Fan',
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: CupertinoColors.white,
@@ -157,14 +158,14 @@ class _CardPageState extends State<CardPage> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 10,
-                  color: CupertinoColors.systemGrey6,
-                  offset: Offset.fromDirection(45, 10),
-                  spreadRadius: 6,
-                )
-              ],
+              // boxShadow: [
+              //   BoxShadow(
+              //     blurRadius: 10,
+              //     color: CupertinoColors.systemGrey6,
+              //     offset: Offset.fromDirection(45, 10),
+              //     spreadRadius: 6,
+              //   )
+              // ],
             ),
             padding: EdgeInsets.fromLTRB(18, 16, 0, 10),
             child: new Text(
@@ -246,8 +247,10 @@ class _CardPageState extends State<CardPage> {
                             style: TextStyle(color: CupertinoColors.white, fontSize: 14),
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/pages/video');
+                        onPressed: () async {
+                          VideoArguments.videoInfo = _videos[0];
+                          VideoArguments.comments = await getCommentsByVideoIdAsync(_videos[0].id);
+                          Navigator.pushNamed(context, '/video');
                         },
                       ),
                     )

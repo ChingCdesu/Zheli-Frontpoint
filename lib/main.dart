@@ -5,10 +5,10 @@ import 'package:zl_app/pages/china_paper/manufacture.dart';
 import 'package:zl_app/pages/feminine_adornment/history.dart';
 import 'package:zl_app/pages/feminine_adornment/main.dart';
 import 'package:zl_app/pages/feminine_adornment/object.dart';
-import 'package:zl_app/pages/video.dart';
+import 'package:zl_app/pages/video_page.dart';
 
 import 'package:zl_app/pages/handcrafted_fan/main.dart';
-import 'package:zl_app/pages/handcrafted_fan/video.dart';
+
 import 'package:zl_app/pages/personal/edit_profile.dart';
 import 'package:zl_app/pages/personal/favorite.dart';
 
@@ -20,13 +20,11 @@ import 'package:zl_app/pages/personal/register.dart';
 
 import 'package:zl_app/pages/sea_culture/cinema.dart';
 import 'package:zl_app/pages/sea_culture/main.dart';
-import 'package:zl_app/pages/sea_culture/video.dart';
 
 import 'package:zl_app/pages/shadow_play/cinema.dart';
 import 'package:zl_app/pages/shadow_play/history.dart';
 import 'package:zl_app/pages/shadow_play/main.dart';
 import 'package:zl_app/pages/shadow_play/manufacture.dart';
-import 'package:zl_app/pages/shadow_play/video.dart';
 
 import 'package:zl_app/pages/sidebar_page.dart';
 import 'package:zl_app/pages/home_page.dart';
@@ -60,6 +58,7 @@ class ZlApp extends StatefulWidget {
 class _ZlAppState extends State<ZlApp> with WidgetsBindingObserver {
   final _routes = {
     '/home': (context) => HomePage(),
+    '/video': (context) => VideoPage(),
     // 富阳竹纸
     '/pages/china_paper/main': (context) => ChinaPaperMain(),
     '/pages/china_paper/history': (context) => ChinaPaperHistory(),
@@ -68,20 +67,20 @@ class _ZlAppState extends State<ZlApp> with WidgetsBindingObserver {
     '/pages/feminine_adornment/main': (context) => FeminineAdornmentMain(),
     '/pages/feminine_adornment/history': (context) => FeminineAdornmentHistory(),
     '/pages/feminine_adornment/object': (context) => FeminineAdornmentObject(),
-    '/pages/feminine_adornment/video': (context) => FeminineAdornmentVideo(),
+    '/pages/feminine_adornment/video': (context) => VideoPage(),
     // 彰吴竹扇
     '/pages/handcrafted_fan/main': (context) => HandcraftedFanMain(),
-    '/pages/handcrafted_fan/video': (context) => HandcraftedFanVideo(),
+    '/pages/handcrafted_fan/video': (context) => VideoPage(),
     // 舟山渔海
     '/pages/sea_culture/main': (context) => SeaCultureMain(),
     '/pages/sea_culture/cinema': (context) => SeaCultureCinema(),
-    '/pages/sea_culture/video': (context) => SeaCultureVideo(),
+    '/pages/sea_culture/video': (context) => VideoPage(),
     // 皮影之光
     '/pages/shadow_play/main': (context) => ShadowPlayMain(),
     '/pages/shadow_play/history': (context) => ShadowPlayHistory(),
     '/pages/shadow_play/manufacture': (context) => ShadowPlayManufacture(),
     '/pages/shadow_play/cinema': (context) => ShadowPlayCinema(),
-    '/pages/shadow_play/video': (context) => ShadowPlayVideo(),
+    '/pages/shadow_play/video': (context) => VideoPage(),
     // 个人中心页面
     '/personal/edit_profile': (context) => EditProfile(),
     '/personal/favorite': (context) => FavoritePage(),
@@ -100,6 +99,7 @@ class _ZlAppState extends State<ZlApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
+      debugShowCheckedModeBanner: false,
       title: 'Cupertino App',
       //home: HomePage(),
       home: SplashScreen(),

@@ -37,12 +37,12 @@ class _ProfilePageState extends State<ProfilePage> {
               children: <Widget>[
                 //背景区
                 Container(
-                    height: DeviceSize.getHeightByPercent(1),
-                    child: Image.network(
-                      _user.headerImage,
-                      fit: BoxFit.fill,
-                    ),
-                    ),
+                  height: DeviceSize.getHeightByPercent(1),
+                  child: Image.network(
+                    _user.avatar,
+                    fit: BoxFit.fill,
+                  ),
+                ),
                 //头像区
                 Positioned(
                     child: Column(

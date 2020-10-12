@@ -69,11 +69,11 @@ class _ContainPageviewState extends State<ContainPageview> {
     return PageView(
       scrollDirection: Axis.horizontal,
       children: <Widget>[
-        contain('assets/china_paper/manufacture/process01.png'),
-        contain('assets/china_paper/manufacture/process02.png'),
-        contain('assets/china_paper/manufacture/process03.png'),
-        contain('assets/china_paper/manufacture/process04.png'),
-        contain('assets/china_paper/manufacture/process05.png'),
+        contain('assets/images/china_paper/process01.png'),
+        contain('assets/images/china_paper/process02.png'),
+        contain('assets/images/china_paper/process03.png'),
+        contain('assets/images/china_paper/process04.png'),
+        contain('assets/images/china_paper/process05.png'),
       ],
     );
   }

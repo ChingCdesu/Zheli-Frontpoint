@@ -1,23 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zl_app/api/interfaces.dart';
+import 'package:zl_app/api/models.dart' as API;
+import 'package:zl_app/api/model_operations.dart' as API;
+import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/settings/user.dart';
 import 'package:zl_app/utils/device_size.dart';
 import 'package:flutter/rendering.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
-import 'package:zl_app/api/models.dart' as API;
-import 'package:zl_app/api/model_operations.dart' as API;
-
-class HandcraftedFanVideo extends StatefulWidget {
-  HandcraftedFanVideo({Key key, this.title}) : super(key: key);
-  final String title;
+class VideoPage extends StatefulWidget {
+  VideoPage({Key key}) : super(key: key);
 
   @override
-  _HandcraftedFanVideoState createState() => _HandcraftedFanVideoState();
+  _VideoPageState createState() => _VideoPageState();
 }
 
-class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
+class _VideoPageState extends State<VideoPage> {
+  _VideoPageState();
   VideoPlayerController _videoPlayercontroller;
   ChewieController _chewieController;
 
@@ -25,13 +26,27 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
   var islikeLight = false;
   var isdislikeLight = false;
 
-  API.Video _videoInfo;
+  FocusNode _fnComment;
+  TextEditingController _txController;
+
+  // API.Video _videoInfo;
+  // List<VideoCommentUserView> _comments = List();
   int favId;
 
   @override
   void initState() {
     super.initState();
-    _videoPlayercontroller = VideoPlayerController.asset('video/zsyh01.mp4');
+    // _videoInfo = ModalRoute.of(context).settings.arguments;
+    // getCommentsByVideoIdAsync(_videoInfo.id)
+    //     .then((comments) => _comments.addAll(comments as List<VideoCommentUserView>))
+    //     .whenComplete(() => setState(() {}));
+    _fnComment = FocusNode();
+    _txController = TextEditingController();
+    print(VideoArguments.comments);
+    print(VideoArguments.videoInfo);
+    var _videoInfo = VideoArguments.videoInfo;
+
+    _videoPlayercontroller = VideoPlayerController.network(publicUrl + _videoInfo.videoUrl);
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayercontroller,
       autoPlay: true,
@@ -43,22 +58,33 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
   void dispose() {
     _videoPlayercontroller.dispose();
     _chewieController.dispose();
+    _fnComment.dispose();
+    _txController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    DeviceSize.setDeviceSize(MediaQuery.of(context).size);
+    var _videoInfo = VideoArguments.videoInfo;
+    var _comments = VideoArguments.comments;
+    String comment = "";
+    // DeviceSize.setDeviceSize(MediaQuery.of(context).size);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         automaticallyImplyLeading: false,
         automaticallyImplyMiddle: true,
         border: Border(),
+        backgroundColor: Colors.white,
         padding: EdgeInsetsDirectional.only(
           end: DeviceSize.getWidthByPercent(0.02),
         ),
-        backgroundColor: Color.fromRGBO(198, 204, 205, 1),
-        //trailing: this.trailing,
+        // trailing: this.trailing,
+        middle: Text(
+          _videoInfo.title,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         leading: Container(
           child: Material(
             color: Colors.transparent,
@@ -72,7 +98,7 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
               onPressed: () async {
                 API.History _h = API.History(
                   userId: Account.userId,
-                  videoId: this._videoInfo.id,
+                  videoId: _videoInfo.id,
                 );
                 var _o = await API.Confirm(_h).doOperation();
                 _h.currentTime = _videoPlayercontroller.value.position.inSeconds;
@@ -157,7 +183,7 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
                                                   padding: EdgeInsets.only(
                                                       left: DeviceSize.getWidthByPercent(0.04)),
                                                   child: new Text(
-                                                    '鄣吴竹扇-扇文化',
+                                                    _videoInfo.title,
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                     ),
@@ -171,33 +197,34 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
                                                 //     105, 15, 0, 0),
                                                 child: Icon(
                                                   isLight
-                                                      ? IconData(0xe68a, fontFamily: 'Schyler')
-                                                      : IconData(0xe672, fontFamily: 'Schyler'),
+                                                      ? IconData(0xe79e, fontFamily: 'Schyler')
+                                                      : IconData(0xe79d, fontFamily: 'Schyler'),
                                                   color: isLight
                                                       ? CupertinoColors.systemYellow
                                                       : CupertinoColors.systemGrey4,
                                                 ),
                                                 onPressed: () {
-                                                  setState(() async {
-                                                    isLight = !isLight;
-                                                    if (isLight) {
-                                                      var _f = API.Favorite(
-                                                        userId: Account.userId,
-                                                        videoId: this._videoInfo.id,
-                                                      );
-                                                      var _o = await API.Create(_f).doOperation();
-                                                      if (_o.hasError) {
-                                                        print(_o.log);
-                                                      }
-                                                    } else {
-                                                      var _o =
-                                                          await API.Destory(API.Favorite(id: favId))
-                                                              .doOperation();
-                                                      if (_o.hasError) {
-                                                        print(_o.log);
-                                                      }
-                                                    }
-                                                  });
+                                                  if (this.mounted) {
+                                                    setState(() {
+                                                      isLight = !isLight;
+                                                      // if (isLight) {
+                                                      //   var _f = API.Favorite(
+                                                      //       userId: Account.userId,
+                                                      //       videoId: _videoInfo.id);
+                                                      //   var _o = await API.Create(_f).doOperation();
+                                                      //   if (_o.hasError) {
+                                                      //     print(_o.log);
+                                                      //   }
+                                                      // } else {
+                                                      //   var _o = await API.Destory(
+                                                      //           API.Favorite(id: favId))
+                                                      //       .doOperation();
+                                                      //   if (_o.hasError) {
+                                                      //     print(_o.log);
+                                                      //   }
+                                                      // }
+                                                    });
+                                                  }
                                                 },
                                               ),
                                             )
@@ -207,7 +234,7 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
                                       Container(
                                         margin: EdgeInsets.fromLTRB(10, 4, 10, 10),
                                         child: new Text(
-                                          '视频内容：中国自古就有“制扇王国”之称，扇文化也是是汉民族文化的重要组成部分，其中最为人熟知的便数竹制折扇了。它的竹制扇骨，白底宣纸扇面以及精致的字画，自宋以来便深受文人百姓的喜爱，如今，鄣吴竹扇仍然紧紧联系着百姓的生活。',
+                                          _videoInfo.description,
                                           style: TextStyle(fontSize: 14),
                                         ),
                                       ),
@@ -230,7 +257,7 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
                                       padding:
                                           EdgeInsets.only(left: DeviceSize.getWidthByPercent(0.02)),
                                       child: new Text(
-                                        '(0)',
+                                        '(${_comments.length})',
                                         style: TextStyle(
                                           fontSize: 14,
                                         ),
@@ -239,6 +266,76 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
                                   ],
                                 ),
                               ),
+                              //评论列表
+                              Container(
+                                padding: EdgeInsets.only(left: 20, right: 20),
+                                child: ListView.builder(
+                                  itemCount: _comments.length,
+                                  shrinkWrap: true,
+                                  physics: RangeMaintainingScrollPhysics(),
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      width: DeviceSize.getWidthByPercent(1.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            // crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              Expanded(
+                                                flex: 1,
+                                                child: CircleAvatar(
+                                                  backgroundImage: NetworkImage(publicUrl +
+                                                      _comments[index].user.avatar), //头像?
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 6,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Container(
+                                                      // alignment: Alignment.topLeft,
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Container(
+                                                            // alignment: Alignment.topLeft,
+                                                            margin: EdgeInsets.only(left: 20),
+                                                            child: new Text(
+                                                              _comments[index].user.username, //用户名
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight: FontWeight.w600,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 3,
+                                                    ),
+                                                    Container(
+                                                      // width: DeviceSize.getWidthByPercent(0.64),
+                                                      margin: EdgeInsets.only(left: 20, top: 0),
+                                                      child: new Text(
+                                                        _comments[index].comment.comment, //评论
+                                                        maxLines: 3,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(fontSize: 14),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -249,6 +346,7 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
               ),
             ],
           ),
+          //输入框
           Align(
             alignment: AlignmentDirectional.bottomCenter,
             child: Container(
@@ -279,6 +377,9 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
                           color: Colors.black12,
                         ),
                         cursorColor: CupertinoColors.activeBlue,
+                        onChanged: (value) => comment = value,
+                        focusNode: _fnComment,
+                        controller: _txController,
                       ),
                     ),
                     Expanded(
@@ -290,7 +391,25 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
                             color: CupertinoColors.activeBlue,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (comment.length != 0 && this.mounted) {
+                            setState(() {
+                              var newComment = VideoCommentUserView();
+                              newComment.user = API.User(
+                                id: Account.userId,
+                                avatar: Account.avatarPath,
+                                username: Account.username,
+                              );
+                              newComment.video = _videoInfo;
+
+                              newComment.comment = API.VideoComment(
+                                  comment: comment, userId: Account.userId, videoId: _videoInfo.id);
+                              VideoArguments.comments.add(newComment);
+                              _fnComment.unfocus();
+                              _txController.clear();
+                            });
+                          }
+                        },
                         padding: EdgeInsets.all(5),
                       ),
                     ),
@@ -303,4 +422,10 @@ class _HandcraftedFanVideoState extends State<HandcraftedFanVideo> {
       ),
     );
   }
+}
+
+class VideoArguments {
+  VideoArguments._();
+  static API.Video videoInfo;
+  static List<VideoCommentUserView> comments;
 }

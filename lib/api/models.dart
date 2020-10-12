@@ -185,7 +185,7 @@ class History extends Model {
 class User extends Model {
   int id;
   String username, email, phone, password;
-  String token, avatar, headerImage;
+  String token, avatar;
 
   User({
     this.id,

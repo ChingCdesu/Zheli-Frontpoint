@@ -9,6 +9,7 @@ import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/api/interfaces.dart';
 import 'package:zl_app/api/models.dart' as API;
 import 'package:zl_app/api/model_operations.dart' as API;
+import 'package:zl_app/pages/video_page.dart';
 
 // import 'package:zl_app/pages/sea_culture/cinema.dart';
 // import 'package:zl_app/pages/sea_culture/video.dart';
@@ -184,9 +185,11 @@ class _SeaCultureMainState extends State<SeaCultureMain> {
                               fit: BoxFit.cover),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/pages/sea_culture/video',
-                            arguments: _vs[currentPage.floor()]);
+                      onPressed: () async {
+                        VideoArguments.videoInfo = _vs[currentPage.floor()];
+                        VideoArguments.comments =
+                            await getCommentsByVideoIdAsync(_vs[currentPage.floor()].id);
+                        Navigator.pushNamed(context, '/pages/sea_culture/video');
                       }),
                 ],
               ),

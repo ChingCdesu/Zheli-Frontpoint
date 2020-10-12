@@ -19,7 +19,7 @@ program: "lib/main.dart"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.8.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -47,7 +47,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^1.10.1
-  json_serializable: ^3.2.0
+  json_serializable: ^3.5.0
   flutter_test:
     sdk: flutter
 

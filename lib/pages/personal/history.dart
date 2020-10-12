@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:zl_app/api/dio_singleton.dart';
+import 'package:zl_app/api/interfaces.dart';
 
 import 'package:zl_app/api/model_operations.dart' as API;
 import 'package:zl_app/api/models.dart' as API;
+import 'package:zl_app/pages/video_page.dart';
 import 'package:zl_app/settings/user.dart';
 
 // Todo: 添加图片到ImageLibrary
@@ -17,8 +20,8 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  List<API.History> _histories;
-  List<API.Video> _videoInfos;
+  List<API.History> _histories = new List();
+  List<API.Video> _videoInfos = new List();
 
   Future _getHistories() async {
     var operation = await API.Confirm(new API.History(userId: Account.userId)).doOperation();
@@ -27,25 +30,28 @@ class _HistoryPageState extends State<HistoryPage> {
     for (var e in _s) {
       API.History _h;
       API.Video _v;
-      await API.Get(new API.History(id: e['ID'])).doOperation().then((_o) async {
-        if (_o.hasError) throw ErrorDescription(_o.log);
-        _h = _o.fromJson(_o.getResult());
-        _histories.add(_h);
-        _v = API.Video(id: _h.videoId);
-        await API.Get(_v).doOperation().then((_o) {
-          if (_o.hasError) throw ErrorDescription(_o.log);
-          _v = _o.fromJson(_o.getResult());
-          _videoInfos.add(_v);
-        });
-      });
+      operation = await API.Get(new API.History(id: e['ID'])).doOperation();
+      if (operation.hasError) throw ErrorDescription(operation.log);
+      _h = operation.getResult();
+      _histories.add(_h);
+      _v = API.Video(id: _h.videoId);
+      operation = await API.Get(_v).doOperation();
+
+      if (operation.hasError) throw ErrorDescription(operation.log);
+      _v = operation.getResult();
+      _videoInfos.add(_v);
     }
   }
 
   @override
   void initState() {
+    super.initState();
     _getHistories().catchError((e) {
       print(e);
-    }).whenComplete(() => super.initState());
+    }).whenComplete(() {
+      print(_histories);
+      setState(() {});
+    });
   }
 
   List<Widget> _render() {
@@ -57,29 +63,39 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   Widget _getSingleHistory(API.History history, API.Video video) {
-    return Container(
-      height: 80,
-      margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
-      decoration: BoxDecoration(
-          //color: CupertinoColors.systemGrey5,
-          ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Image.network(video.imageUrl),
-            width: 150,
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 10, top: 4),
-            width: 154,
-            child: Text(
-              video.title,
-              style: TextStyle(fontSize: 12),
+    return GestureDetector(
+      child: Container(
+        height: 80,
+        margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
+        decoration: BoxDecoration(
+            //color: CupertinoColors.systemGrey5,
             ),
-          )
-        ],
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Image.network(publicUrl + video.imageUrl),
+              width: 150,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 10, top: 4),
+              width: 154,
+              child: Text(
+                video.title,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
+      onTap: () async {
+        VideoArguments.videoInfo = video;
+        VideoArguments.comments = await getCommentsByVideoIdAsync(video.id);
+        Navigator.pushNamed(context, '/video');
+      },
     );
   }
 

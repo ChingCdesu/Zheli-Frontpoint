@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:zl_app/api/dio_singleton.dart';
 import 'package:zl_app/api/interfaces.dart';
+import 'package:zl_app/pages/video_page.dart';
 
 import 'package:zl_app/utils/device_size.dart';
 
@@ -20,7 +21,6 @@ class ShadowPlayMain extends StatefulWidget {
 }
 
 class _ShadowPlayMainState extends State<ShadowPlayMain> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,7 +66,7 @@ class _ShadowPlayMainState extends State<ShadowPlayMain> {
           //positing
           Positioned(
             top: 70,
-            left: 320,
+            right: 20,
             child: Container(
               child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
                 Icon(
@@ -110,6 +110,7 @@ class _LikePageViewState extends State<LikePageView> {
       getVideosByModuleIdAsync(4).then((v) => _videos = v).whenComplete(() => setState(() {}));
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -140,8 +141,7 @@ class _LikePageViewState extends State<LikePageView> {
             'assets/images/shadow_play/bgc04.jpg',
             ' ',
             '欣赏作品||倒马关。倒马关，位于河北唐县西北60公里的倒马关乡倒马关村，最初于战国时置，称鸿之塞。',
-            '/pages/video',
-            arguments: _videos[0],
+            '/video',
           ),
           myCard(
             'assets/images/shadow_play/bgc05.jpg',
@@ -155,10 +155,14 @@ class _LikePageViewState extends State<LikePageView> {
   }
 
 //所有的卡片
-  Widget myCard(String img, String title, String text, String route,{dynamic arguments}) {
+  Widget myCard(String img, String title, String text, String route, {dynamic arguments}) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, route, arguments: arguments);
+      onTap: () async {
+        if (route.endsWith('video')) {
+          VideoArguments.videoInfo = _videos[0];
+          VideoArguments.comments = await getCommentsByVideoIdAsync(_videos[0].id);
+        }
+        Navigator.pushNamed(context, route);
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(40, 10, 10, 10),
@@ -166,7 +170,7 @@ class _LikePageViewState extends State<LikePageView> {
           padding: EdgeInsets.all(10),
           width: DeviceSize.getWidthByPercent(0.6), // width: 240,
           decoration: BoxDecoration(
-            //image: DecorationImage(image: NetworkImage(publicUrl + img), fit: BoxFit.cover),
+            //image: DecorationImage( image: NetworkImage(publicUrl + img), fit: BoxFit.cover),
             image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
             borderRadius: BorderRadius.circular(35),
             boxShadow: <BoxShadow>[
@@ -192,9 +196,9 @@ class _LikePageViewState extends State<LikePageView> {
                     color: CupertinoColors.black,
                     size: 18,
                   ),
-                  // onPressed: () {
-                  //   Navigator.pushNamed(context, url);
-                  // },
+                  onPressed: () {
+                    // Navigator.pushNamed(context, url);
+                  },
                 ),
               ),
               //文本介绍
